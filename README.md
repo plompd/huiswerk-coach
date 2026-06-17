@@ -1,23 +1,22 @@
-# Huiswerk Coach — Scheikunde HAVO 3
+# Huiswerk Coach — HAVO 3
 
-Interactief leerdashboard voor **Hoofdstuk 4: Rekenen aan reacties** (HAVO 3).
+Interactief leermateriaal voor HAVO 3.
 
 ## 🚀 Live
 
 👉 **https://plompd.github.io/huiswerk-coach/**
 
+De startpagina (`index.html`) is een menu naar alle vakken.
+
 ## 📚 Inhoud
 
-- **§1 Energie** — wet van behoud, exotherm/endotherm, ΔE, activeringsenergie, energiediagrammen
-- **§2 Reactiesnelheid** — botsende-deeltjesmodel, temperatuur, concentratie, verdelingsgraad, katalysator
+### Scheikunde
+- **Hoofdstuk 4 — Rekenen aan reacties** (`scheikunde-h4.html`): energie & reactiesnelheid, theorie, energiediagrammen, 24 flashcards, 14 oefenvragen, spiekbriefje.
 
-## 🛠️ Wat zit erin?
-
-- 📖 Theorie in inklapbare blokjes
-- 📊 Interactieve energiediagrammen (4 varianten)
-- 🎴 24 flashcards, met 'nog oefenen'-markering
-- ✏️ 14 oefenvragen op 3 niveaus, met directe feedback en uitleg
-- 📋 Spiekbriefje met formules, factoren, top-10 begrippen en veelgemaakte fouten
+### Economie
+- **Hoofdstuk 9 — Goede tijden, slechte tijden**
+  - `economie-h9.html` — interactieve oefenquiz (8 meerkeuze + 2 open vragen, directe feedback).
+  - `economie-h9-leerdocument.html` — samenvatting, schema, begrippenlijst en ezelsbruggetjes (op te slaan als PDF via de printknop).
 
 ## 📱 Op je telefoon
 
@@ -25,5 +24,8 @@ Open de URL in Safari → deelmenu → **Voeg toe aan beginscherm**. Daarna star
 
 ## 📝 Bestanden
 
-- `index.html` — het dashboard (één self-contained bestand)
-- `Scheikunde-H4-Samenvatting.md` — samenvatting in markdown
+- `index.html` — startpagina / menu
+- `scheikunde-h4.html` — scheikunde-dashboard H4
+- `economie-h9.html` — economie-oefenquiz H9
+- `economie-h9-leerdocument.html` — economie-leerdocument H9
+- `Scheikunde-H4-Samenvatting.pdf` — samenvatting scheikunde (PDF)
