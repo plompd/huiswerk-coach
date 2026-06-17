@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefenquiz — Economie H9: Goede tijden, slechte tijden</title>
+<style>
+  :root{--blue:#1d4ed8;--blue2:#3b82f6;--green:#16a34a;--red:#dc2626;--bg:#f1f5f9;}
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:#1f2937;margin:0;line-height:1.5;}
+  .topbar{background:var(--blue);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .topbar a{color:#fff;text-decoration:none;font-size:14px;opacity:.95;}
+  .topbar a:hover{text-decoration:underline;}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 14px 40px;}
+  header.hero{background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;border-radius:16px;padding:22px 24px;box-shadow:0 8px 24px rgba(29,78,216,.25);}
+  header.hero h1{margin:0 0 4px;font-size:24px;}
+  header.hero p{margin:0;opacity:.92;font-size:14px;}
+  .bar{height:10px;background:#e2e8f0;border-radius:999px;margin:18px 0 6px;overflow:hidden;}
+  .bar > div{height:100%;width:0;background:linear-gradient(90deg,#22c55e,#16a34a);transition:width .3s;}
+  .meta{display:flex;justify-content:space-between;font-size:13px;color:#475569;margin-bottom:4px;}
+  .card{background:#fff;border-radius:14px;padding:20px 22px;margin:16px 0;box-shadow:0 2px 10px rgba(0,0,0,.06);}
+  .qnum{display:inline-block;background:#dbeafe;color:#1e40af;border-radius:999px;padding:2px 12px;font-size:12px;font-weight:bold;margin-bottom:10px;}
+  .qtext{font-size:17px;font-weight:600;margin-bottom:14px;}
+  .opt{display:block;width:100%;text-align:left;background:#f8fafc;border:2px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin:8px 0;font-size:15px;cursor:pointer;transition:.15s;}
+  .opt:hover{border-color:var(--blue2);background:#eff6ff;}
+  .opt.correct{border-color:var(--green);background:#f0fdf4;}
+  .opt.wrong{border-color:var(--red);background:#fef2f2;}
+  .opt .mark{float:right;font-weight:bold;}
+  .feedback{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:14px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.good{background:#f0fdf4;border-left:4px solid var(--green);}
+  .feedback.bad{background:#fef2f2;border-left:4px solid var(--red);}
+  .btn{background:var(--blue);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px;}
+  .btn:hover{background:#1e40af;}
+  .btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue);}
+  .btn:disabled{opacity:.4;cursor:not-allowed;}
+  .nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:8px;}
+  .open textarea{width:100%;min-height:90px;border:2px solid #e2e8f0;border-radius:10px;padding:10px;font-size:14px;font-family:inherit;resize:vertical;}
+  .modelans{margin-top:12px;padding:12px 14px;border-radius:10px;background:#fffbeb;border-left:4px solid #eab308;font-size:14px;display:none;}
+  .modelans.show{display:block;}
+  .modelans b{color:#854d0e;}
+  .result{text-align:center;padding:30px 20px;}
+  .result .score{font-size:52px;font-weight:800;color:var(--blue);}
+  .result .emoji{font-size:46px;}
+  .hidden{display:none;}
+  .tag{font-size:12px;color:#64748b;}
+  footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html">&larr; Terug naar overzicht</a>
+  <a href="economie-h9-leerdocument.html">Leerdocument &rarr;</a>
+</div>
+<div class="wrap">
+  <header class="hero">
+    <h1>Oefenquiz — Goede tijden, slechte tijden</h1>
+    <p>Economie · Hoofdstuk 9 · conjunctuur, overheid &amp; ECB</p>
+  </header>
+
+  <div class="meta"><span id="counter">Vraag 1</span><span id="scoreLbl">Score: 0</span></div>
+  <div class="bar"><div id="prog"></div></div>
+
+  <div id="quiz"></div>
+  <div id="end" class="hidden"></div>
+
+  <footer>Meerkeuze telt mee voor je score · open vragen check je zelf met het antwoordmodel.</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  {type:"mc", q:"Wat is een conjunctuurgolf?",
+   opts:["De schommeling van de vraag naar goederen en diensten in de tijd","Het maximaal aantal producten dat een fabriek kan maken","De rente die de ECB aan banken vraagt","De belasting die de overheid int"],
+   correct:0,
+   exp:"De conjunctuurgolf is de op- en neergaande beweging van de vraag (en dus de economie) in de tijd."},
+  {type:"mc", q:"In een laagconjunctuur is de bezettingsgraad…",
+   opts:["Hoog: alle machines draaien","Laag: machines staan stil en personeel is niet nodig","Altijd precies 100%","Niet te bepalen"],
+   correct:1,
+   exp:"Bij weinig vraag wordt maar een klein deel van de productiecapaciteit gebruikt: lage bezettingsgraad, dus ontslagen en werkloosheid."},
+  {type:"mc", q:"Welke rij past bij een HOOGconjunctuur?",
+   opts:["Werkloosheid hoog · inflatie laag · vertrouwen laag","Werkloosheid laag · inflatie hoog · vertrouwen hoog","Werkloosheid laag · inflatie laag · vertrouwen laag","Werkloosheid hoog · inflatie hoog · vertrouwen hoog"],
+   correct:1,
+   exp:"Hoogconjunctuur = bijna alles hoog: veel vraag, hoge lonen dus hoge inflatie, hoog vertrouwen. Alleen de werkloosheid is juist laag."},
+  {type:"mc", q:"Het is LAAGconjunctuur. Wat doet de overheid om te stimuleren?",
+   opts:["Belasting verhogen","Belasting verlagen en/of zelf meer kopen","De rente verhogen","Niets, dat mag alleen de ECB"],
+   correct:1,
+   exp:"Belasting omlaag: mensen houden meer over, meer koopkracht, meer vraag. De overheid doet het tegenovergestelde van de conjunctuur (gaspedaal)."},
+  {type:"mc", q:"Het is HOOGconjunctuur. Wat doet de ECB met de rente, en waarom?",
+   opts:["Rente omhoog, om de vraag af te remmen en inflatie te beperken","Rente omlaag, om lenen goedkoper te maken","Rente omhoog, om de werkloosheid te verhogen","De ECB verandert nooit de rente"],
+   correct:0,
+   exp:"Rente omhoog: lenen duurder, minder lenen en kopen, meer sparen, vraag daalt, inflatie wordt afgeremd."},
+  {type:"mc", q:"Wat is het verschil tussen een recessie en een depressie?",
+   opts:["Een recessie is een hoogconjunctuur, een depressie een laagconjunctuur","Een recessie is mild, een depressie is diep en langdurig","Ze betekenen precies hetzelfde","Een depressie gaat alleen over de ECB"],
+   correct:1,
+   exp:"Beide zijn laagconjunctuur. Recessie = milde daling; depressie = zware, langdurige laagconjunctuur."},
+  {type:"mc", q:"Waarom zit de ECB 'tussen twee vuren'?",
+   opts:["Omdat ze geen geld heeft","Omdat ze één rente vaststelt voor heel Europa, terwijl landen in verschillende fasen zitten","Omdat banken geen rente willen betalen","Omdat de overheid de rente bepaalt"],
+   correct:1,
+   exp:"Eén rente voor alle eurolanden. Wat goed is voor een land in hoogconjunctuur (hoge rente) is slecht voor een land in laagconjunctuur (lage rente nodig)."},
+  {type:"mc", q:"Welke is GEEN kenmerk van een hoogconjunctuur?",
+   opts:["Grote vraag naar goederen","Hoog consumentenvertrouwen","Hoge werkloosheid","Veel belastinginkomsten voor de overheid"],
+   correct:2,
+   exp:"In een hoogconjunctuur is de werkloosheid juist LAAG; bedrijven kunnen moeilijk personeel vinden."},
+  {type:"open", q:"Leg de keten uit: waarom leidt een hoog consumentenvertrouwen tot een hoogconjunctuur?",
+   model:"Hoog vertrouwen → consumenten kopen meer → de vraag naar goederen en diensten stijgt → bedrijven gaan meer produceren en investeren → ze nemen meer personeel aan → werkloosheid daalt en de economie groeit."},
+  {type:"open", q:"Waarom is de inflatie in een laagconjunctuur meestal laag? Leg uit.",
+   model:"Door de lage vraag kunnen bedrijven hun producten moeilijk verkopen. Ze durven de prijzen daarom niet te verhogen (anders verkopen ze nog minder). Omdat de prijzen nauwelijks stijgen, blijft de inflatie laag."}
+];
+
+let idx=0, score=0, mcTotal=QUESTIONS.filter(q=>q.type==="mc").length, answered=[];
+const quiz=document.getElementById('quiz');
+const prog=document.getElementById('prog');
+const counter=document.getElementById('counter');
+const scoreLbl=document.getElementById('scoreLbl');
+
+function render(){
+  const q=QUESTIONS[idx];
+  counter.textContent=`Vraag ${idx+1} / ${QUESTIONS.length}`;
+  scoreLbl.textContent=`Score: ${score} / ${mcTotal}`;
+  prog.style.width=`${(idx)/QUESTIONS.length*100}%`;
+  let html=`<div class="card"><span class="qnum">${q.type==="mc"?"Meerkeuze":"Open vraag"} ${idx+1}</span><div class="qtext">${q.q}</div>`;
+  if(q.type==="mc"){
+    q.opts.forEach((o,i)=>{ html+=`<button class="opt" data-i="${i}" onclick="pick(${i})">${o}<span class="mark"></span></button>`; });
+    html+=`<div class="feedback" id="fb"></div>`;
+  }else{
+    html+=`<div class="open"><textarea id="ta" placeholder="Typ hier je antwoord… probeer de keten (… → … → …) compleet te maken."></textarea>`;
+    html+=`<button class="btn ghost" style="margin-top:10px" onclick="showModel()">Toon antwoordmodel</button>`;
+    html+=`<div class="modelans" id="model"><b>Voorbeeldantwoord:</b><br>${q.model}</div></div>`;
+  }
+  html+=`<div class="nav"><span class="tag">${idx+1} van ${QUESTIONS.length}</span><button class="btn" id="next" onclick="next()" ${q.type==="mc"?"disabled":""}>${idx===QUESTIONS.length-1?"Bekijk resultaat":"Volgende →"}</button></div></div>`;
+  quiz.innerHTML=html;
+}
+function pick(i){
+  const q=QUESTIONS[idx];
+  if(answered[idx]!==undefined) return;
+  answered[idx]=i;
+  const btns=document.querySelectorAll('.opt');
+  btns.forEach((b,bi)=>{
+    b.style.pointerEvents='none';
+    if(bi===q.correct){b.classList.add('correct');b.querySelector('.mark').textContent='✓';}
+    if(bi===i&&i!==q.correct){b.classList.add('wrong');b.querySelector('.mark').textContent='✗';}
+  });
+  const fb=document.getElementById('fb');
+  if(i===q.correct){score++;fb.className='feedback good show';fb.innerHTML='<b>Goed!</b> '+q.exp;}
+  else{fb.className='feedback bad show';fb.innerHTML='<b>Niet juist.</b> '+q.exp;}
+  scoreLbl.textContent=`Score: ${score} / ${mcTotal}`;
+  document.getElementById('next').disabled=false;
+}
+function showModel(){document.getElementById('model').classList.add('show');}
+function next(){ if(idx<QUESTIONS.length-1){idx++;render();} else finish(); }
+function finish(){
+  prog.style.width='100%';
+  quiz.classList.add('hidden');
+  const end=document.getElementById('end');
+  end.classList.remove('hidden');
+  const pct=Math.round(score/mcTotal*100);
+  let emoji,msg;
+  if(pct>=80){emoji='🎉';msg='Sterk! Je beheerst de stof goed.';}
+  else if(pct>=50){emoji='💪';msg='Aardig op weg — herhaal de fout gemaakte ketens nog even.';}
+  else{emoji='📚';msg='Nog even oefenen. Lees het leerdocument en probeer opnieuw.';}
+  end.innerHTML=`<div class="card result"><div class="emoji">${emoji}</div>
+    <div class="score">${score}/${mcTotal}</div>
+    <p style="font-size:18px;font-weight:600">${pct}% goed op de meerkeuzevragen</p>
+    <p>${msg}</p>
+    <p class="tag">Vergeet niet je open vragen zelf na te kijken met het antwoordmodel.</p>
+    <button class="btn" onclick="restart()">Opnieuw proberen</button></div>`;
+  counter.textContent='Klaar!';
+}
+function restart(){idx=0;score=0;answered=[];document.getElementById('end').classList.add('hidden');quiz.classList.remove('hidden');render();}
+render();
+</script>
+</body>
+</html>
