@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scheikunde H5 — Brandstoffen en kunststoffen</title>
+<style>
+  :root{--green:#1f7a4d;--green-light:#e6f4ec;--green-dark:#155735;--orange:#f08a3e;--red:#d94f4f;--blue:#4a8bd6;--bg:#f7f9f8;--card:#fff;--text:#1d2b25;--muted:#6b7770;--border:#d8e1dc;--shadow:0 2px 8px rgba(0,0,0,0.06);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.55;}
+  header{background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;padding:16px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  header .home{color:#fff;text-decoration:none;font-size:.78rem;opacity:.9;}
+  header h1{margin:4px 0 0;font-size:1.1rem;font-weight:600;}
+  header .sub{font-size:.8rem;opacity:.85;margin-top:2px;}
+  nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;position:sticky;top:70px;z-index:99;-webkit-overflow-scrolling:touch;}
+  nav button{flex:0 0 auto;background:none;border:none;padding:12px 16px;font-size:.85rem;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;font-weight:500;}
+  nav button.active{color:var(--green);border-bottom-color:var(--green);}
+  main{padding:16px;max-width:820px;margin:0 auto;}
+  section{display:none;}
+  section.active{display:block;}
+  h2{color:var(--green-dark);font-size:1.2rem;margin:8px 0 12px;}
+  h3{color:var(--green);font-size:1rem;margin:18px 0 8px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .pill{display:inline-block;background:var(--green-light);color:var(--green-dark);padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;margin-right:6px;margin-bottom:4px;}
+  .pill-orange{background:#fdebd9;color:#a85410;}
+  .pill-red{background:#fbe4e4;color:#a82929;}
+  .pill-blue{background:#e1ecf9;color:#1f4a82;}
+  .key{background:#fff7d6;padding:0 4px;border-radius:3px;font-weight:600;}
+  .formula{background:#f1f5f3;border-left:3px solid var(--green);padding:10px 14px;font-family:"Consolas",monospace;margin:10px 0;border-radius:4px;}
+  pre.struct{background:#f1f5f3;border-left:3px solid var(--green);padding:10px 14px;font-family:"Consolas","Courier New",monospace;margin:10px 0;border-radius:4px;overflow-x:auto;font-size:.9rem;line-height:1.3;}
+  .tip{background:#fff8e1;border-left:3px solid var(--orange);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .tip::before{content:"💡 ";}
+  .warning{background:#fdecea;border-left:3px solid var(--red);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .warning::before{content:"⚠️ ";}
+  ul{padding-left:20px;}li{margin-bottom:4px;}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0;}
+  th,td{padding:7px 9px;border:1px solid var(--border);text-align:left;}
+  th{background:var(--green-light);color:var(--green-dark);}
+  /* Flashcards */
+  .flashcard-stack{perspective:1200px;}
+  .flashcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 18px;min-height:180px;box-shadow:var(--shadow);cursor:pointer;transition:transform .5s;transform-style:preserve-3d;position:relative;}
+  .flashcard.flipped{transform:rotateY(180deg);}
+  .flashcard .front,.flashcard .back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;padding:24px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+  .flashcard .back{transform:rotateY(180deg);background:var(--green-light);border-radius:12px;}
+  .flashcard .term{font-size:1.25rem;font-weight:600;color:var(--green-dark);}
+  .flashcard .def{font-size:.95rem;color:var(--text);}
+  .flashcard .hint{font-size:.7rem;color:var(--muted);position:absolute;bottom:10px;}
+  .flash-controls{display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
+  .flash-controls button{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 16px;font-size:.9rem;cursor:pointer;font-weight:500;}
+  .filter-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+  .filter-bar button{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:16px;font-size:.8rem;cursor:pointer;color:var(--muted);}
+  .filter-bar button.active{background:var(--green);color:#fff;border-color:var(--green);}
+  /* Quiz */
+  .quiz-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .quiz-q{font-weight:600;margin-bottom:10px;}
+  .quiz-options{display:flex;flex-direction:column;gap:6px;}
+  .quiz-option{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:left;cursor:pointer;font-size:.92rem;transition:all .15s;}
+  .quiz-option:hover{background:#eef3ef;}
+  .quiz-option.correct{background:#d4edda;border-color:#2d7a3e;color:#1d4d28;}
+  .quiz-option.wrong{background:#f8d7da;border-color:#a82929;color:#6a1f1f;}
+  .quiz-option:disabled{cursor:not-allowed;}
+  .quiz-feedback{margin-top:10px;padding:10px 12px;border-radius:6px;font-size:.9rem;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.good{background:#d4edda;color:#1d4d28;}
+  .quiz-feedback.bad{background:#f8d7da;color:#6a1f1f;}
+  .progress-bar{background:var(--border);border-radius:8px;height:8px;margin:16px 0;overflow:hidden;}
+  .progress-fill{background:var(--green);height:100%;transition:width .4s;width:0%;}
+  .score-display{text-align:center;font-size:.95rem;color:var(--muted);margin-bottom:12px;}
+  .check-btn{background:var(--green);color:#fff;border:none;border-radius:6px;padding:8px 14px;cursor:pointer;font-size:.9rem;font-weight:500;}
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;}
+  details summary{cursor:pointer;font-weight:500;}
+  details[open] summary{color:var(--green);}
+  footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.8rem;}
+  @media (min-width:700px){main{padding:24px;}header h1{font-size:1.3rem;}}
+</style>
+</head>
+<body>
+<header>
+  <a class="home" href="index.html">&larr; Overzicht</a>
+  <h1>Scheikunde Hoofdstuk 5 — Brandstoffen en kunststoffen</h1>
+  <div class="sub">§1 Fossiele brandstoffen · §2 Koolstofverbindingen · HAVO 3</div>
+</header>
+<nav>
+  <button class="tab-btn active" data-tab="start">🏠 Start</button>
+  <button class="tab-btn" data-tab="theorie">📖 Theorie</button>
+  <button class="tab-btn" data-tab="flashcards">🎴 Flashcards</button>
+  <button class="tab-btn" data-tab="quiz">✏️ Oefenvragen</button>
+  <button class="tab-btn" data-tab="cheatsheet">📋 Spiekbriefje</button>
+</nav>
+<main>
+
+<section id="start" class="active">
+  <h2>Welkom!</h2>
+  <div class="card">
+    <p>Dit dashboard helpt je hoofdstuk 5 onder de knie te krijgen — op je laptop én telefoon. Klik op de tabs hierboven om te wisselen tussen theorie, flashcards en oefenvragen.</p>
+  </div>
+  <h3>📌 Wat ga je leren?</h3>
+  <div class="card">
+    <p><strong>§1 Fossiele brandstoffen</strong></p>
+    <ul>
+      <li>Wat fossiele brandstoffen zijn en hoe ze ontstaan</li>
+      <li>Gefractioneerde destillatie van aardolie (fracties &amp; kooktrajecten)</li>
+      <li>Het kraakproces en het kloppend maken van een kraakreactie</li>
+    </ul>
+    <p><strong>§2 Koolstofverbindingen</strong></p>
+    <ul>
+      <li>Molecuul- vs. structuurformule, functionele groepen</li>
+      <li>Alkanen, alkenen en alkanolen (+ algemene formules)</li>
+      <li>Isomeren herkennen en tekenen</li>
+      <li>Systematische naamgeving (stappenplan)</li>
+      <li>Waarom een –OH-groep beter oplost in water</li>
+    </ul>
+  </div>
+  <h3>🎯 Slim leren in 3 stappen</h3>
+  <div class="card">
+    <ol>
+      <li><strong>Lees</strong> de theorie kort door — begrijpen, niet stampen.</li>
+      <li><strong>Oefen</strong> de begrippen met flashcards, elke dag 10 minuten.</li>
+      <li><strong>Test jezelf</strong> met de oefenvragen; fout? Lees de uitleg en probeer later opnieuw.</li>
+    </ol>
+  </div>
+  <div class="tip">Geen idee waar te beginnen? Open <strong>📋 Spiekbriefje</strong> — daar staat alles op één pagina.</div>
+</section>
+
+<section id="theorie">
+  <h2>📖 Theorie</h2>
+
+  <details open>
+    <summary><strong>§1.1 Fossiele brandstoffen — ontstaan</strong></summary>
+    <p>Miljoenen jaren geleden ontstonden dikke lagen uit <span class="key">afgestorven planten en dieren</span>. Onder hoge <strong>druk</strong> en <strong>temperatuur</strong> veranderden die in <span class="key">steenkool, aardolie en aardgas</span>. Omdat ze zo lang geleden gevormd zijn, heten het <strong>fossiele brandstoffen</strong>.</p>
+    <p>Aardolie is een <strong>mengsel van duizenden koolstofverbindingen</strong> en een belangrijke <strong>grondstof</strong> voor brandstoffen, kunststoffen, medicijnen, verf, lijmen en cosmetica.</p>
+    <div class="tip">Koolstofverbindingen heten ook <strong>organische verbindingen</strong> — ze komen van oorsprong uit planten en dieren.</div>
+  </details>
+
+  <details>
+    <summary><strong>§1.2 Gefractioneerde destillatie</strong></summary>
+    <p>Aardolie wordt verhit en verdampt. De damp stijgt in een <span class="key">destillatietoren</span> die naar boven toe kouder wordt. Op elke hoogte condenseert een <strong>fractie</strong>: stoffen met ongeveer hetzelfde kookpunt.</p>
+    <p><strong>Hoog kookpunt → laag in de toren</strong> (dikke, zware moleculen). <strong>Laag kookpunt → hoog in de toren</strong> (lichte gassen).</p>
+    <table>
+      <tr><th>Fractie</th><th>Kooktraject (°C)</th><th>Gebruik</th></tr>
+      <tr><td>gas</td><td>&lt; 20</td><td>flessengas / lpg</td></tr>
+      <tr><td>benzine</td><td>20–150</td><td>autobenzine</td></tr>
+      <tr><td>nafta</td><td>150–180</td><td>petrochemie → kraken → kunststoffen</td></tr>
+      <tr><td>kerosine</td><td>180–230</td><td>vliegtuigbrandstof</td></tr>
+      <tr><td>gasolie</td><td>230–330</td><td>diesel</td></tr>
+      <tr><td>stookolie</td><td>330–370</td><td>brandstof zeeschepen</td></tr>
+      <tr><td>residu</td><td>&gt; 370</td><td>asfalt / bitumen, dakbedekking</td></tr>
+    </table>
+    <p>Benzine en gasolie worden daarna <strong>ontzwaveld</strong> (zwavelverbindingen geven schadelijk zwaveldioxide). Additieven verbeteren de verbranding.</p>
+  </details>
+
+  <details>
+    <summary><strong>§1.3 Het kraakproces</strong></summary>
+    <p>Destillatie levert maar <strong>30–40% benzine</strong> per vat olie — te weinig. Daarom wordt extra benzine gemaakt door <span class="key">kraken</span>: een <strong>ontledingsreactie</strong> waarbij lange koolstofverbindingen in <strong>kleinere moleculen</strong> worden gebroken. Minstens één kleiner molecuul bevat altijd een <strong>dubbele binding</strong> (een alkeen).</p>
+    <div class="formula">C₂₀H₄₂ → C₉H₂₀ + C₇H₁₄ + ?<br>C: 20 − 9 − 7 = 4  ·  H: 42 − 20 − 14 = 8  →  ? = C₄H₈</div>
+    <div class="tip">Kloppend maken = tel C en H links, trek de bekende stoffen eraf. Wat overblijft is de onbekende stof.</div>
+  </details>
+
+  <details>
+    <summary><strong>§2.1 Molecuul- en structuurformule</strong></summary>
+    <p>Een <span class="key">molecuulformule</span> geeft het aantal en soort atomen (bv. CH₄). Een <span class="key">structuurformule</span> laat met streepjes zien <strong>hoe</strong> de atomen verbonden zijn. Vaste regels (covalentie): <strong>C = 4</strong> bindingen, <strong>O = 2</strong>, <strong>H = 1</strong>.</p>
+    <pre class="struct">methaan (CH4):
+
+    H
+    |
+H — C — H
+    |
+    H</pre>
+    <p>Een <span class="key">functionele groep</span> is een atoomgroep of meervoudige binding die de eigenschappen bepaalt (bv. een dubbele binding of een –OH-groep).</p>
+  </details>
+
+  <details>
+    <summary><strong>§2.2 Alkanen</strong></summary>
+    <p><strong>Alkanen</strong> bestaan alleen uit C en H met <strong>enkelvoudige bindingen</strong>, geen functionele groep. Algemene formule:</p>
+    <div class="formula">alkaan: C<sub>n</sub>H<sub>2n+2</sub></div>
+    <table>
+      <tr><th>Naam</th><th>Formule</th><th>Weetje</th></tr>
+      <tr><td>methaan</td><td>CH₄</td><td>aardgas</td></tr>
+      <tr><td>ethaan</td><td>C₂H₆</td><td></td></tr>
+      <tr><td>propaan</td><td>C₃H₈</td><td>+ butaan = lpg</td></tr>
+      <tr><td>butaan</td><td>C₄H₁₀</td><td>campinggas</td></tr>
+      <tr><td>pentaan</td><td>C₅H₁₂</td><td>wasbenzine</td></tr>
+      <tr><td>hexaan</td><td>C₆H₁₄</td><td>extractievloeistof</td></tr>
+    </table>
+  </details>
+
+  <details>
+    <summary><strong>§2.3 Alkenen</strong></summary>
+    <p><strong>Alkenen</strong> bestaan ook alleen uit C en H, maar met <strong>één dubbele binding</strong> (de functionele groep → reactiever). Algemene formule:</p>
+    <div class="formula">alkeen: C<sub>n</sub>H<sub>2n</sub></div>
+    <pre class="struct">etheen (C2H4):
+
+H       H
+ \     /
+  C = C
+ /     \
+H       H</pre>
+    <p>Alkenen ontstaan o.a. bij het <strong>kraken</strong>. Uit <strong>etheen</strong> (C₂H₄) wordt de kunststof <strong>PE (polyetheen)</strong> gemaakt — plastic tassen en verpakkingen. Ander voorbeeld: propeen (C₃H₆).</p>
+  </details>
+
+  <details>
+    <summary><strong>§2.4 Alkanolen</strong></summary>
+    <p>Vervang in een alkaan een H door een <span class="key">–OH-groep</span> → een <strong>alkanol</strong> (uitgang <strong>-anol</strong>).</p>
+    <pre class="struct">methanol (CH3OH):       ethanol (C2H5OH):
+
+    H                   H   H
+    |                   |   |
+H — C — O — H       H — C — C — O — H
+    |                   |   |
+    H                   H   H</pre>
+    <p><strong>Ethanol</strong> (C₂H₅OH) = "alcohol", oplosmiddel en in drank. <strong>Methanol</strong> (CH₃OH) is giftig en wordt aan spiritus toegevoegd zodat het niet drinkbaar is.</p>
+  </details>
+
+  <details>
+    <summary><strong>§2.5 Isomeren</strong></summary>
+    <p><span class="key">Isomeren</span> = dezelfde <strong>molecuulformule</strong>, andere <strong>structuurformule</strong>. Van C₄H₁₀ bestaan een rechte en een vertakte vorm:</p>
+    <pre class="struct">recht (butaan):             vertakt (2-methylpropaan):
+
+    H   H   H   H               H   H   H
+    |   |   |   |               |   |   |
+H — C — C — C — C — H       H — C — C — C — H
+    |   |   |   |               |   |   |
+    H   H   H   H               H   C   H
+                                    |
+                                    H</pre>
+    <div class="warning">Vertakt molecuul → boller → minder contact → <strong>zwakkere vanderwaalsbinding</strong> → <strong>lager kookpunt</strong>. Twee isomeren zijn dus echt verschillende stoffen (verschillend kook-/smeltpunt).</div>
+  </details>
+
+  <details>
+    <summary><strong>§2.6 Systematische naamgeving (stappenplan)</strong></summary>
+    <p><strong>Stap 1 — stamnaam.</strong> Tel de C-atomen in de langste keten → stam (meth, eth, prop, but, pent, hex, hept). Soort verbinding → uitgang: alkaan <strong>-aan</strong>, alkeen <strong>-een</strong>, alkanol <strong>-anol</strong>.</p>
+    <p><strong>Stap 2 — zijketens.</strong> methyl- (–CH₃), ethyl- (–C₂H₅). Bij meerdere: alfabetische volgorde, vóór de stamnaam.</p>
+    <p><strong>Stap 3 — plaatsnummers.</strong> Nummer de C-atomen. Begin tellen aan de kant die de functionele groep het laagste nummer geeft: eerst –OH, anders dubbele binding, anders zijketens zo laag mogelijk.</p>
+    <div class="tip">Voorbeeld: 4 C-atomen, geen zijketens, geen functionele groep → <strong>butaan</strong>. 2 C-atomen + –OH → <strong>ethanol</strong>.</div>
+  </details>
+
+  <details>
+    <summary><strong>§2.7 Oplossen in water (–OH-groep)</strong></summary>
+    <p>Stoffen met een <strong>–OH-groep lossen beter op in water</strong>. De –OH-groep lijkt op water (ook O–H) en maakt goede aantrekking met watermoleculen. Hoe langer het koolstofdeel, hoe slechter het oplost — daarom lost ethanol prima op, maar een lang alkanol veel minder.</p>
+  </details>
+</section>
+
+<section id="flashcards">
+  <h2>🎴 Flashcards</h2>
+  <p>Klik op de kaart om het antwoord te zien.</p>
+  <div class="filter-bar">
+    <button class="fc-filter active" data-cat="all">Alle</button>
+    <button class="fc-filter" data-cat="fossiel">§1 Brandstoffen</button>
+    <button class="fc-filter" data-cat="koolstof">§2 Koolstof</button>
+    <button class="fc-filter" data-cat="oefen">Nog oefenen</button>
+  </div>
+  <div class="score-display" id="fc-counter">Kaart 1 van …</div>
+  <div class="flashcard-stack">
+    <div class="flashcard" id="flashcard">
+      <div class="front"><div class="term" id="fc-term">Begin</div><div class="hint">tik om te draaien</div></div>
+      <div class="back"><div class="def" id="fc-def">...</div><div class="hint">tik om terug te draaien</div></div>
+    </div>
+  </div>
+  <div class="flash-controls">
+    <button id="fc-prev">← Vorige</button>
+    <button id="fc-mark" style="background:var(--orange);">⚠️ Nog oefenen</button>
+    <button id="fc-next">Volgende →</button>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>✏️ Oefenvragen</h2>
+  <div class="score-display" id="score-display">Beantwoord: 0 / 0 — Goed: 0</div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="filter-bar">
+    <button class="quiz-filter active" data-level="all">Alle</button>
+    <button class="quiz-filter" data-level="1">Niveau 1: Onthouden</button>
+    <button class="quiz-filter" data-level="2">Niveau 2: Begrijpen</button>
+    <button class="quiz-filter" data-level="3">Niveau 3: Toepassen</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="text-align:center;margin-top:16px;">
+    <button class="check-btn" onclick="resetQuiz()" style="background:var(--muted);">🔄 Opnieuw beginnen</button>
+  </div>
+</section>
+
+<section id="cheatsheet">
+  <h2>📋 Spiekbriefje — alles op één pagina</h2>
+  <div class="card">
+    <h3 style="margin-top:0">Algemene formules</h3>
+    <div class="formula">alkaan: C<sub>n</sub>H<sub>2n+2</sub>  (alleen enkele bindingen)</div>
+    <div class="formula">alkeen: C<sub>n</sub>H<sub>2n</sub>  (één dubbele binding)</div>
+    <div class="formula">alkanol: alkaan met een –OH-groep (uitgang -anol)</div>
+    <div class="formula">covalentie: C = 4 · O = 2 · H = 1 bindingen</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Fracties van aardolie (laag kookpunt = hoog in toren)</h3>
+    <table>
+      <tr><th>Fractie</th><th>°C</th><th>Gebruik</th></tr>
+      <tr><td>gas</td><td>&lt;20</td><td>flessengas/lpg</td></tr>
+      <tr><td>benzine</td><td>20–150</td><td>autobenzine</td></tr>
+      <tr><td>nafta</td><td>150–180</td><td>kraken/kunststoffen</td></tr>
+      <tr><td>kerosine</td><td>180–230</td><td>vliegtuigbrandstof</td></tr>
+      <tr><td>gasolie</td><td>230–330</td><td>diesel</td></tr>
+      <tr><td>stookolie</td><td>330–370</td><td>zeeschepen</td></tr>
+      <tr><td>residu</td><td>&gt;370</td><td>asfalt/bitumen</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Naamgeving in 3 stappen</h3>
+    <ol>
+      <li><strong>Stam</strong> = aantal C in langste keten (meth/eth/prop/but/pent/hex/hept) + uitgang (-aan / -een / -anol).</li>
+      <li><strong>Zijketens</strong>: methyl- (–CH₃), ethyl- (–C₂H₅); alfabetisch.</li>
+      <li><strong>Plaatsnummers</strong>: tel vanaf de kant met de laagste nummers (–OH eerst, dan dubbele binding, dan zijketens).</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Top begrippen</h3>
+    <ul style="font-size:.92rem;">
+      <li><strong>Fossiele brandstof</strong> — uit afgestorven planten/dieren, druk + temperatuur</li>
+      <li><strong>Gefractioneerde destillatie</strong> — scheiden op kookpunt in een toren</li>
+      <li><strong>Kraken</strong> — lange moleculen → kleinere (met dubbele binding)</li>
+      <li><strong>Molecuulformule</strong> vs. <strong>structuurformule</strong></li>
+      <li><strong>Functionele groep</strong> — bepaalt de eigenschappen (dubbele binding, –OH)</li>
+      <li><strong>Isomeren</strong> — zelfde molecuulformule, andere structuur</li>
+      <li><strong>Vanderwaalsbinding</strong> — zwakke binding tussen moleculen, bepaalt kookpunt</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Veelgemaakte fouten</h3>
+    <div class="warning">"Een C-atoom heeft 3 bindingen." → <strong>FOUT.</strong> Altijd <strong>4</strong>.</div>
+    <div class="warning">"Isomeren zijn dezelfde stof." → <strong>FOUT.</strong> Andere structuur = andere stof (ander kookpunt).</div>
+    <div class="warning">"Een alkeen heeft formule C<sub>n</sub>H<sub>2n+2</sub>." → <strong>FOUT.</strong> Dat is een alkáán. Alkeen = C<sub>n</sub>H<sub>2n</sub>.</div>
+    <div class="warning">"Bij kraken ontstaan alleen alkanen." → <strong>FOUT.</strong> Er ontstaat altijd minstens één <strong>alkeen</strong> (dubbele binding).</div>
+  </div>
+</section>
+
+</main>
+<footer>Gemaakt voor scheikunde H5 — Brandstoffen en kunststoffen · HAVO 3</footer>
+
+<script>
+// TABS
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// FLASHCARDS
+const flashcards=[
+  {term:"Fossiele brandstof",def:"Steenkool, aardolie of aardgas, ontstaan uit afgestorven planten/dieren onder hoge druk en temperatuur.",cat:"fossiel"},
+  {term:"Koolstofverbinding",def:"Stof waarvan de moleculen één of meer C-atomen bevatten. Ook: organische verbinding.",cat:"fossiel"},
+  {term:"Aardolie",def:"Mengsel van duizenden koolstofverbindingen; grondstof voor brandstoffen, kunststoffen, medicijnen, verf en cosmetica.",cat:"fossiel"},
+  {term:"Gefractioneerde destillatie",def:"Aardolie verdampen en in een destillatietoren scheiden in fracties op basis van kookpunt.",cat:"fossiel"},
+  {term:"Fractie",def:"Groep stoffen uit aardolie met ongeveer hetzelfde kooktraject (bv. benzine, kerosine).",cat:"fossiel"},
+  {term:"Kooktraject benzine",def:"20–150 °C. Volgorde van laag naar hoog kookpunt: gas, benzine, nafta, kerosine, gasolie, stookolie, residu.",cat:"fossiel"},
+  {term:"Residu",def:"Wat onderin de toren overblijft (kookpunt > 370 °C). Grondstof voor asfalt/bitumen en dakbedekking.",cat:"fossiel"},
+  {term:"Ontzwaveling",def:"Zwavelverbindingen uit benzine/gasolie halen; bij verbranding geven die anders schadelijk zwaveldioxide.",cat:"fossiel"},
+  {term:"Kraken",def:"Ontledingsreactie waarbij lange koolstofverbindingen in kleinere worden gebroken; levert extra benzine en alkenen.",cat:"fossiel"},
+  {term:"Waarom kraken?",def:"Destillatie levert maar 30–40% benzine per vat olie; kraken maakt extra benzine om aan de vraag te voldoen.",cat:"fossiel"},
+  {term:"Molecuulformule",def:"Aantal en soort atomen in een molecuul, bv. C2H6O. Zegt niets over de structuur.",cat:"koolstof"},
+  {term:"Structuurformule",def:"Tekening met streepjes die laat zien hoe de atomen aan elkaar gebonden zijn.",cat:"koolstof"},
+  {term:"Covalentie",def:"Aantal bindingen per atoom: C = 4, O = 2, H = 1.",cat:"koolstof"},
+  {term:"Functionele groep",def:"Atoomgroep of meervoudige binding die de eigenschappen van een stof bepaalt (bv. dubbele binding, –OH).",cat:"koolstof"},
+  {term:"Alkaan",def:"Koolwaterstof met alleen enkelvoudige bindingen. Algemene formule CnH2n+2. Geschikt als brandstof.",cat:"koolstof"},
+  {term:"Alkeen",def:"Koolwaterstof met één dubbele binding (functionele groep). Algemene formule CnH2n. Bv. etheen.",cat:"koolstof"},
+  {term:"Alkanol",def:"Alkaan waarin een H vervangen is door een –OH-groep. Uitgang -anol. Bv. ethanol, methanol.",cat:"koolstof"},
+  {term:"Etheen / PE",def:"Etheen (C2H4) is een alkeen; hieruit wordt de kunststof PE (polyetheen) gemaakt.",cat:"koolstof"},
+  {term:"Isomeren",def:"Stoffen met dezelfde molecuulformule maar een andere structuurformule.",cat:"koolstof"},
+  {term:"Vanderwaalsbinding",def:"Zwakke aantrekking tussen moleculen. Vertakt molecuul → zwakker → lager kookpunt.",cat:"koolstof"},
+  {term:"Zijketen",def:"C-groep buiten de hoofdketen, bv. methyl- (–CH3) of ethyl- (–C2H5).",cat:"koolstof"},
+  {term:"–OH en oplossen",def:"Een –OH-groep lijkt op water en maakt goede aantrekking met water → stof lost beter op in water.",cat:"koolstof"}
+];
+let fcIndex=0,fcFilter='all',fcMarked=new Set();
+function fcFiltered(){if(fcFilter==='all')return flashcards;if(fcFilter==='oefen')return flashcards.filter((_,i)=>fcMarked.has(i));return flashcards.filter(c=>c.cat===fcFilter);}
+function renderFc(){
+  const list=fcFiltered();
+  if(list.length===0){document.getElementById('fc-term').textContent='Geen kaarten';document.getElementById('fc-def').textContent='-';document.getElementById('fc-counter').textContent='0 van 0';return;}
+  if(fcIndex>=list.length)fcIndex=0;if(fcIndex<0)fcIndex=list.length-1;
+  const c=list[fcIndex];
+  document.getElementById('fc-term').textContent=c.term;
+  document.getElementById('fc-def').textContent=c.def;
+  document.getElementById('fc-counter').textContent=`Kaart ${fcIndex+1} van ${list.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const real=flashcards.indexOf(c),mb=document.getElementById('fc-mark');
+  if(fcMarked.has(real)){mb.textContent='✓ Gemarkeerd';mb.style.background='var(--green)';}else{mb.textContent='⚠️ Nog oefenen';mb.style.background='var(--orange)';}
+}
+document.getElementById('flashcard').addEventListener('click',()=>document.getElementById('flashcard').classList.toggle('flipped'));
+document.getElementById('fc-prev').addEventListener('click',()=>{fcIndex--;renderFc();});
+document.getElementById('fc-next').addEventListener('click',()=>{fcIndex++;renderFc();});
+document.getElementById('fc-mark').addEventListener('click',()=>{const list=fcFiltered();const real=flashcards.indexOf(list[fcIndex]);if(fcMarked.has(real))fcMarked.delete(real);else fcMarked.add(real);renderFc();});
+document.querySelectorAll('.fc-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.fc-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');fcFilter=b.dataset.cat;fcIndex=0;renderFc();}));
+renderFc();
+
+// QUIZ
+const quizQuestions=[
+  {level:1,q:"Wat zijn fossiele brandstoffen?",options:["Brandstoffen uit aardolie, aardgas en steenkool, ontstaan uit afgestorven planten/dieren","Brandstoffen gemaakt in een fabriek uit water","Alle stoffen met een –OH-groep","Alleen aardgas"],correct:0,explain:"Steenkool, aardolie en aardgas zijn miljoenen jaren geleden ontstaan uit resten van planten en dieren onder druk en temperatuur."},
+  {level:1,q:"Welke algemene formule hoort bij een alkaan?",options:["CnH2n","CnH2n+2","CnH2n-2","CnHnOn"],correct:1,explain:"Alkanen (alleen enkele bindingen) hebben de formule CnH2n+2. CnH2n is een alkeen."},
+  {level:1,q:"Wat is het verschil tussen een molecuulformule en een structuurformule?",options:["Geen verschil","De molecuulformule geeft aantal/soort atomen; de structuurformule laat de bindingen zien","De structuurformule is altijd korter","Alleen de naam verschilt"],correct:1,explain:"De molecuulformule telt de atomen (CH4), de structuurformule laat met streepjes zien hoe ze verbonden zijn."},
+  {level:1,q:"Hoeveel atoombindingen maakt een koolstofatoom altijd?",options:["2","3","4","6"],correct:2,explain:"Koolstof heeft covalentie 4: elk C-atoom maakt altijd 4 atoombindingen. (O = 2, H = 1.)"},
+  {level:1,q:"Welke fractie heeft het laagste kooktraject?",options:["residu","gasolie","gas","kerosine"],correct:2,explain:"Gas kookt < 20 °C en stijgt het hoogst in de toren. Residu (>370 °C) blijft onderin."},
+  {level:2,q:"Waarom scheiden de fracties zich in de destillatietoren?",options:["Door hun kleur","Door verschil in kookpunt: hoog kookpunt condenseert laag, laag kookpunt stijgt hoog","Door hun gewicht alleen","Door magnetisme"],correct:1,explain:"De toren wordt naar boven kouder. Stoffen met een hoog kookpunt condenseren onderin, lichte gassen stijgen het hoogst."},
+  {level:2,q:"Wat ontstaat er altijd minstens één van bij het kraken?",options:["Een alkaan zonder waterstof","Een molecuul met een dubbele binding (alkeen)","Water","Een edelgas"],correct:1,explain:"Kraken breekt lange moleculen; minstens één klein molecuul bevat altijd een dubbele binding tussen twee C-atomen."},
+  {level:2,q:"Wat is het verschil tussen een alkaan en een alkeen?",options:["Een alkeen bevat zuurstof","Een alkeen heeft één dubbele binding, een alkaan alleen enkele bindingen","Een alkaan is altijd vloeibaar","Geen verschil"],correct:1,explain:"De dubbele binding is de functionele groep van het alkeen en maakt het reactiever. Alkanen hebben alleen enkele bindingen."},
+  {level:2,q:"Waarom is een –OH-groep belangrijk voor oplossen in water?",options:["Hij maakt de stof giftig","Hij lijkt op water en maakt goede aantrekking met water → beter oplosbaar","Hij verlaagt het kookpunt","Hij maakt de stof brandbaar"],correct:1,explain:"De –OH-groep (O–H, net als water) trekt watermoleculen goed aan. Daarom lost ethanol prima op in water."},
+  {level:2,q:"Waarom heeft de vertakte vorm van C4H10 een lager kookpunt dan de rechte vorm?",options:["Vertakt is zwaarder","Vertakt is boller → zwakkere vanderwaalsbinding → lager kookpunt","Vertakt bevat meer atomen","Vertakt heeft een dubbele binding"],correct:1,explain:"Een boller, vertakt molecuul raakt buurmoleculen op minder plekken → zwakkere vanderwaalsbinding → lager kookpunt."},
+  {level:3,q:"C2H5OH en CH3–O–CH3: zijn dit isomeren?",options:["Nee, andere molecuulformule","Ja, beide zijn C2H6O met een andere structuur","Nee, het is dezelfde stof","Ja, want beide zijn alkanen"],correct:1,explain:"Tel de atomen: beide zijn C2H6O. Zelfde molecuulformule, andere structuur → isomeren (ethanol en di-methylether)."},
+  {level:3,q:"Decaan C10H22 wordt gekraakt tot octaan C8H18 + ? Wat is de onbekende stof?",options:["C2H6","C2H4","CH4","C2H2"],correct:1,explain:"C: 10−8 = 2. H: 22−18 = 4. Dus C2H4 (etheen, een alkeen met dubbele binding)."},
+  {level:3,q:"Een keten van 3 C-atomen met een –OH-groep. Welke naamuitgang hoort daarbij?",options:["-aan","-een","-anol","-ol-aan"],correct:2,explain:"Een –OH-groep maakt het een alkanol → uitgang -anol. Met 3 C-atomen: propanol."},
+  {level:3,q:"Welke stof is GEEN alkaan?",options:["methaan CH4","propaan C3H8","etheen C2H4","butaan C4H10"],correct:2,explain:"Etheen (C2H4) past op CnH2n en heeft een dubbele binding → het is een alkeen, geen alkaan."}
+];
+let quizState={},quizFilter='all';
+function renderQuiz(){
+  const cont=document.getElementById('quiz-container');cont.innerHTML='';
+  const list=quizFilter==='all'?quizQuestions:quizQuestions.filter(q=>q.level==quizFilter);
+  list.forEach((q,idx)=>{
+    const real=quizQuestions.indexOf(q);
+    const card=document.createElement('div');card.className='quiz-card';
+    card.innerHTML=`<div class="quiz-q"><span class="pill ${q.level==1?'':q.level==2?'pill-blue':'pill-orange'}">Niveau ${q.level}</span> ${idx+1}. ${q.q}</div>
+      <div class="quiz-options" id="opts-${real}">${q.options.map((o,i)=>`<button class="quiz-option" data-q="${real}" data-i="${i}">${o}</button>`).join('')}</div>
+      <div class="quiz-feedback" id="fb-${real}"></div>`;
+    cont.appendChild(card);
+  });
+  document.querySelectorAll('.quiz-option').forEach(b=>b.addEventListener('click',()=>answer(parseInt(b.dataset.q),parseInt(b.dataset.i))));
+  Object.keys(quizState).forEach(qi=>{
+    const s=quizState[qi];if(!s.answered)return;
+    const opts=document.querySelectorAll(`#opts-${qi} .quiz-option`);
+    opts.forEach((b,i)=>{b.disabled=true;if(i===quizQuestions[qi].correct)b.classList.add('correct');if(i===s.chosen&&s.chosen!==quizQuestions[qi].correct)b.classList.add('wrong');});
+    const fb=document.getElementById(`fb-${qi}`);if(fb){fb.classList.add('show',s.correct?'good':'bad');fb.innerHTML=(s.correct?'✅ <strong>Goed!</strong> ':'❌ <strong>Niet helemaal.</strong> ')+quizQuestions[qi].explain;}
+  });
+  updateScore();
+}
+function answer(qi,choice){
+  const q=quizQuestions[qi];const correct=choice===q.correct;
+  quizState[qi]={answered:true,chosen:choice,correct};
+  const opts=document.querySelectorAll(`#opts-${qi} .quiz-option`);
+  opts.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===choice&&!correct)b.classList.add('wrong');});
+  const fb=document.getElementById(`fb-${qi}`);fb.classList.add('show',correct?'good':'bad');
+  fb.innerHTML=(correct?'✅ <strong>Goed!</strong> ':'❌ <strong>Niet helemaal.</strong> ')+q.explain;
+  updateScore();
+}
+function updateScore(){
+  const total=quizQuestions.length,answered=Object.keys(quizState).length,correct=Object.values(quizState).filter(s=>s.correct).length;
+  document.getElementById('score-display').textContent=`Beantwoord: ${answered} / ${total} — Goed: ${correct}`;
+  document.getElementById('progress-fill').style.width=`${answered/total*100}%`;
+}
+function resetQuiz(){if(confirm('Alles opnieuw beginnen?')){quizState={};renderQuiz();}}
+document.querySelectorAll('.quiz-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.quiz-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');quizFilter=b.dataset.level;renderQuiz();}));
+renderQuiz();
+</script>
+</body>
+</html>

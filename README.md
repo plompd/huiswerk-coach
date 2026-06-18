@@ -12,6 +12,7 @@ De startpagina (`index.html`) is een menu naar alle vakken.
 
 ### Scheikunde
 - **Hoofdstuk 4 — Rekenen aan reacties** (`scheikunde-h4.html`): energie & reactiesnelheid, theorie, energiediagrammen, 24 flashcards, 14 oefenvragen, spiekbriefje.
+- **Hoofdstuk 5 — Brandstoffen en kunststoffen** (`scheikunde-h5.html`): fossiele brandstoffen, destillatie, kraken, koolstofverbindingen (alkanen/alkenen/alkanolen), isomeren en naamgeving. Theorie, 22 flashcards, 14 oefenvragen, spiekbriefje.
 
 ### Economie
 - **Hoofdstuk 9 — Goede tijden, slechte tijden**
@@ -26,6 +27,7 @@ Open de URL in Safari → deelmenu → **Voeg toe aan beginscherm**. Daarna star
 
 - `index.html` — startpagina / menu
 - `scheikunde-h4.html` — scheikunde-dashboard H4
+- `scheikunde-h5.html` — scheikunde-dashboard H5
 - `economie-h9.html` — economie-oefenquiz H9
 - `economie-h9-leerdocument.html` — economie-leerdocument H9
 - `Scheikunde-H4-Samenvatting.pdf` — samenvatting scheikunde (PDF)
