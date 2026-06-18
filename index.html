@@ -11,17 +11,20 @@
   header{background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff;padding:30px 16px 26px;text-align:center;}
   header h1{margin:0 0 6px;font-size:28px;}
   header p{margin:0;opacity:.92;font-size:15px;}
-  main{max-width:780px;margin:0 auto;padding:22px 16px 50px;}
+  main{max-width:820px;margin:0 auto;padding:22px 16px 50px;}
   h2{font-size:15px;text-transform:uppercase;letter-spacing:.05em;color:#64748b;margin:26px 0 10px;}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;}
-  .tile{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px 18px;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:.15s;}
-  .tile:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.10);border-color:#bfdbfe;}
-  .tile .emoji{font-size:30px;}
-  .tile h3{margin:8px 0 4px;font-size:17px;}
-  .tile p{margin:0;font-size:13px;color:#64748b;}
-  .tile .pill{display:inline-block;margin-top:10px;font-size:12px;font-weight:600;border-radius:999px;padding:3px 10px;}
-  .pill.blue{background:#dbeafe;color:#1e40af;}
-  .pill.green{background:#dcfce7;color:#166534;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.05);display:flex;flex-direction:column;}
+  .card .emoji{font-size:30px;}
+  .card h3{margin:8px 0 4px;font-size:17px;}
+  .card p{margin:0 0 12px;font-size:13px;color:#64748b;flex:1;}
+  .actions{display:flex;flex-wrap:wrap;gap:8px;}
+  .btn{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-size:13px;font-weight:600;border-radius:999px;padding:7px 13px;}
+  .btn.open{background:#1d4ed8;color:#fff;}
+  .btn.open.g{background:#1f7a4d;}
+  .btn.pdf{background:#fee2e2;color:#b91c1c;}
+  .btn.alt{background:#dbeafe;color:#1e40af;}
+  .btn:hover{filter:brightness(.95);}
   footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:30px;}
 </style>
 </head>
@@ -34,34 +37,38 @@
 
   <h2>Scheikunde</h2>
   <div class="grid">
-    <a class="tile" href="scheikunde-h4.html">
+    <div class="card">
       <div class="emoji">⚗️</div>
       <h3>Hoofdstuk 4 — Rekenen aan reacties</h3>
       <p>Energie &amp; reactiesnelheid: theorie, diagrammen, flashcards en oefenvragen.</p>
-      <span class="pill green">Dashboard</span>
-    </a>
-    <a class="tile" href="scheikunde-h5.html">
+      <div class="actions">
+        <a class="btn open g" href="scheikunde-h4.html">▶ Openen</a>
+        <a class="btn pdf" href="Scheikunde-H4-Samenvatting.pdf">📄 PDF</a>
+      </div>
+    </div>
+    <div class="card">
       <div class="emoji">🛢️</div>
       <h3>Hoofdstuk 5 — Brandstoffen en kunststoffen</h3>
       <p>Fossiele brandstoffen, destillatie, kraken &amp; koolstofverbindingen. Theorie, flashcards en quiz.</p>
-      <span class="pill green">Dashboard</span>
-    </a>
+      <div class="actions">
+        <a class="btn open g" href="scheikunde-h5.html">▶ Openen</a>
+        <a class="btn pdf" href="scheikunde-h5-leerdocument.pdf">📄 PDF</a>
+      </div>
+    </div>
   </div>
 
   <h2>Economie</h2>
   <div class="grid">
-    <a class="tile" href="economie-h9.html">
+    <div class="card">
       <div class="emoji">📈</div>
-      <h3>Hoofdstuk 9 — Oefenquiz</h3>
-      <p>Conjunctuur, overheid &amp; ECB. 8 meerkeuze + 2 open vragen met directe feedback.</p>
-      <span class="pill blue">Quiz</span>
-    </a>
-    <a class="tile" href="economie-h9-leerdocument.html">
-      <div class="emoji">📝</div>
-      <h3>Hoofdstuk 9 — Leerdocument</h3>
-      <p>Samenvatting, schema, begrippen en ezelsbruggetjes. Op te slaan als PDF.</p>
-      <span class="pill blue">Samenvatting</span>
-    </a>
+      <h3>Hoofdstuk 9 — Goede tijden, slechte tijden</h3>
+      <p>Conjunctuur, overheid &amp; ECB. Oefenquiz met directe feedback, samenvatting en PDF.</p>
+      <div class="actions">
+        <a class="btn open" href="economie-h9.html">▶ Quiz</a>
+        <a class="btn alt" href="economie-h9-leerdocument.html">📖 Samenvatting</a>
+        <a class="btn pdf" href="economie-h9-leerdocument.pdf">📄 PDF</a>
+      </div>
+    </div>
   </div>
 
 </main>
