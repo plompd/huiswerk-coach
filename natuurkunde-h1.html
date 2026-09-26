@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natuurkunde H1 — Bewegen in beeld</title>
+<style>
+  :root{--blue:#1d4ed8;--blue-light:#e3ebfb;--blue-dark:#1e3a8a;--orange:#f08a3e;--red:#d94f4f;--green:#1f7a4d;--bg:#f5f7fb;--card:#fff;--text:#1d2433;--muted:#667085;--border:#d9e0ec;--shadow:0 2px 8px rgba(0,0,0,0.06);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.55;}
+  header{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  header .home{color:#fff;text-decoration:none;font-size:.78rem;opacity:.9;}
+  header h1{margin:4px 0 0;font-size:1.1rem;font-weight:600;}
+  header .sub{font-size:.8rem;opacity:.85;margin-top:2px;}
+  nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;position:sticky;top:68px;z-index:99;-webkit-overflow-scrolling:touch;}
+  nav button{flex:0 0 auto;background:none;border:none;padding:12px 14px;font-size:.85rem;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;font-weight:500;}
+  nav button.active{color:var(--blue);border-bottom-color:var(--blue);}
+  main{padding:16px;max-width:840px;margin:0 auto;}
+  section{display:none;}
+  section.active{display:block;}
+  h2{color:var(--blue-dark);font-size:1.2rem;margin:8px 0 12px;}
+  h3{color:var(--blue);font-size:1rem;margin:18px 0 8px;}
+  h4{margin:14px 0 6px;font-size:.95rem;color:var(--blue-dark);}
+  p{margin:8px 0;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .pill{display:inline-block;background:var(--blue-light);color:var(--blue-dark);padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;margin-right:6px;margin-bottom:4px;}
+  .pill-orange{background:#fdebd9;color:#a85410;}
+  .pill-red{background:#fbe4e4;color:#a82929;}
+  .pill-green{background:#e2f3e8;color:#1c5c38;}
+  .key{background:#fff7d6;padding:0 4px;border-radius:3px;font-weight:600;}
+  .formula{background:#eef2fb;border-left:3px solid var(--blue);padding:10px 14px;font-family:"Consolas","Menlo",monospace;margin:10px 0;border-radius:4px;font-size:.95rem;}
+  .formula small{font-family:inherit;color:var(--muted);display:block;margin-top:4px;font-size:.8rem;}
+  .why{background:#eef8f2;border-left:3px solid var(--green);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .why::before{content:"🎯 Waarom leer je dit? ";font-weight:600;}
+  .idea{background:#f3f0ff;border-left:3px solid #7c5cd6;padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .idea::before{content:"🧠 In gewone taal: ";font-weight:600;}
+  .tip{background:#fff8e1;border-left:3px solid var(--orange);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .tip::before{content:"💡 ";}
+  .warning{background:#fdecea;border-left:3px solid var(--red);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .warning::before{content:"⚠️ ";}
+  .example{background:#fafbfd;border:1px dashed var(--border);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem;}
+  .example .ex-title{font-weight:600;color:var(--blue-dark);margin-bottom:4px;}
+  ul,ol{padding-left:20px;}li{margin-bottom:4px;}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0;}
+  th,td{padding:7px 9px;border:1px solid var(--border);text-align:left;vertical-align:top;}
+  th{background:var(--blue-light);color:var(--blue-dark);}
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;}
+  details summary{cursor:pointer;font-weight:500;}
+  details[open] summary{color:var(--blue);}
+  .steps{counter-reset:s;padding-left:0;list-style:none;}
+  .steps li{counter-increment:s;padding-left:32px;position:relative;margin-bottom:6px;}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:.75rem;font-weight:600;display:flex;align-items:center;justify-content:center;}
+  /* interactive graph */
+  .graph-wrap{display:grid;grid-template-columns:1fr;gap:10px;}
+  @media(min-width:640px){.graph-wrap{grid-template-columns:1fr 1fr;}}
+  svg{width:100%;height:auto;background:#fff;border:1px solid var(--border);border-radius:8px;}
+  .slider-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:.9rem;flex-wrap:wrap;}
+  .slider-row input[type=range]{flex:1;min-width:140px;}
+  .readout{font-family:"Consolas","Menlo",monospace;background:#eef2fb;padding:6px 10px;border-radius:6px;font-size:.88rem;margin-top:6px;}
+  /* Flashcards */
+  .flashcard-stack{perspective:1200px;}
+  .flashcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 18px;min-height:200px;box-shadow:var(--shadow);cursor:pointer;transition:transform .5s;transform-style:preserve-3d;position:relative;}
+  .flashcard.flipped{transform:rotateY(180deg);}
+  .flashcard .front,.flashcard .back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;padding:24px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+  .flashcard .back{transform:rotateY(180deg);background:var(--blue-light);border-radius:12px;}
+  .flashcard .term{font-size:1.2rem;font-weight:600;color:var(--blue-dark);}
+  .flashcard .def{font-size:.93rem;color:var(--text);}
+  .flashcard .hint{font-size:.7rem;color:var(--muted);position:absolute;bottom:10px;}
+  .flash-controls{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:6px;}
+  .flash-controls button{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:.88rem;cursor:pointer;font-weight:500;}
+  .filter-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+  .filter-bar button{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:16px;font-size:.8rem;cursor:pointer;color:var(--muted);}
+  .filter-bar button.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+  /* Quiz */
+  .quiz-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .quiz-q{font-weight:600;margin-bottom:10px;}
+  .quiz-options{display:flex;flex-direction:column;gap:6px;}
+  .quiz-option{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:left;cursor:pointer;font-size:.92rem;transition:all .15s;font-family:inherit;color:var(--text);}
+  .quiz-option:hover{background:#eaeff9;}
+  .quiz-option.correct{background:#d4edda;border-color:#2d7a3e;color:#1d4d28;}
+  .quiz-option.wrong{background:#f8d7da;border-color:#a82929;color:#6a1f1f;}
+  .quiz-option:disabled{cursor:not-allowed;}
+  .quiz-feedback{margin-top:10px;padding:10px 12px;border-radius:6px;font-size:.9rem;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.good{background:#d4edda;color:#1d4d28;}
+  .quiz-feedback.bad{background:#f8d7da;color:#6a1f1f;}
+  .progress-bar{background:var(--border);border-radius:8px;height:8px;margin:16px 0;overflow:hidden;}
+  .progress-fill{background:var(--blue);height:100%;transition:width .4s;width:0%;}
+  .score-display{text-align:center;font-size:.95rem;color:var(--muted);margin-bottom:12px;}
+  .btn{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:8px 14px;cursor:pointer;font-size:.88rem;font-weight:500;font-family:inherit;}
+  .btn.ghost{background:#fff;color:var(--blue);border:1px solid var(--blue);}
+  .btn.grey{background:var(--muted);}
+  /* Rekenen */
+  .ex-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .ex-card .ex-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+  .ex-card .ex-q{margin:6px 0 10px;font-size:.95rem;}
+  .ex-input{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .ex-input input{width:120px;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:1rem;font-family:inherit;}
+  .ex-input .unit{font-family:"Consolas","Menlo",monospace;color:var(--muted);}
+  .ex-fb{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:.9rem;display:none;}
+  .ex-fb.show{display:block;}
+  .ex-fb.good{background:#d4edda;color:#1d4d28;}
+  .ex-fb.bad{background:#f8d7da;color:#6a1f1f;}
+  .ex-sol{margin-top:8px;background:#fafbfd;border:1px dashed var(--border);border-radius:8px;padding:10px 12px;font-size:.9rem;display:none;}
+  .ex-sol.show{display:block;}
+  /* Schema */
+  .plan-day{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow);}
+  .plan-day .d-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;}
+  .plan-day .d-date{font-weight:600;color:var(--blue-dark);}
+  .plan-day .d-dur{font-size:.8rem;color:var(--muted);}
+  .plan-day label{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:.92rem;cursor:pointer;}
+  .plan-day input[type=checkbox]{margin-top:4px;}
+  .plan-day label.done{color:var(--muted);text-decoration:line-through;}
+  .date-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0;}
+  .date-row input[type=date]{padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:1rem;font-family:inherit;}
+  footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.8rem;}
+  @media (min-width:700px){main{padding:24px;}header h1{font-size:1.3rem;}}
+</style>
+</head>
+<body>
+<header>
+  <a class="home" href="index.html">&larr; Overzicht</a>
+  <h1>Natuurkunde Hoofdstuk 1 — Bewegen in beeld</h1>
+  <div class="sub">§1.1 t/m §1.5 · Pulsar · HAVO 4</div>
+</header>
+<nav>
+  <button class="tab-btn active" data-tab="start">🏠 Start</button>
+  <button class="tab-btn" data-tab="theorie">📖 Theorie</button>
+  <button class="tab-btn" data-tab="rekenen">🧮 Formule-trainer</button>
+  <button class="tab-btn" data-tab="flashcards">🎴 Flashcards</button>
+  <button class="tab-btn" data-tab="quiz">✏️ Oefenvragen</button>
+  <button class="tab-btn" data-tab="cheatsheet">📋 Spiekbriefje</button>
+  <button class="tab-btn" data-tab="schema">📅 Leerschema</button>
+</nav>
+<main>
+
+<!-- ======================= START ======================= -->
+<section id="start" class="active">
+  <h2>Welkom!</h2>
+  <div class="card">
+    <p>Dit dashboard helpt je hoofdstuk 1 <strong>echt te snappen</strong>, niet alleen te stampen. Het hele hoofdstuk draait om drie vragen: <em>waar</em> is iets, <em>hoe snel</em> gaat het, en <em>hoe snel verandert die snelheid</em>? Alles wat je leert (grafieken, formules, eenheden) is gereedschap om die drie vragen te beantwoorden.</p>
+  </div>
+
+  <h3>🗺️ De rode draad van het hoofdstuk</h3>
+  <div class="card">
+    <table>
+      <tr><th>Paragraaf</th><th>Vraag die je leert beantwoorden</th><th>Gereedschap</th></tr>
+      <tr><td><strong>1.1</strong> Bewegingen vastleggen</td><td>Waar is iets op welk moment, en hoe snel gaat het gemiddeld?</td><td>plaats x, tijd t, (x,t)-diagram, v<sub>gem</sub> = Δx/Δt</td></tr>
+      <tr><td><strong>1.2</strong> Snelheidsgrafieken</td><td>Hoe verandert de snelheid, en hoe ver kom je dan?</td><td>(v,t)-diagram, oppervlakte = verplaatsing</td></tr>
+      <tr><td><strong>1.3</strong> Versnellen en vertragen</td><td>Hoe snel verandert de snelheid?</td><td>a = Δv/Δt, vrije val, g = 9,81 m/s²</td></tr>
+      <tr><td><strong>1.4</strong> Grootheden en eenheden</td><td>Hoe schrijf je een meetwaarde goed op?</td><td>SI-eenheden, [v] = m/s, Binas</td></tr>
+      <tr><td><strong>1.5</strong> Wiskundig gereedschap</td><td>Hoe reken je netjes en hoe schrijf je een formule om?</td><td>significante cijfers, 10-machten, evenredigheid</td></tr>
+    </table>
+  </div>
+
+  <h3>🔑 De drie inzichten die alles verbinden</h3>
+  <div class="card">
+    <ol>
+      <li><strong>Steilheid van de (x,t)-grafiek = snelheid.</strong> Hoe steiler, hoe sneller. Horizontaal = stilstaan.</li>
+      <li><strong>Steilheid van de (v,t)-grafiek = versnelling.</strong> Horizontaal = constante snelheid (a = 0).</li>
+      <li><strong>Oppervlakte onder de (v,t)-grafiek = verplaatsing.</strong> Rechthoek, driehoek of hokjes tellen.</li>
+    </ol>
+    <div class="tip">Snap je deze drie, dan snap je 80% van de toets. Alle voorbeelden in het boek zijn variaties hierop.</div>
+  </div>
+
+  <h3>🎯 Zo gebruik je dit dashboard</h3>
+  <div class="card">
+    <ol>
+      <li>Zet je <strong>toetsdatum</strong> in het tabblad <strong>📅 Leerschema</strong>; je krijgt dan een planning per dag.</li>
+      <li>Lees per sessie de <strong>📖 Theorie</strong> van één paragraaf. Speel met de interactieve grafieken tot je ze snapt.</li>
+      <li>Oefen de formules in de <strong>🧮 Formule-trainer</strong>: steeds nieuwe getallen, met uitwerking als je vastloopt.</li>
+      <li>Doe de <strong>🎴 Flashcards</strong> en markeer wat je nog niet kent.</li>
+      <li>Test jezelf met de <strong>✏️ Oefenvragen</strong>. Fout? Lees de uitleg en probeer het een dag later opnieuw.</li>
+      <li>Op de dag voor de toets: <strong>📋 Spiekbriefje</strong> doornemen en de "nog oefenen"-kaarten.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======================= THEORIE ======================= -->
+<section id="theorie">
+  <h2>📖 Theorie</h2>
+  <p style="color:var(--muted);font-size:.9rem;">Klik een paragraaf open. Elke paragraaf begint met <em>waarom</em> je het leert en <em>wat het betekent</em>, daarna pas de formules.</p>
+
+  <!-- 1.1 -->
+  <details open>
+    <summary><strong>§1.1 Bewegingen vastleggen</strong> — plaats, tijd en gemiddelde snelheid</summary>
+    <div class="why">Als je wilt zeggen hoe snel iets beweegt (een sprinter, een auto bij een trajectcontrole, een vallende appel) moet je eerst kunnen <strong>meten</strong> waar het is en wanneer. Uit die metingen haal je de snelheid. Dit is de basis van alles in de mechanica.</div>
+    <div class="idea">Je maakt een "dagboek" van de beweging: op tijdstip t was het voorwerp op plaats x. Zet je dat in een grafiek, dan kun je aan de <strong>vorm</strong> van de lijn zien hoe de beweging verliep.</div>
+
+    <h4>Plaats, tijd en verplaatsing</h4>
+    <ul>
+      <li><strong>Plaats x</strong> in meter (m): waar het voorwerp is. Beginpunt meestal x<sub>0</sub> = 0 m op t = 0 s.</li>
+      <li><strong>Tijd t</strong> in seconde (s).</li>
+      <li><strong>Verplaatsing Δx</strong> = x<sub>eind</sub> − x<sub>begin</sub>. De Griekse letter <span class="key">Δ (delta) betekent "verschil" of "verandering"</span>. Zo is Δt een tijdsduur (t<sub>2</sub> − t<sub>1</sub>).</li>
+    </ul>
+    <div class="example"><div class="ex-title">Dafne Schippers, 100 m in 10,91 s</div>Na 4 s is ze op x = 30,1 m. Haar verplaatsing in de eerste 4 s: Δx = 30,1 − 0 = 30,1 m. Zet je alle metingen uit (x verticaal, t horizontaal), dan krijg je het <strong>(x,t)-diagram</strong>.</div>
+
+    <h4>Hoe meet je een beweging?</h4>
+    <table>
+      <tr><th>Methode</th><th>Wanneer</th><th>Hoe werkt het</th></tr>
+      <tr><td>Meetlint + stopwatch</td><td>Langzame beweging</td><td>Plaats en tijd handmatig meten</td></tr>
+      <tr><td>Stroboscoop</td><td>Snelle beweging</td><td>Lamp flitst met vaste tussenpozen; bij 50 flitsen/s is de tijd tussen twee flitsen 1/50 = 0,020 s. Op de foto zie je het voorwerp alleen tijdens de flitsen.</td></tr>
+      <tr><td>Videometing</td><td>Snelle beweging</td><td>Serie foto's met vaste tussenpoos, bv. 0,04 s → 1/0,04 = 25 beelden per seconde (25 Hz). Hogesnelheidscamera: 1000 Hz = elke 0,001 s (1 ms) een beeld.</td></tr>
+    </table>
+
+    <h4>Gemiddelde snelheid</h4>
+    <div class="formula">v<sub>gem</sub> = Δx / Δt<small>v<sub>gem</sub> in m/s · Δx = verplaatsing in m · Δt = tijdsduur in s</small></div>
+    <p>Dafne: 100 m / 10,91 s = <strong>9,17 m/s</strong>. "Gemiddeld" omdat ze in het begin langzamer en later sneller ging; de formule smeert dat uit over de hele race.</p>
+    <div class="example"><div class="ex-title">Voorbeeld 1: trajectcontrole</div>Maximum 80 km/h. Camera's staan 25 km uit elkaar; een auto doet er 15 min = 0,25 uur over.<br>v<sub>gem</sub> = 25 / 0,25 = <strong>100 km/h</strong> → bekeuring. (Let op: hier mag je in km en uur rekenen, want de uitkomst hoeft in km/h.)</div>
+
+    <h4>Omrekenen m/s ↔ km/h</h4>
+    <div class="formula">m/s → km/h: × 3,6 &nbsp;&nbsp;|&nbsp;&nbsp; km/h → m/s: ÷ 3,6<small>Waarom 3,6? 1 m/s = 1 m per seconde = 3600 m per uur = 3,6 km per uur.</small></div>
+    <div class="tip">Check jezelf: het getal in km/h is altijd <strong>groter</strong> dan in m/s (10 m/s = 36 km/h). Kom je lager uit, dan heb je de verkeerde kant op gerekend.</div>
+
+    <h4>Snelheid op één tijdstip (momentane snelheid)</h4>
+    <div class="idea">De gemiddelde snelheid zegt niets over één moment. Wil je weten hoe snel Dafne op t = 1,0 s ging, dan kijk je hoe <strong>steil</strong> de (x,t)-grafiek daar is. Hoe steiler, hoe meer meters per seconde, dus hoe sneller.</div>
+    <div class="formula">v = (Δx / Δt)<sub>raaklijn</sub><small>Teken een raaklijn aan de (x,t)-grafiek op dat tijdstip, kies twee punten ver uit elkaar op die raaklijn, en bereken de steilheid.</small></div>
+    <ol class="steps">
+      <li>Teken een <strong>raaklijn</strong> aan de grafiek op het gevraagde tijdstip (een rechte lijn die de kromme daar net raakt).</li>
+      <li>Trek de raaklijn ver door en kies er <strong>twee punten ver uit elkaar</strong> op (nauwkeuriger).</li>
+      <li>Lees van beide punten x en t af, en reken v = (x<sub>2</sub> − x<sub>1</sub>) / (t<sub>2</sub> − t<sub>1</sub>).</li>
+    </ol>
+    <div class="example"><div class="ex-title">Voorbeeld 2: snelheid op t = 1,0 s</div>De raaklijn op t = 1,0 s gaat door (0,5 s; 0 m) en (4,0 s; 19 m).<br>v = (19 − 0) / (4,0 − 0,5) = 19 / 3,5 = <strong>5,4 m/s</strong>.</div>
+
+    <h4>Wat zie je aan een (x,t)-grafiek?</h4>
+    <table>
+      <tr><th>Vorm van de (x,t)-grafiek</th><th>Betekenis</th></tr>
+      <tr><td>Horizontaal</td><td>Stilstand (v = 0), de plaats verandert niet</td></tr>
+      <tr><td>Rechte schuine lijn</td><td>Constante snelheid: <strong>eenparige beweging</strong></td></tr>
+      <tr><td>Steeds steiler (kromt omhoog)</td><td>Snelheid neemt toe (versnellen)</td></tr>
+      <tr><td>Steeds vlakker</td><td>Snelheid neemt af (vertragen)</td></tr>
+    </table>
+
+    <h4>Eenparige beweging</h4>
+    <p>Bij een <span class="key">eenparige beweging</span> is de snelheid constant: elke seconde evenveel meter erbij. De (x,t)-grafiek is dan een rechte lijn en de raaklijn valt samen met de grafiek zelf. Dan geldt:</p>
+    <div class="formula">s = v · t<small>s = verplaatsing (m) · v = snelheid (m/s) · t = tijdsduur (s)</small></div>
+    <div class="example"><div class="ex-title">Voorbeeld 3: constante snelheid uit het (x,t)-diagram</div>Na t = 3 s loopt Dafne eenparig. Kies twee punten ver uit elkaar: (4,0 s; 30 m) en (10,91 s; 100 m).<br>v = (100 − 30) / (10,91 − 4,0) = 70 / 6,91 = <strong>10,1 m/s</strong> = 10,1 × 3,6 = <strong>36 km/h</strong>.</div>
+
+    <h4>🎛️ Probeer het zelf: steilheid = snelheid</h4>
+    <div class="card">
+      <p style="font-size:.9rem;">Schuif de tijd. Links zie je de (x,t)-grafiek van een sprint (vereenvoudigd model van Dafne: 3 s versnellen, daarna 10,1 m/s) met de <span style="color:#1f7a4d;font-weight:600;">raaklijn</span>. Rechts de bijbehorende (v,t)-grafiek. Kijk hoe de steilheid links precies de hoogte rechts is.</p>
+      <div class="slider-row"><label for="sl-t">t =</label><input type="range" id="sl-t" min="0" max="10" step="0.1" value="1"><span id="sl-t-val">1,0 s</span></div>
+      <div class="graph-wrap">
+        <svg id="g-xt" viewBox="0 0 320 230"></svg>
+        <svg id="g-vt" viewBox="0 0 320 230"></svg>
+      </div>
+      <div class="readout" id="g-readout"></div>
+    </div>
+  </details>
+
+  <!-- 1.2 -->
+  <details>
+    <summary><strong>§1.2 Snelheidsgrafieken</strong> — het (v,t)-diagram en oppervlakte = verplaatsing</summary>
+    <div class="why">Een (x,t)-grafiek laat zien <em>waar</em> iets is. Een (v,t)-grafiek laat direct zien <em>hoe snel</em> het gaat en of dat verandert. En het mooie: uit de (v,t)-grafiek kun je ook terugrekenen hoe ver iets is gekomen. Dat heb je nodig bij remwegen, valbewegingen en optrekkende auto's.</div>
+    <div class="idea">Stel je rijdt 2 uur lang 100 km/h. Dan heb je 200 km afgelegd: snelheid × tijd. In een (v,t)-grafiek is dat een rechthoek van hoogte 100 en breedte 2. <strong>De oppervlakte onder de grafiek is de afgelegde afstand.</strong> Dat geldt altijd, ook als de snelheid verandert.</div>
+
+    <h4>Het (v,t)-diagram</h4>
+    <p>Snelheid v verticaal, tijd t horizontaal. Je kunt het maken uit metingen (tachograaf) of afleiden uit het (x,t)-diagram door op verschillende tijdstippen de steilheid te bepalen.</p>
+    <table>
+      <tr><th></th><th>Periode I (0 – 3 s)</th><th>Periode II (na 3 s)</th></tr>
+      <tr><td>(x,t)-grafiek</td><td>Loopt steeds steiler</td><td>Rechte lijn, constante steilheid</td></tr>
+      <tr><td>(v,t)-grafiek</td><td>Stijgt van 0 naar 10,1 m/s</td><td>Horizontaal op 10,1 m/s</td></tr>
+      <tr><td>Beweging</td><td>Versnelt</td><td>Eenparig (rechtlijnig)</td></tr>
+    </table>
+    <div class="warning">Verwar de twee grafieken niet! Een <strong>horizontale (x,t)-lijn</strong> = stilstaan. Een <strong>horizontale (v,t)-lijn</strong> = constante snelheid (dus wél bewegen). Kijk altijd eerst wat er op de verticale as staat.</div>
+
+    <h4>Verplaatsing bij constante snelheid</h4>
+    <div class="formula">Δx = s = v · t &nbsp;=&nbsp; oppervlakte van de rechthoek onder de (v,t)-grafiek</div>
+    <p>Dafne tussen t = 5,0 s en t = 10,0 s: s = 10,1 × (10,0 − 5,0) = <strong>51 m</strong>. Hoogte van de rechthoek = v, breedte = Δt.</p>
+
+    <h4>Verplaatsing als de snelheid niet constant is</h4>
+    <p>Ook dan is de verplaatsing de oppervlakte onder de (v,t)-grafiek. Twee manieren:</p>
+    <ol class="steps">
+      <li><strong>Hokjes tellen.</strong> Bereken eerst wat één hokje "waard" is: breedte (s) × hoogte (m/s) = meters. Tel de hokjes onder de grafiek (halve hokjes samenvoegen). Vermenigvuldig.</li>
+      <li><strong>Schatten met een meetkundige figuur.</strong> Teken een driehoek (of rechthoek) die ongeveer dezelfde oppervlakte heeft: wat je te veel pakt, compenseer je met wat je te weinig pakt.</li>
+    </ol>
+    <div class="example"><div class="ex-title">Voorbeeld 4: eerste 4 s van de sprint</div><strong>Hokjes:</strong> één hokje = 0,5 s × 1 m/s = 0,5 m. Ongeveer 60 hokjes → 60 × 0,5 = <strong>30 m</strong>.<br><strong>Driehoek:</strong> basis 4,0 s, hoogte 15 m/s → ½ × 4,0 × 15 = <strong>30 m</strong>.<br>Beide manieren geven hetzelfde; een paar procent afwijking is normaal.</div>
+    <div class="tip">Hokjes tellen is precies maar traag; een figuur schatten is snel. Op een toets: kies de figuur als de grafiek er duidelijk als driehoek/rechthoek uitziet, anders hokjes.</div>
+  </details>
+
+  <!-- 1.3 -->
+  <details>
+    <summary><strong>§1.3 Versnellen en vertragen</strong> — versnelling, vrije val, vertraging</summary>
+    <div class="why">"Van 0 naar 100 in 2,15 s" zegt iets over hoe <em>snel de snelheid verandert</em>. Dat is versnelling. Je hebt het nodig om te begrijpen waarom een vallende steen steeds harder gaat, hoe lang een remweg is en waarom een bal die je omhoog gooit weer terugkomt.</div>
+    <div class="idea">Snelheid = hoeveel meter erbij per seconde. Versnelling = hoeveel <strong>m/s</strong> erbij per seconde. Daarom is de eenheid m/s per s, geschreven als <strong>m/s²</strong>. Een versnelling van 3 m/s² betekent: elke seconde wordt de snelheid 3 m/s groter.</div>
+
+    <h4>Gemiddelde versnelling</h4>
+    <div class="formula">a<sub>gem</sub> = Δv / Δt<small>a in m/s² · Δv = snelheidstoename in m/s · Δt = tijdsduur in s</small></div>
+    <div class="example"><div class="ex-title">DUT15 (elektrische racewagen TU Delft)</div>Van 0 naar 100 km/h = 27,8 m/s in 2,15 s: a = 27,8 / 2,15 = <strong>12,9 m/s²</strong>. Elke seconde komt er 12,9 m/s bij. (Eerst km/h naar m/s omrekenen!)</div>
+
+    <h4>Versnelling op één tijdstip</h4>
+    <p>Precies zoals bij snelheid: teken een <strong>raaklijn aan de (v,t)-grafiek</strong> en bepaal de steilheid. Kies twee punten ver uit elkaar.</p>
+    <div class="formula">a = (Δv / Δt)<sub>raaklijn</sub></div>
+    <div class="example"><div class="ex-title">Voorbeeld 5: DUT15 uit het (v,t)-diagram</div><strong>a</strong> In het begin is de (v,t)-grafiek steiler dan aan het einde: de versnelling is in het begin groter.<br><strong>b</strong> Gemiddeld van 0 tot 0,40 s: v gaat van 0 naar 12 m/s → a<sub>gem</sub> = 12 / 0,40 = <strong>30 m/s²</strong>.<br><strong>c</strong> Op t = 1,0 s: raaklijn door (0 s; 11,5 m/s) en (1,8 s; 30 m/s) → a = (30 − 11,5) / 1,8 = <strong>10 m/s²</strong>.</div>
+
+    <h4>Eenparig versnelde beweging</h4>
+    <p>De <span class="key">versnelling is constant</span>: elke seconde komt er evenveel snelheid bij. De (v,t)-grafiek is een <strong>schuine rechte lijn</strong>. De verplaatsing bepaal je met de oppervlakte onder die lijn: een <strong>rechthoek</strong> (de beginsnelheid) plus een <strong>driehoek</strong> (de toename).</p>
+    <div class="formula">Δx = rechthoek + driehoek = v<sub>begin</sub> · Δt + ½ · Δt · Δv</div>
+    <div class="example"><div class="ex-title">Voorbeeld 6: fietser, 1,7 m/s → 6,8 m/s in 4,0 s</div><strong>a</strong> Δv = 6,8 − 1,7 = 5,1 m/s → a = 5,1 / 4,0 = <strong>1,3 m/s²</strong>.<br><strong>b</strong> Rechthoek: 4,0 × 1,7 = 6,8 m. Driehoek: ½ × 4,0 × 5,1 = 10,2 m. Samen <strong>17 m</strong>.<br><strong>c</strong> Wanneer 30 km/h = 8,3 m/s? Nodig: 8,3 − 1,7 = 6,6 m/s extra. Per seconde 1,3 m/s erbij → Δt = 6,6 / 1,3 = <strong>5,1 s</strong>.</div>
+
+    <h4>🎛️ Probeer het zelf: oppervlakte = verplaatsing</h4>
+    <div class="card">
+      <p style="font-size:.9rem;">Stel beginsnelheid, versnelling en tijd in. De <span style="color:#1d4ed8;font-weight:600;">blauwe rechthoek</span> is wat je aflegt door je beginsnelheid, de <span style="color:#f08a3e;font-weight:600;">oranje driehoek</span> door het versnellen.</p>
+      <div class="slider-row"><label>v<sub>begin</sub> =</label><input type="range" id="sl-v0" min="0" max="10" step="0.5" value="2"><span id="sl-v0-val">2,0 m/s</span></div>
+      <div class="slider-row"><label>a =</label><input type="range" id="sl-a" min="0" max="3" step="0.1" value="1.5"><span id="sl-a-val">1,5 m/s²</span></div>
+      <div class="slider-row"><label>Δt =</label><input type="range" id="sl-dt" min="1" max="8" step="0.5" value="4"><span id="sl-dt-val">4,0 s</span></div>
+      <svg id="g-area" viewBox="0 0 320 230" style="max-width:420px;display:block;margin:0 auto;"></svg>
+      <div class="readout" id="g-area-readout"></div>
+    </div>
+
+    <h4>De vrije val</h4>
+    <p>Een <span class="key">valbeweging</span> is een versnelde beweging. Een <span class="key">vrije val</span> is het speciale geval waarbij <strong>alleen de zwaartekracht</strong> werkt, dus geen luchtweerstand. Op de maan (geen atmosfeer) vallen een hamer en een veer precies even snel. Op aarde spreek je van vrije val als de luchtweerstand te verwaarlozen is, meestal aan het begin van een val als de snelheid nog klein is.</p>
+    <div class="formula">Vrije val = eenparig versnelde beweging met a = g = 9,81 m/s² (Nederland)<small>g heet de valversnelling. Binas tabel 30B: iets meer bij de polen (9,83), iets minder bij de evenaar (9,78). Andere planeten: Binas tabel 31.</small></div>
+    <div class="example"><div class="ex-title">Voorbeeld 7: knikker valt 2,5 s zonder beginsnelheid</div><strong>a</strong> (v,t): rechte lijn vanaf 0, elke seconde 9,81 m/s erbij.<br><strong>b</strong> Op t = 2,5 s: v = 2,5 × 9,81 = 24,5 m/s. Verplaatsing = driehoek = ½ × 2,5 × 24,5 = <strong>31 m</strong>.<br><strong>c</strong> (x,t): kromme die steeds steiler wordt (want de snelheid neemt toe).</div>
+
+    <h4>Val met luchtweerstand</h4>
+    <table>
+      <tr><th>Voorwerp</th><th>(v,t)-grafiek</th><th>Wat gebeurt er</th></tr>
+      <tr><td>A: metalen kogeltje</td><td>Rechte lijn, a = g = 9,8 m/s²</td><td>Vrije val, luchtweerstand verwaarloosbaar</td></tr>
+      <tr><td>B: kurk</td><td>Buigt af, steilheid neemt af</td><td>Luchtweerstand neemt toe → versnelling neemt af</td></tr>
+      <tr><td>C: papiersnipper</td><td>Wordt horizontaal</td><td>Versnelling wordt 0 → constante snelheid (eenparig), net als regendruppels</td></tr>
+    </table>
+
+    <h4>Vertraging</h4>
+    <p>Bij remmen neemt de snelheid af: v<sub>eind</sub> &lt; v<sub>begin</sub>, dus Δv = v<sub>eind</sub> − v<sub>begin</sub> is <strong>negatief</strong>, en a = Δv/Δt dus ook. De versnelling is <strong>tegen de bewegingsrichting in</strong> gericht. Bij een <span class="key">eenparig vertraagde beweging</span> is de (v,t)-grafiek een <strong>dalende rechte lijn</strong>. Verplaatsing en gemiddelde snelheid bepaal je precies zoals bij versnellen.</p>
+    <div class="example"><div class="ex-title">Voorbeeld 8: worp omhoog met 13 m/s</div>Zodra de bal los is, remt de zwaartekracht hem af met a = −g = −9,81 m/s². Op het hoogste punt is v = 0. Hoe lang duurt dat? Elke seconde gaat er 9,81 m/s af: Δt = 13 / 9,81 = <strong>1,3 s</strong>.</div>
+    <div class="tip">Omhoog gooien en vallen zijn dezelfde beweging in spiegelbeeld: dezelfde g, alleen het teken verschilt. Vallen: v neemt 9,81 m/s per seconde toe. Omhoog: v neemt 9,81 m/s per seconde af.</div>
+  </details>
+
+  <!-- 1.4 -->
+  <details>
+    <summary><strong>§1.4 Grootheden en hun eenheden</strong> — SI, afgeleide eenheden, omrekenen</summary>
+    <div class="why">Als een Amerikaan "80" rijdt, is dat 80 mijl per uur (129 km/h). Zonder eenheid is een getal betekenisloos. In de natuurkunde spreek je daarom af in welke eenheden je rekent, zodat formules kloppen en mensen elkaar begrijpen. Op de toets kost een vergeten of verkeerde eenheid punten.</div>
+    <div class="idea">Een <strong>grootheid</strong> is <em>wat</em> je meet (lengte, tijd, snelheid). Een <strong>eenheid</strong> is <em>waarin</em> je het uitdrukt (meter, seconde, m/s). Een meetwaarde is altijd <strong>getal + eenheid</strong>: 9,17 m/s.</div>
+
+    <h4>De basisgrootheden (SI)</h4>
+    <p>Voor zeven <strong>basisgrootheden</strong> zijn internationale afspraken gemaakt: het <strong>SI</strong> (Système International). De vijf belangrijkste (Binas tabel 3):</p>
+    <table>
+      <tr><th>Basisgrootheid</th><th>Symbool</th><th>Grondeenheid</th><th>Symbool</th></tr>
+      <tr><td>lengte</td><td>ℓ</td><td>meter</td><td>m</td></tr>
+      <tr><td>massa</td><td>m</td><td>kilogram</td><td>kg</td></tr>
+      <tr><td>tijd</td><td>t</td><td>seconde</td><td>s</td></tr>
+      <tr><td>stroomsterkte</td><td>I</td><td>ampère</td><td>A</td></tr>
+      <tr><td>temperatuur</td><td>T</td><td>kelvin</td><td>K</td></tr>
+    </table>
+    <div class="warning">In formules altijd de <strong>SI-eenheid zonder voorvoegsel</strong> invullen: meters, geen kilometers; seconden, geen minuten. Eén uitzondering: de <strong>kilogram</strong> (met "kilo") is zelf de grondeenheid.</div>
+
+    <h4>Afgeleide grootheden en eenheden</h4>
+    <p>Notatie: <strong>[t] = s</strong> betekent "de eenheid van tijd is de seconde". Alle andere eenheden kun je uitdrukken in grondeenheden via een formule waarin de grootheid voorkomt:</p>
+    <div class="formula">[v] = [x] / [t] = m / s = m · s⁻¹<br>[a] = m / s² = m · s⁻²</div>
+    <div class="example"><div class="ex-title">Voorbeeld 9: eenheid van bewegingsenergie E = ½ m · v²</div>Het getal ½ heeft geen eenheid. [E] = [m] · [v] · [v] = kg · m·s⁻¹ · m·s⁻¹ = <strong>kg · m² · s⁻²</strong> (dat is de joule).</div>
+    <p>Negatieve machten: s⁻¹ = 1/s. Ook bij getallen: 10⁻² = 1/10² = 1/100 = 0,01.</p>
+
+    <h4>Omrekenen van eenheden (Binas tabel 4 en 5)</h4>
+    <ul>
+      <li>1 L = 1 dm³ en 1 m³ = 1000 L (natuurkunde gebruikt m³, scheikunde liters).</li>
+      <li>1 AE (astronomische eenheid) = afstand aarde–zon = 1,495 98 · 10¹¹ m.</li>
+      <li>1 kWh = 3,6 · 10⁶ J (handig voor energieverbruik thuis).</li>
+    </ul>
+
+    <h4>Omtrek, oppervlakte en volume (Binas tabel 36B)</h4>
+    <table>
+      <tr><th>Figuur</th><th>Omtrek O</th><th>Oppervlakte A</th><th>Volume V</th></tr>
+      <tr><td>Rechthoek ℓ × b</td><td>2ℓ + 2b</td><td>ℓ · b</td><td></td></tr>
+      <tr><td>Cirkel, straal r</td><td>2πr</td><td>πr²</td><td></td></tr>
+      <tr><td>Balk ℓ × b × h</td><td></td><td></td><td>ℓ · b · h</td></tr>
+      <tr><td>Cilinder, straal r, hoogte h</td><td></td><td></td><td>πr² · h</td></tr>
+      <tr><td>Bol, straal r</td><td></td><td>4πr²</td><td>⁴⁄₃ πr³</td></tr>
+    </table>
+    <p>Eenheden volgen uit de formule: [A] = m · m = m², [V] = m³.</p>
+  </details>
+
+  <!-- 1.5 -->
+  <details>
+    <summary><strong>§1.5 Wiskundig gereedschap</strong> — significante cijfers, 10-machten, formules omschrijven, evenredigheid</summary>
+    <div class="why">Een meting is nooit perfect. Als je een tijd meet als 1,7 s, weet je niet of het 1,68 of 1,72 was. Je antwoord mag daarom niet nauwkeuriger lijken dan je metingen. Daarnaast moet je formules kunnen omschrijven (je wilt vaak een andere grootheid uitrekenen dan die vooraan staat) en verbanden in grafieken herkennen.</div>
+
+    <h4>Significante cijfers</h4>
+    <div class="idea">Significante cijfers = het aantal cijfers dat écht iets zegt over de nauwkeurigheid. Je kijkt <strong>niet</strong> naar de komma, maar naar welke cijfers "tellen".</div>
+    <table>
+      <tr><th>Regel</th><th>Voorbeeld</th></tr>
+      <tr><td>Nullen <strong>vooraan</strong> tellen NIET mee</td><td>0,034 → 2 significante cijfers</td></tr>
+      <tr><td>Nullen <strong>achter of tussen</strong> tellen WEL mee</td><td>3,400 → 4; 205 → 3</td></tr>
+      <tr><td>Machten van 10 tellen NIET mee</td><td>3,4 · 10² → 2</td></tr>
+      <tr><td>Aantal decimalen zegt niets over significantie</td><td>15 mm en 1,5 cm hebben allebei 2</td></tr>
+    </table>
+    <h4>De drie vuistregels bij rekenen</h4>
+    <ol class="steps">
+      <li><strong>Vermenigvuldigen en delen:</strong> antwoord in het <strong>kleinste aantal significante cijfers</strong> van de gegevens.</li>
+      <li><strong>Optellen en aftrekken:</strong> antwoord in het <strong>kleinste aantal decimalen</strong> van de gegevens.</li>
+      <li><strong>Tussenresultaten niet afronden</strong>; alleen het eindantwoord.</li>
+    </ol>
+    <div class="example"><div class="ex-title">Voorbeeld 10</div><strong>a</strong> Bal bereikt na 1,33 s een hoogte van 8,6 m. v<sub>gem</sub> = 8,6 / 1,33 = 6,46… → 8,6 heeft 2 sig. cijfers, dus <strong>6,5 m/s</strong>. Had je 1,33 eerst afgerond naar 1,3, dan kreeg je 6,6: fout, want te vroeg afgerond.<br><strong>b</strong> 100,2 g + 5,46 g = 105,66 → kleinste aantal decimalen is 1 → <strong>105,7 g</strong>.</div>
+
+    <h4>Voorvoegsels en 10-machten</h4>
+    <table>
+      <tr><th>naam</th><th>symbool</th><th>factor</th></tr>
+      <tr><td>mega</td><td>M</td><td>10⁶</td></tr>
+      <tr><td>kilo</td><td>k</td><td>10³</td></tr>
+      <tr><td>centi</td><td>c</td><td>10⁻²</td></tr>
+      <tr><td>milli</td><td>m</td><td>10⁻³</td></tr>
+      <tr><td>micro</td><td>µ</td><td>10⁻⁶</td></tr>
+    </table>
+    <p><strong>Wetenschappelijke notatie</strong> (notatie met machten van 10): een getal van 1 tot 10, maal een 10-macht. 1 km = 1000 m = 1 · 10³ m. 0,035 s = 3,5 · 10⁻² s. 444 m = 4,44 · 10² m. Positieve exponent: komma naar rechts; negatieve exponent: komma naar links. Het aantal significante cijfers verandert hierdoor niet.</p>
+
+    <h4>Formules omschrijven</h4>
+    <div class="idea">Een formule is een balans: wat je links doet, moet je ook rechts doen. Je wilt de gevraagde grootheid <strong>alleen</strong> aan de linkerkant krijgen.</div>
+    <div class="example"><div class="ex-title">Voorbeeld 11: 355 m fietsen met 25 km/h, hoe lang?</div>Formule: v<sub>gem</sub> = Δx / Δt. Gevraagd: Δt.<br>Vermenigvuldig links en rechts met Δt: v<sub>gem</sub> · Δt = Δx.<br>Deel links en rechts door v<sub>gem</sub>: <strong>Δt = Δx / v<sub>gem</sub></strong>.<br>Invullen (eerst 25 km/h → 25/3,6 = 6,94 m/s): Δt = 355 / 6,94 = <strong>51 s</strong>.</div>
+    <div class="example"><div class="ex-title">Voorbeeld 12: kwadraat en wortel, E = ½ m · v²</div>Gevraagd: v. Deel beide kanten door ½m: v² = E / (½m) = <strong>2E / m</strong>.<br>De snelheid staat nog in het kwadraat → worteltrekken, links én rechts: <strong>v = √(2E / m)</strong>.</div>
+    <div class="tip">Ezelsbrug voor de "formuledriehoek" bij v = Δx/Δt: bovenin Δx, onderin v en Δt naast elkaar. Dek af wat je zoekt: v = Δx/Δt, Δt = Δx/v, Δx = v · Δt.</div>
+
+    <h4>Recht evenredig verband</h4>
+    <p>Bij een eenparige beweging: twee keer zo lang lopen = twee keer zo ver. Plaats en tijd zijn dan <span class="key">recht evenredig</span>: x ~ t, oftewel x = c · t met c een constante (de <strong>evenredigheidsconstante</strong>, hier de snelheid: x = v · t).</p>
+    <ul>
+      <li>Notatie: Y ~ X. Bij n keer zo grote X wordt Y ook n keer zo groot.</li>
+      <li>Formule: Y = c · X, oftewel Y / X = c.</li>
+      <li>Grafiek: <strong>rechte lijn door de oorsprong</strong>, steilheid c.</li>
+      <li>Voorbeeld: eenparig versnelde beweging zonder beginsnelheid: v = a · t (v ~ t, steilheid a).</li>
+    </ul>
+    <p>Een <strong>lineair verband</strong> is ook een rechte lijn, maar hoeft <em>niet</em> door de oorsprong: bijvoorbeeld een (v,t)-grafiek met beginsnelheid 5,0 m/s. Dan is v niet recht evenredig met t.</p>
+
+    <h4>Omgekeerd evenredig verband</h4>
+    <p>Hoe harder je rijdt, hoe minder tijd je nodig hebt voor de 100 m tussen twee hectometerpaaltjes. Vier keer zo snel → vier keer zo weinig tijd.</p>
+    <table>
+      <tr><th>v (m/s)</th><td>5,0</td><td>10</td><td>15</td><td>20</td></tr>
+      <tr><th>t (s)</th><td>20</td><td>10</td><td>6,7</td><td>5,0</td></tr>
+    </table>
+    <ul>
+      <li>Notatie: Y ~ 1/X. Bij n keer zo grote X wordt Y n keer zo klein.</li>
+      <li>Formule: X · Y = c, oftewel Y = c / X.</li>
+      <li>Grafiek: een <strong>hyperbool</strong> (dalende kromme).</li>
+    </ul>
+    <div class="tip">Snelle check: recht evenredig → Y/X is overal hetzelfde getal. Omgekeerd evenredig → X·Y is overal hetzelfde getal (hier: 5×20 = 10×10 = 20×5 = 100).</div>
+  </details>
+</section>
+
+<!-- ======================= REKENEN ======================= -->
+<section id="rekenen">
+  <h2>🧮 Formule-trainer</h2>
+  <div class="card">
+    <p>Elke opgave krijgt <strong>nieuwe getallen</strong> als je op 🔄 klikt. Vul je antwoord in en controleer. Loop je vast? Klik op "Uitwerking" en volg de stappen. Rond je antwoord af zoals in de opgave gevraagd; een kleine afrondingsafwijking is oké.</p>
+    <div class="tip">Vaste aanpak bij elke rekenopgave: <strong>1</strong> Welke grootheid vraag ik? <strong>2</strong> Welke formule bevat die? <strong>3</strong> Alles omrekenen naar SI (m, s, m/s). <strong>4</strong> Formule omschrijven. <strong>5</strong> Invullen, rekenen, eenheid erbij, significante cijfers checken.</div>
+  </div>
+  <div class="filter-bar">
+    <button class="ex-filter active" data-cat="all">Alle</button>
+    <button class="ex-filter" data-cat="p1">§1.1 Snelheid</button>
+    <button class="ex-filter" data-cat="p2">§1.2 Oppervlakte</button>
+    <button class="ex-filter" data-cat="p3">§1.3 Versnelling</button>
+    <button class="ex-filter" data-cat="p5">§1.4/1.5 Rekenen</button>
+  </div>
+  <div class="score-display" id="ex-score">Goed: 0 · Fout: 0</div>
+  <div id="ex-container"></div>
+</section>
+
+<!-- ======================= FLASHCARDS ======================= -->
+<section id="flashcards">
+  <h2>🎴 Flashcards</h2>
+  <p>Klik op de kaart om het antwoord te zien. Markeer wat je nog niet kent; die kaarten komen terug onder "Nog oefenen".</p>
+  <div class="filter-bar">
+    <button class="fc-filter active" data-cat="all">Alle</button>
+    <button class="fc-filter" data-cat="p1">§1.1</button>
+    <button class="fc-filter" data-cat="p2">§1.2</button>
+    <button class="fc-filter" data-cat="p3">§1.3</button>
+    <button class="fc-filter" data-cat="p4">§1.4</button>
+    <button class="fc-filter" data-cat="p5">§1.5</button>
+    <button class="fc-filter" data-cat="oefen">⚠️ Nog oefenen</button>
+  </div>
+  <div class="score-display" id="fc-counter">Kaart 1 van …</div>
+  <div class="flashcard-stack">
+    <div class="flashcard" id="flashcard">
+      <div class="front"><div class="term" id="fc-term">Begin</div><div class="hint">tik om te draaien</div></div>
+      <div class="back"><div class="def" id="fc-def">...</div><div class="hint">tik om terug te draaien</div></div>
+    </div>
+  </div>
+  <div class="flash-controls">
+    <button id="fc-prev">← Vorige</button>
+    <button id="fc-mark" style="background:var(--orange);">⚠️ Nog oefenen</button>
+    <button id="fc-next">Volgende →</button>
+  </div>
+  <div style="text-align:center;margin-top:12px;"><button class="btn ghost" id="fc-shuffle">🔀 Schud de kaarten</button></div>
+</section>
+
+<!-- ======================= QUIZ ======================= -->
+<section id="quiz">
+  <h2>✏️ Oefenvragen</h2>
+  <div class="score-display" id="score-display">Beantwoord: 0 / 0 — Goed: 0</div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="filter-bar">
+    <button class="quiz-filter active" data-level="all">Alle</button>
+    <button class="quiz-filter" data-level="1">Niveau 1: Onthouden</button>
+    <button class="quiz-filter" data-level="2">Niveau 2: Begrijpen</button>
+    <button class="quiz-filter" data-level="3">Niveau 3: Toepassen</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="text-align:center;margin-top:16px;">
+    <button class="btn grey" onclick="resetQuiz()">🔄 Opnieuw beginnen</button>
+  </div>
+</section>
+
+<!-- ======================= CHEATSHEET ======================= -->
+<section id="cheatsheet">
+  <h2>📋 Spiekbriefje — alles op één pagina</h2>
+  <div class="card">
+    <h3 style="margin-top:0">Formules (Binas tabel 35)</h3>
+    <div class="formula">v<sub>gem</sub> = Δx / Δt <small>gemiddelde snelheid (m/s) = verplaatsing (m) / tijdsduur (s)</small></div>
+    <div class="formula">v = (Δx / Δt)<sub>raaklijn</sub> <small>snelheid op één tijdstip = steilheid raaklijn (x,t)-grafiek</small></div>
+    <div class="formula">s = v · t <small>verplaatsing bij eenparige beweging (constante v)</small></div>
+    <div class="formula">a<sub>gem</sub> = Δv / Δt <small>versnelling (m/s²) = snelheidsverandering (m/s) / tijdsduur (s)</small></div>
+    <div class="formula">a = (Δv / Δt)<sub>raaklijn</sub> <small>versnelling op één tijdstip = steilheid raaklijn (v,t)-grafiek</small></div>
+    <div class="formula">Δx = oppervlakte onder (v,t)-grafiek <small>rechthoek b·h, driehoek ½·b·h, of hokjes tellen</small></div>
+    <div class="formula">vrije val: a = g = 9,81 m/s² <small>worp omhoog: a = −9,81 m/s²</small></div>
+    <div class="formula">m/s → km/h: × 3,6 &nbsp;·&nbsp; km/h → m/s: ÷ 3,6</div>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Grafieken lezen</h3>
+    <table>
+      <tr><th></th><th>(x,t)-diagram</th><th>(v,t)-diagram</th></tr>
+      <tr><td>Steilheid =</td><td>snelheid v</td><td>versnelling a</td></tr>
+      <tr><td>Oppervlakte =</td><td>(niets)</td><td>verplaatsing Δx</td></tr>
+      <tr><td>Horizontaal =</td><td>stilstaan</td><td>constante snelheid</td></tr>
+      <tr><td>Rechte schuine lijn =</td><td>eenparige beweging</td><td>eenparig versneld / vertraagd</td></tr>
+      <tr><td>Kromt steeds steiler =</td><td>versnellen</td><td>versnelling neemt toe</td></tr>
+      <tr><td>Kromt steeds vlakker =</td><td>vertragen</td><td>versnelling neemt af (bv. luchtweerstand)</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Eenheden en notatie</h3>
+    <ul style="font-size:.92rem;">
+      <li>SI-grondeenheden: m, kg, s, A, K. In formules altijd SI zonder voorvoegsel (behalve kg).</li>
+      <li>[v] = m/s = m·s⁻¹ &nbsp;·&nbsp; [a] = m/s² &nbsp;·&nbsp; [E] = kg·m²·s⁻²</li>
+      <li>Voorvoegsels: M 10⁶ · k 10³ · c 10⁻² · m 10⁻³ · µ 10⁻⁶</li>
+      <li>Wetenschappelijke notatie: getal van 1 tot 10 × 10-macht (444 = 4,44·10²; 0,035 = 3,5·10⁻²)</li>
+      <li>1 L = 1 dm³ · 1 m³ = 1000 L · 1 kWh = 3,6·10⁶ J</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Significante cijfers</h3>
+    <ul style="font-size:.92rem;">
+      <li>Nullen vooraan tellen niet (0,034 → 2); nullen achter/tussen wel (3,400 → 4); 10-machten niet.</li>
+      <li>× en ÷ → kleinste aantal significante cijfers.</li>
+      <li>+ en − → kleinste aantal decimalen.</li>
+      <li>Tussenresultaten nooit afronden.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Verbanden</h3>
+    <table>
+      <tr><th></th><th>Recht evenredig</th><th>Omgekeerd evenredig</th></tr>
+      <tr><td>Notatie</td><td>Y ~ X</td><td>Y ~ 1/X</td></tr>
+      <tr><td>Formule</td><td>Y = c·X (Y/X = c)</td><td>Y = c/X (X·Y = c)</td></tr>
+      <tr><td>Grafiek</td><td>rechte lijn door oorsprong</td><td>hyperbool</td></tr>
+      <tr><td>X wordt n× zo groot</td><td>Y n× zo groot</td><td>Y n× zo klein</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Stappenplan rekenopgave</h3>
+    <ol class="steps" style="font-size:.92rem;">
+      <li>Gegevens opschrijven mét eenheid; gevraagde grootheid noteren.</li>
+      <li>Alles omrekenen naar SI (km/h ÷ 3,6; minuten × 60; km × 1000).</li>
+      <li>Formule kiezen waarin de gevraagde grootheid staat.</li>
+      <li>Formule omschrijven (gevraagde grootheid alleen links).</li>
+      <li>Invullen en rekenen, niet tussentijds afronden.</li>
+      <li>Eindantwoord: juist aantal significante cijfers + eenheid. Klopt de orde van grootte?</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">Veelgemaakte fouten</h3>
+    <div class="warning">"Horizontale lijn in het (v,t)-diagram = stilstaan." → <strong>FOUT.</strong> Dat is constante snelheid. Stilstaan is v = 0 (lijn op de t-as).</div>
+    <div class="warning">"Steilheid van de (v,t)-grafiek is de snelheid." → <strong>FOUT.</strong> Dat is de <strong>versnelling</strong>. De snelheid lees je af op de verticale as.</div>
+    <div class="warning">"25 km/h invullen in v = Δx/Δt met Δx in meters." → <strong>FOUT.</strong> Eerst ÷ 3,6 naar m/s.</div>
+    <div class="warning">"Tussenresultaat 6,94 afronden naar 7 en verder rekenen." → <strong>FOUT.</strong> Alleen het eindantwoord afronden.</div>
+    <div class="warning">"Raaklijn met twee punten dicht bij elkaar." → <strong>Onnauwkeurig.</strong> Kies punten ver uit elkaar op de raaklijn.</div>
+    <div class="warning">"Bij vertragen is a positief." → <strong>FOUT.</strong> Δv &lt; 0, dus a &lt; 0. Bij een worp omhoog: a = −9,81 m/s².</div>
+  </div>
+</section>
+
+<!-- ======================= SCHEMA ======================= -->
+<section id="schema">
+  <h2>📅 Leerschema</h2>
+  <div class="card">
+    <p>Vul je toetsdatum in. Het schema verdeelt de stof over de dagen die je nog hebt, zodat je niet alles in één avond hoeft te doen. Vink af wat je gedaan hebt; dat wordt op dit apparaat onthouden.</p>
+    <div class="date-row"><label for="toets-datum"><strong>Toetsdatum:</strong></label><input type="date" id="toets-datum"><span id="dagen-over" style="color:var(--muted);font-size:.9rem;"></span></div>
+    <div class="tip">Vijf sessies van 40 tot 45 minuten. Korter en vaker werkt beter dan één lange avond: je hersenen hebben slaap nodig om het vast te zetten. Heb je meer dagen, dan bouwt het schema rustdagen in.</div>
+  </div>
+  <div id="plan-container"></div>
+  <div style="text-align:center;margin-top:12px;"><button class="btn grey" id="plan-reset">🔄 Vinkjes wissen</button></div>
+</section>
+
+</main>
+<footer>Gemaakt voor natuurkunde H1 — Bewegen in beeld · Pulsar HAVO 4</footer>
+
+<script>
+// ---------- helpers ----------
+function nl(x,dec){ if(dec===undefined){dec = Math.abs(x)>=100?0:Math.abs(x)>=10?1:2;} return x.toFixed(dec).replace('.',','); }
+function rnd(min,max,step){ step=step||1; const n=Math.round((max-min)/step); return min+Math.round(Math.random()*n)*step; }
+function store(k,v){ try{localStorage.setItem('nk-h1-'+k,JSON.stringify(v));}catch(e){} }
+function load(k,def){ try{const v=localStorage.getItem('nk-h1-'+k);return v===null?def:JSON.parse(v);}catch(e){return def;} }
+
+// ---------- TABS ----------
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ---------- SVG graph helpers ----------
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!==undefined)e.textContent=text;return e;}
+function makePlot(svg,opts){
+  // opts: xmax,ymax,xlabel,ylabel,xstep,ystep
+  svg.innerHTML='';
+  const W=320,H=230,L=42,R=12,T=14,B=34;
+  const pw=W-L-R,ph=H-T-B;
+  const sx=x=>L+x/opts.xmax*pw, sy=y=>T+ph-y/opts.ymax*ph;
+  // grid
+  for(let x=0;x<=opts.xmax+1e-9;x+=opts.xstep){svg.appendChild(el('line',{x1:sx(x),y1:T,x2:sx(x),y2:T+ph,stroke:'#e6eaf2','stroke-width':1}));svg.appendChild(el('text',{x:sx(x),y:T+ph+13,'font-size':'9','text-anchor':'middle',fill:'#667085'},String(x).replace('.',',')));}
+  for(let y=0;y<=opts.ymax+1e-9;y+=opts.ystep){svg.appendChild(el('line',{x1:L,y1:sy(y),x2:L+pw,y2:sy(y),stroke:'#e6eaf2','stroke-width':1}));svg.appendChild(el('text',{x:L-4,y:sy(y)+3,'font-size':'9','text-anchor':'end',fill:'#667085'},String(y)));}
+  svg.appendChild(el('line',{x1:L,y1:T,x2:L,y2:T+ph,stroke:'#333','stroke-width':1.2}));
+  svg.appendChild(el('line',{x1:L,y1:T+ph,x2:L+pw,y2:T+ph,stroke:'#333','stroke-width':1.2}));
+  svg.appendChild(el('text',{x:L+pw,y:T+ph+27,'font-size':'10','text-anchor':'end',fill:'#333'},opts.xlabel));
+  svg.appendChild(el('text',{x:L+4,y:T+9,'font-size':'10',fill:'#333'},opts.ylabel));
+  return {sx,sy,L,T,pw,ph};
+}
+function poly(svg,pts,attrs){const p=el('polyline',Object.assign({fill:'none',points:pts.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')},attrs));svg.appendChild(p);return p;}
+
+// ---------- Interactive 1: sprint ----------
+const SPR={T:3,vmax:10.1};SPR.a=SPR.vmax/SPR.T;
+function sprV(t){return t<=SPR.T?SPR.a*t:SPR.vmax;}
+function sprX(t){return t<=SPR.T?0.5*SPR.a*t*t:0.5*SPR.a*SPR.T*SPR.T+SPR.vmax*(t-SPR.T);}
+function drawSprint(t){
+  const gx=document.getElementById('g-xt'),gv=document.getElementById('g-vt');
+  const px=makePlot(gx,{xmax:10,ymax:90,xlabel:'t (s)',ylabel:'x (m)',xstep:2,ystep:10});
+  const pv=makePlot(gv,{xmax:10,ymax:12,xlabel:'t (s)',ylabel:'v (m/s)',xstep:2,ystep:2});
+  // curves
+  const ptsX=[],ptsV=[];for(let s=0;s<=10.001;s+=0.1){ptsX.push([px.sx(s),px.sy(sprX(s))]);ptsV.push([pv.sx(s),pv.sy(sprV(s))]);}
+  poly(gx,ptsX,{stroke:'#b8322e','stroke-width':2});
+  // area under v,t from 0..t
+  const area=[[pv.sx(0),pv.sy(0)]];for(let s=0;s<=t+1e-9;s+=0.1){area.push([pv.sx(s),pv.sy(sprV(s))]);}area.push([pv.sx(t),pv.sy(sprV(t))]);area.push([pv.sx(t),pv.sy(0)]);
+  gv.appendChild(el('polygon',{points:area.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' '),fill:'#fde68a',opacity:.8}));
+  poly(gv,ptsV,{stroke:'#b8322e','stroke-width':2});
+  // tangent on x,t
+  const v=sprV(t),x=sprX(t);
+  let t1=t-2.2,t2=t+2.2;if(t1<0){t2-=t1;t1=0;}if(t2>10){t1-=(t2-10);t2=10;}
+  const y1=x+v*(t1-t),y2=x+v*(t2-t);
+  gx.appendChild(el('line',{x1:px.sx(t1),y1:px.sy(Math.max(0,Math.min(90,y1))),x2:px.sx(t2),y2:px.sy(Math.max(0,Math.min(90,y2))),stroke:'#1f7a4d','stroke-width':2,'stroke-dasharray':'5,3'}));
+  gx.appendChild(el('circle',{cx:px.sx(t),cy:px.sy(x),r:4,fill:'#1d4ed8'}));
+  gv.appendChild(el('circle',{cx:pv.sx(t),cy:pv.sy(v),r:4,fill:'#1d4ed8'}));
+  gv.appendChild(el('line',{x1:pv.L,y1:pv.sy(v),x2:pv.sx(t),y2:pv.sy(v),stroke:'#1d4ed8','stroke-width':1,'stroke-dasharray':'3,3'}));
+  gx.appendChild(el('text',{x:px.sx(0.2),y:px.T+22,'font-size':'9',fill:'#1f7a4d'},'raaklijn: steilheid = '+nl(v,1)+' m/s'));
+  gv.appendChild(el('text',{x:pv.sx(0.2),y:pv.T+22,'font-size':'9',fill:'#a16207'},'gele oppervlakte = '+nl(x,1)+' m'));
+  document.getElementById('sl-t-val').textContent=nl(t,1)+' s';
+  const fase=t<SPR.T?'versnelt (x,t wordt steiler; v,t stijgt)':'eenparig (x,t rechte lijn; v,t horizontaal)';
+  document.getElementById('g-readout').innerHTML=`t = ${nl(t,1)} s → x = ${nl(x,1)} m, v = ${nl(v,1)} m/s<br>steilheid raaklijn (x,t) = ${nl(v,1)} m/s = hoogte in (v,t)<br>oppervlakte onder (v,t) van 0 tot ${nl(t,1)} s = ${nl(x,1)} m = plaats in (x,t)<br>fase: ${fase}`;
+}
+document.getElementById('sl-t').addEventListener('input',e=>drawSprint(parseFloat(e.target.value)));
+drawSprint(1);
+
+// ---------- Interactive 2: area ----------
+function drawArea(){
+  const v0=parseFloat(document.getElementById('sl-v0').value),a=parseFloat(document.getElementById('sl-a').value),dt=parseFloat(document.getElementById('sl-dt').value);
+  const svg=document.getElementById('g-area');
+  const vEnd=v0+a*dt;const ymax=Math.max(10,Math.ceil((vEnd+1)/5)*5);
+  const p=makePlot(svg,{xmax:8,ymax:ymax,xlabel:'t (s)',ylabel:'v (m/s)',xstep:1,ystep:ymax/5});
+  // rectangle
+  svg.appendChild(el('rect',{x:p.sx(0),y:p.sy(v0),width:p.sx(dt)-p.sx(0),height:p.sy(0)-p.sy(v0),fill:'#bfdbfe',opacity:.9}));
+  // triangle
+  svg.appendChild(el('polygon',{points:`${p.sx(0)},${p.sy(v0)} ${p.sx(dt)},${p.sy(v0)} ${p.sx(dt)},${p.sy(vEnd)}`,fill:'#fdba74',opacity:.9}));
+  const tLine=a>0?Math.min(8,(ymax-v0)/a):8;
+  poly(svg,[[p.sx(0),p.sy(v0)],[p.sx(tLine),p.sy(v0+a*tLine)]],{stroke:'#b8322e','stroke-width':2});
+  svg.appendChild(el('line',{x1:p.sx(dt),y1:p.sy(0),x2:p.sx(dt),y2:p.sy(vEnd),stroke:'#333','stroke-dasharray':'3,3'}));
+  const rect=v0*dt,tri=0.5*dt*(vEnd-v0);
+  document.getElementById('sl-v0-val').textContent=nl(v0,1)+' m/s';
+  document.getElementById('sl-a-val').textContent=nl(a,1)+' m/s²';
+  document.getElementById('sl-dt-val').textContent=nl(dt,1)+' s';
+  document.getElementById('g-area-readout').innerHTML=`v<sub>eind</sub> = v<sub>begin</sub> + a·Δt = ${nl(v0,1)} + ${nl(a,1)} × ${nl(dt,1)} = ${nl(vEnd,1)} m/s<br>rechthoek = v<sub>begin</sub> · Δt = ${nl(v0,1)} × ${nl(dt,1)} = ${nl(rect,1)} m<br>driehoek = ½ · Δt · Δv = ½ × ${nl(dt,1)} × ${nl(vEnd-v0,1)} = ${nl(tri,1)} m<br><strong>Δx = ${nl(rect,1)} + ${nl(tri,1)} = ${nl(rect+tri,1)} m</strong>`;
+}
+['sl-v0','sl-a','sl-dt'].forEach(id=>document.getElementById(id).addEventListener('input',drawArea));
+drawArea();
+
+// ---------- FORMULE-TRAINER ----------
+const exTypes=[
+ {cat:'p1',title:'Gemiddelde snelheid',gen(){const dx=rnd(40,400,10),dt=rnd(4,40,0.5);const v=dx/dt;return{q:`Een fietser legt <strong>${dx} m</strong> af in <strong>${nl(dt,1)} s</strong>. Bereken de gemiddelde snelheid in m/s.`,ans:v,unit:'m/s',dec:1,sol:`<ol><li>Gevraagd: v<sub>gem</sub>. Formule: v<sub>gem</sub> = Δx / Δt.</li><li>Alles is al in SI (m en s).</li><li>v<sub>gem</sub> = ${dx} / ${nl(dt,1)} = <strong>${nl(v,1)} m/s</strong>.</li></ol>`};}},
+ {cat:'p1',title:'Omrekenen km/h → m/s',gen(){const k=rnd(18,144,1);const v=k/3.6;return{q:`Een auto rijdt <strong>${k} km/h</strong>. Hoeveel m/s is dat?`,ans:v,unit:'m/s',dec:1,sol:`<ol><li>Van km/h naar m/s: <strong>delen door 3,6</strong>.</li><li>${k} / 3,6 = <strong>${nl(v,1)} m/s</strong>.</li><li>Check: het getal in m/s is kleiner dan in km/h. Klopt.</li></ol>`};}},
+ {cat:'p1',title:'Omrekenen m/s → km/h',gen(){const v=rnd(3,35,0.5);const k=v*3.6;return{q:`Een sprinter loopt <strong>${nl(v,1)} m/s</strong>. Hoeveel km/h is dat?`,ans:k,unit:'km/h',dec:0,sol:`<ol><li>Van m/s naar km/h: <strong>vermenigvuldigen met 3,6</strong>.</li><li>${nl(v,1)} × 3,6 = <strong>${nl(k,0)} km/h</strong>.</li><li>Waarom 3,6? 1 m/s = 3600 m per uur = 3,6 km/h.</li></ol>`};}},
+ {cat:'p1',title:'Eenparige beweging: s = v · t',gen(){const k=rnd(20,90,5),min=rnd(2,15,1);const v=k/3.6,t=min*60,s=v*t;return{q:`Een auto rijdt eenparig met <strong>${k} km/h</strong> gedurende <strong>${min} minuten</strong>. Hoeveel meter legt hij af?`,ans:s,unit:'m',dec:0,sol:`<ol><li>Gevraagd: s. Formule: s = v · t.</li><li>Omrekenen naar SI: v = ${k} / 3,6 = ${nl(v,2)} m/s; t = ${min} × 60 = ${t} s.</li><li>s = ${nl(v,2)} × ${t} = <strong>${nl(s,0)} m</strong> (= ${nl(s/1000,1)} km).</li></ol>`};}},
+ {cat:'p1',title:'Tijdsduur uit v = Δx/Δt (formule omschrijven)',gen(){const dx=rnd(100,2000,50),k=rnd(10,60,2);const v=k/3.6,t=dx/v;return{q:`Je fietst <strong>${dx} m</strong> met een gemiddelde snelheid van <strong>${k} km/h</strong>. Hoelang doe je daarover (in s)?`,ans:t,unit:'s',dec:0,sol:`<ol><li>Gevraagd: Δt. Formule: v<sub>gem</sub> = Δx / Δt.</li><li>Omschrijven: Δt = Δx / v<sub>gem</sub>.</li><li>Omrekenen: ${k} km/h = ${k}/3,6 = ${nl(v,2)} m/s.</li><li>Δt = ${dx} / ${nl(v,2)} = <strong>${nl(t,0)} s</strong>.</li></ol>`};}},
+ {cat:'p1',title:'Snelheid uit een raaklijn',gen(){const t1=rnd(0,2,0.5),t2=t1+rnd(2,5,0.5),x1=rnd(0,10,1),x2=x1+rnd(8,40,1);const v=(x2-x1)/(t2-t1);return{q:`Je tekent een raaklijn aan een (x,t)-grafiek. Twee punten op de raaklijn zijn (t<sub>1</sub> = ${nl(t1,1)} s; x<sub>1</sub> = ${x1} m) en (t<sub>2</sub> = ${nl(t2,1)} s; x<sub>2</sub> = ${x2} m). Bereken de snelheid op dat tijdstip.`,ans:v,unit:'m/s',dec:1,sol:`<ol><li>Snelheid op een tijdstip = steilheid van de raaklijn: v = (Δx/Δt)<sub>raaklijn</sub>.</li><li>Δx = ${x2} − ${x1} = ${x2-x1} m; Δt = ${nl(t2,1)} − ${nl(t1,1)} = ${nl(t2-t1,1)} s.</li><li>v = ${x2-x1} / ${nl(t2-t1,1)} = <strong>${nl(v,1)} m/s</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Verplaatsing = rechthoek onder (v,t)',gen(){const v=rnd(4,30,1),ta=rnd(0,6,1),tb=ta+rnd(3,12,1);const s=v*(tb-ta);return{q:`In een (v,t)-diagram loopt de grafiek horizontaal op <strong>${v} m/s</strong> tussen t = ${ta} s en t = ${tb} s. Bereken de verplaatsing in dat tijdsinterval.`,ans:s,unit:'m',dec:0,sol:`<ol><li>Constante snelheid → verplaatsing = oppervlakte rechthoek onder de grafiek.</li><li>Hoogte = v = ${v} m/s; breedte = Δt = ${tb} − ${ta} = ${tb-ta} s.</li><li>Δx = ${v} × ${tb-ta} = <strong>${s} m</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Verplaatsing = driehoek onder (v,t)',gen(){const t=rnd(2,10,0.5),v=rnd(6,30,1);const s=0.5*t*v;return{q:`Een voorwerp versnelt vanuit stilstand eenparig; na <strong>${nl(t,1)} s</strong> is de snelheid <strong>${v} m/s</strong>. De (v,t)-grafiek is een rechte lijn uit de oorsprong. Bereken de verplaatsing in die ${nl(t,1)} s.`,ans:s,unit:'m',dec:1,sol:`<ol><li>Oppervlakte onder de (v,t)-grafiek = driehoek.</li><li>Δx = ½ × basis × hoogte = ½ × ${nl(t,1)} × ${v}.</li><li>Δx = <strong>${nl(s,1)} m</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Hokjes tellen',gen(){const bw=[0.2,0.5,1][rnd(0,2)],bh=[0.5,1,2][rnd(0,2)],n=rnd(20,80,1);const s=bw*bh*n;return{q:`In een (v,t)-diagram is één hokje <strong>${nl(bw,1)} s</strong> breed en <strong>${nl(bh,1)} m/s</strong> hoog. Je telt <strong>${n} hokjes</strong> onder de grafiek. Wat is de verplaatsing?`,ans:s,unit:'m',dec:1,sol:`<ol><li>Eén hokje = breedte × hoogte = ${nl(bw,1)} s × ${nl(bh,1)} m/s = ${nl(bw*bh,2)} m.</li><li>${n} hokjes × ${nl(bw*bh,2)} m = <strong>${nl(s,1)} m</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Gemiddelde versnelling',gen(){const v1=rnd(0,10,1),v2=v1+rnd(5,30,1),dt=rnd(2,12,0.5);const a=(v2-v1)/dt;return{q:`De snelheid van een scooter neemt toe van <strong>${v1} m/s</strong> naar <strong>${v2} m/s</strong> in <strong>${nl(dt,1)} s</strong>. Bereken de gemiddelde versnelling.`,ans:a,unit:'m/s²',dec:2,sol:`<ol><li>Formule: a<sub>gem</sub> = Δv / Δt.</li><li>Δv = ${v2} − ${v1} = ${v2-v1} m/s.</li><li>a = ${v2-v1} / ${nl(dt,1)} = <strong>${nl(a,2)} m/s²</strong>. Betekenis: elke seconde komt er ${nl(a,2)} m/s bij.</li></ol>`};}},
+ {cat:'p3',title:'Versnelling met km/h (eerst omrekenen)',gen(){const k=rnd(50,120,10),dt=rnd(3,12,0.5);const v=k/3.6,a=v/dt;return{q:`Een auto trekt op van 0 naar <strong>${k} km/h</strong> in <strong>${nl(dt,1)} s</strong>. Bereken de gemiddelde versnelling in m/s².`,ans:a,unit:'m/s²',dec:1,sol:`<ol><li>Eerst omrekenen: ${k} km/h = ${k}/3,6 = ${nl(v,2)} m/s.</li><li>a = Δv / Δt = ${nl(v,2)} / ${nl(dt,1)} = <strong>${nl(a,1)} m/s²</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Eenparig versneld: eindsnelheid',gen(){const v0=rnd(0,8,0.5),a=rnd(0.5,3,0.1),t=rnd(2,10,0.5);const v=v0+a*t;return{q:`Een fietser rijdt <strong>${nl(v0,1)} m/s</strong> en versnelt eenparig met <strong>${nl(a,1)} m/s²</strong> gedurende <strong>${nl(t,1)} s</strong>. Wat is de snelheid daarna?`,ans:v,unit:'m/s',dec:1,sol:`<ol><li>Elke seconde komt er a = ${nl(a,1)} m/s bij. In ${nl(t,1)} s: Δv = a · Δt = ${nl(a,1)} × ${nl(t,1)} = ${nl(a*t,1)} m/s.</li><li>v<sub>eind</sub> = v<sub>begin</sub> + Δv = ${nl(v0,1)} + ${nl(a*t,1)} = <strong>${nl(v,1)} m/s</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Eenparig versneld: verplaatsing (rechthoek + driehoek)',gen(){const v0=rnd(1,8,0.5),a=rnd(0.5,3,0.1),t=rnd(2,8,0.5);const dv=a*t,r=v0*t,d=0.5*t*dv;return{q:`Een fietser rijdt <strong>${nl(v0,1)} m/s</strong> en versnelt eenparig met <strong>${nl(a,1)} m/s²</strong> gedurende <strong>${nl(t,1)} s</strong>. Bereken de verplaatsing in die tijd.`,ans:r+d,unit:'m',dec:1,sol:`<ol><li>Δv = a · Δt = ${nl(a,1)} × ${nl(t,1)} = ${nl(dv,1)} m/s.</li><li>Rechthoek (beginsnelheid): v<sub>begin</sub> · Δt = ${nl(v0,1)} × ${nl(t,1)} = ${nl(r,1)} m.</li><li>Driehoek (toename): ½ · Δt · Δv = ½ × ${nl(t,1)} × ${nl(dv,1)} = ${nl(d,1)} m.</li><li>Δx = ${nl(r,1)} + ${nl(d,1)} = <strong>${nl(r+d,1)} m</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Vrije val: snelheid',gen(){const t=rnd(0.5,5,0.1);const v=9.81*t;return{q:`Een steen valt zonder beginsnelheid; luchtweerstand verwaarloos je. Hoe groot is de snelheid na <strong>${nl(t,1)} s</strong>?`,ans:v,unit:'m/s',dec:1,sol:`<ol><li>Vrije val = eenparig versneld met a = g = 9,81 m/s².</li><li>v = g · t = 9,81 × ${nl(t,1)} = <strong>${nl(v,1)} m/s</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Vrije val: valhoogte',gen(){const t=rnd(0.5,4,0.1);const v=9.81*t,h=0.5*t*v;return{q:`Een knikker valt <strong>${nl(t,1)} s</strong> zonder beginsnelheid (vrije val). Hoeveel meter is hij dan gevallen?`,ans:h,unit:'m',dec:1,sol:`<ol><li>Eindsnelheid: v = g · t = 9,81 × ${nl(t,1)} = ${nl(v,2)} m/s.</li><li>Verplaatsing = driehoek onder (v,t): ½ × ${nl(t,1)} × ${nl(v,2)} = <strong>${nl(h,1)} m</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Worp omhoog: tijd tot hoogste punt',gen(){const v0=rnd(5,25,0.5);const t=v0/9.81;return{q:`Je gooit een bal recht omhoog met <strong>${nl(v0,1)} m/s</strong>. Na hoeveel seconden bereikt hij zijn hoogste punt? (luchtweerstand verwaarlozen)`,ans:t,unit:'s',dec:2,sol:`<ol><li>Op het hoogste punt is v = 0. De snelheid neemt elke seconde met 9,81 m/s af (a = −g).</li><li>Δt = Δv / g = ${nl(v0,1)} / 9,81 = <strong>${nl(t,2)} s</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Vertraging (remmen)',gen(){const v1=rnd(10,30,1),v2=rnd(0,6,1),dt=rnd(2,8,0.5);const a=(v2-v1)/dt;return{q:`Een auto remt van <strong>${v1} m/s</strong> naar <strong>${v2} m/s</strong> in <strong>${nl(dt,1)} s</strong>. Bereken de versnelling (let op het teken).`,ans:a,unit:'m/s²',dec:1,sol:`<ol><li>Δv = v<sub>eind</sub> − v<sub>begin</sub> = ${v2} − ${v1} = ${v2-v1} m/s (negatief: de snelheid neemt af).</li><li>a = Δv / Δt = ${v2-v1} / ${nl(dt,1)} = <strong>${nl(a,1)} m/s²</strong>. Negatief = vertraging.</li></ol>`};}},
+ {cat:'p5',title:'Significante cijfers tellen',gen(){const opts=[['0,034',2],['3,400',4],['205',3],['3,4 · 10²',2],['0,0500',3],['1200',4],['0,7',1],['12,05',4],['9,81',3],['2,0 · 10⁻³',2],['100,2',4],['0,010',2]];const o=opts[rnd(0,opts.length-1)];return{q:`Hoeveel significante cijfers heeft de meetwaarde <strong>${o[0]}</strong>?`,ans:o[1],unit:'cijfers',dec:0,exact:true,sol:`<ol><li>Nullen vooraan tellen niet mee; nullen achter of tussen wel; 10-machten niet.</li><li>${o[0]} heeft dus <strong>${o[1]}</strong> significante cijfer(s).</li></ol>`};}},
+ {cat:'p5',title:'Afronden na delen',gen(){const dx=rnd(2,20,0.1),dt=rnd(1.01,4.99,0.01);const v=dx/dt;const sig=2;const rounded=parseFloat(v.toPrecision(sig));return{q:`Je meet Δx = <strong>${nl(dx,1)} m</strong> (2 significante cijfers) en Δt = <strong>${nl(dt,2)} s</strong> (3 significante cijfers). Bereken v<sub>gem</sub> en geef het antwoord in het juiste aantal significante cijfers.`,ans:rounded,unit:'m/s',dec:null,tol:0.011,sol:`<ol><li>v = ${nl(dx,1)} / ${nl(dt,2)} = ${nl(v,3)}…</li><li>Delen → kleinste aantal significante cijfers = 2.</li><li>Antwoord: <strong>${String(rounded).replace('.',',')} m/s</strong>. (Nooit de 1,xx eerst afronden: dan reken je verkeerd.)</li></ol>`};}},
+ {cat:'p5',title:'Wetenschappelijke notatie: exponent',gen(){const items=[['0,035 s','3,5',-2],['444 m','4,44',2],['1200 m','1,2',3],['0,0070 kg','7,0',-3],['25 000 m','2,5',4],['0,52 m','5,2',-1],['1,495 98 · 10¹¹ m (staat al goed)','1,495 98',11],['3 600 000 J','3,6',6]];const it=items[rnd(0,items.length-1)];return{q:`Schrijf <strong>${it[0]}</strong> in wetenschappelijke notatie: ${it[1]} · 10<sup>?</sup>. Welke exponent hoort bij het vraagteken?`,ans:it[2],unit:'(exponent)',dec:0,exact:true,sol:`<ol><li>Zet de komma achter het eerste cijfer dat geen nul is: ${it[1]}.</li><li>Tel hoeveel plaatsen de komma verschoven is: naar links = positieve exponent, naar rechts = negatieve exponent.</li><li>${it[0]} = ${it[1]} · 10<sup>${it[2]}</sup>.</li></ol>`};}},
+ {cat:'p5',title:'Voorvoegsels omrekenen naar SI',gen(){const items=[['2,5 km','m',2500],['350 cm','m',3.5],['45 mm','m',0.045],['12 ms','s',0.012],['0,8 km','m',800],['750 g','kg',0.75],['3,2 MJ','J',3200000],['20 µs','s',0.00002]];const it=items[rnd(0,items.length-1)];return{q:`Reken om naar de SI-eenheid: <strong>${it[0]}</strong> = ? ${it[1]}`,ans:it[2],unit:it[1],dec:null,tol:0.005,sol:`<ol><li>Voorvoegsel: k = 10³, c = 10⁻², m = 10⁻³, µ = 10⁻⁶, M = 10⁶. Let op: de SI-eenheid van massa is de <em>kilogram</em>.</li><li>${it[0]} = <strong>${String(it[2]).replace('.',',')} ${it[1]}</strong>.</li></ol>`};}},
+ {cat:'p5',title:'Formule met kwadraat en wortel: E = ½ m v²',gen(){const m=rnd(2,80,1),v=rnd(2,20,1);const E=0.5*m*v*v;return{q:`Een voorwerp van <strong>${m} kg</strong> heeft een bewegingsenergie van <strong>${E} J</strong>. Bereken de snelheid met E = ½ m · v².`,ans:v,unit:'m/s',dec:1,sol:`<ol><li>Omschrijven: deel beide kanten door ½m → v² = 2E / m.</li><li>Worteltrekken links en rechts → v = √(2E / m).</li><li>v = √(2 × ${E} / ${m}) = √${2*E/m} = <strong>${v} m/s</strong>.</li></ol>`};}},
+ {cat:'p5',title:'Omgekeerd evenredig verband',gen(){const c=100,v=[4,5,8,16,20,25,40][rnd(0,6)];const t=c/v;return{q:`Tussen twee hectometerpaaltjes ligt 100 m. Bij 10 m/s duurt dat 10 s. Hoelang duurt het bij <strong>${v} m/s</strong>? (t is omgekeerd evenredig met v)`,ans:t,unit:'s',dec:1,sol:`<ol><li>Omgekeerd evenredig: v · t = constant = 10 × 10 = 100.</li><li>t = 100 / v = 100 / ${v} = <strong>${nl(t,1)} s</strong>.</li><li>Check: ${v/10} keer zo snel → ${v/10} keer zo weinig tijd.</li></ol>`};}},
+ {cat:'p5',title:'Recht evenredig verband',gen(){const a=rnd(1,4,0.5),t1=rnd(2,5,1),f=[2,3,4][rnd(0,2)];const v1=a*t1,t2=t1*f;return{q:`Bij een eenparig versnelde beweging vanuit stilstand is v recht evenredig met t. Na <strong>${t1} s</strong> is v = <strong>${nl(v1,1)} m/s</strong>. Hoe groot is v na <strong>${t2} s</strong>?`,ans:a*t2,unit:'m/s',dec:1,sol:`<ol><li>Recht evenredig: ${f}× zo lange tijd → ${f}× zo grote snelheid.</li><li>Of via de constante: c = v/t = ${nl(v1,1)}/${t1} = ${nl(a,1)} (dat is de versnelling a). v = ${nl(a,1)} × ${t2} = <strong>${nl(a*t2,1)} m/s</strong>.</li></ol>`};}}
+];
+let exFilter='all',exState={good:0,bad:0},exCurrent={};
+function exRender(){
+  const cont=document.getElementById('ex-container');cont.innerHTML='';
+  exTypes.forEach((t,i)=>{
+    if(exFilter!=='all'&&t.cat!==exFilter)return;
+    if(!exCurrent[i])exCurrent[i]=t.gen();
+    const c=exCurrent[i];
+    const card=document.createElement('div');card.className='ex-card';card.id='ex-'+i;
+    card.innerHTML=`<div class="ex-head"><div><span class="pill">${t.cat==='p1'?'§1.1':t.cat==='p2'?'§1.2':t.cat==='p3'?'§1.3':'§1.4/1.5'}</span><strong>${t.title}</strong></div><button class="btn ghost" data-new="${i}">🔄 Nieuwe getallen</button></div>
+      <div class="ex-q">${c.q}</div>
+      <div class="ex-input"><input type="text" inputmode="decimal" placeholder="antwoord" data-in="${i}"><span class="unit">${c.unit}</span><button class="btn" data-check="${i}">Controleer</button><button class="btn ghost" data-sol="${i}">Uitwerking</button></div>
+      <div class="ex-fb" id="exfb-${i}"></div>
+      <div class="ex-sol" id="exsol-${i}">${c.sol}</div>`;
+    cont.appendChild(card);
+  });
+  cont.querySelectorAll('[data-new]').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.new;exCurrent[i]=exTypes[i].gen();exRender();document.getElementById('ex-'+i).scrollIntoView({behavior:'smooth',block:'center'});}));
+  cont.querySelectorAll('[data-sol]').forEach(b=>b.addEventListener('click',()=>document.getElementById('exsol-'+b.dataset.sol).classList.toggle('show')));
+  cont.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>exCheck(+b.dataset.check)));
+  cont.querySelectorAll('[data-in]').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')exCheck(+inp.dataset.in);}));
+}
+function exCheck(i){
+  const c=exCurrent[i];const inp=document.querySelector(`[data-in="${i}"]`);const fb=document.getElementById('exfb-'+i);
+  const raw=inp.value.trim().replace(',','.').replace(/\s/g,'');const val=parseFloat(raw);
+  if(isNaN(val)){fb.className='ex-fb show bad';fb.textContent='Vul eerst een getal in (komma of punt mag).';return;}
+  let ok;
+  if(c.exact)ok=Math.abs(val-c.ans)<1e-9;
+  else{const tol=c.tol!==undefined?c.tol:Math.max(Math.abs(c.ans)*0.025,c.dec===0?0.6:c.dec===1?0.06:0.006);ok=Math.abs(val-c.ans)<=tol;}
+  const shown=c.dec===null?String(c.ans).replace('.',','):nl(c.ans,c.dec);
+  if(ok){exState.good++;fb.className='ex-fb show good';fb.innerHTML=`✅ <strong>Goed!</strong> ${shown} ${c.unit}.`;}
+  else{exState.bad++;fb.className='ex-fb show bad';fb.innerHTML=`❌ <strong>Niet goed.</strong> Het antwoord is ${shown} ${c.unit}. Klik op "Uitwerking" en kijk waar het misging.`;document.getElementById('exsol-'+i).classList.add('show');}
+  document.getElementById('ex-score').textContent=`Goed: ${exState.good} · Fout: ${exState.bad}`;
+}
+document.querySelectorAll('.ex-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.ex-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');exFilter=b.dataset.cat;exRender();}));
+exRender();
+
+// ---------- FLASHCARDS ----------
+const flashcards=[
+  {term:"Plaats x",def:"Waar een voorwerp zich bevindt, in meter (m). Beginpunt meestal x₀ = 0 m op t = 0 s.",cat:"p1"},
+  {term:"Verplaatsing Δx",def:"Verschil in plaats: Δx = x_eind − x_begin, in meter. De letter Δ (delta) betekent 'verschil' of 'verandering'.",cat:"p1"},
+  {term:"Wat betekent Δt?",def:"Een tijdsduur: t₂ − t₁, in seconde.",cat:"p1"},
+  {term:"(x,t)-diagram",def:"Grafiek met de plaats x verticaal en de tijd t horizontaal. De steilheid is de snelheid.",cat:"p1"},
+  {term:"Stroboscoop",def:"Lamp die met vaste tussenpozen flitst. Bij 50 flitsen/s is de tijd tussen twee flitsen 1/50 = 0,020 s. Voor snelle bewegingen.",cat:"p1"},
+  {term:"Videometing",def:"Serie foto's met vaste tussenpoos, bv. 0,04 s → 25 beelden per seconde (25 Hz). Hogesnelheidscamera: 1000 Hz = elke 1 ms een beeld.",cat:"p1"},
+  {term:"Gemiddelde snelheid (formule)",def:"v_gem = Δx / Δt. Verplaatsing (m) gedeeld door tijdsduur (s), in m/s.",cat:"p1"},
+  {term:"m/s → km/h",def:"Vermenigvuldigen met 3,6. (1 m/s = 3600 m per uur = 3,6 km/h.) Andersom: delen door 3,6.",cat:"p1"},
+  {term:"Momentane snelheid",def:"De snelheid op één tijdstip. Bepaal je met de steilheid van de raaklijn aan de (x,t)-grafiek: v = (Δx/Δt)_raaklijn.",cat:"p1"},
+  {term:"Hoe bepaal je de steilheid van een raaklijn?",def:"Teken de raaklijn ver door, kies twee punten ver uit elkaar op de raaklijn, lees x en t af, bereken (x₂−x₁)/(t₂−t₁).",cat:"p1"},
+  {term:"Eenparige beweging",def:"Beweging met constante snelheid: elke seconde evenveel meter erbij. (x,t)-grafiek is een rechte schuine lijn. s = v · t.",cat:"p1"},
+  {term:"Horizontale (x,t)-grafiek",def:"Het voorwerp staat stil: de plaats verandert niet, v = 0.",cat:"p1"},
+  {term:"(x,t)-grafiek loopt steeds steiler",def:"De snelheid neemt toe: het voorwerp versnelt.",cat:"p1"},
+  {term:"(v,t)-diagram",def:"Grafiek met de snelheid v verticaal en de tijd t horizontaal. Steilheid = versnelling; oppervlakte onder de grafiek = verplaatsing.",cat:"p2"},
+  {term:"Horizontale (v,t)-grafiek",def:"Constante snelheid (eenparige beweging). Het voorwerp beweegt wél, alleen niet sneller of langzamer.",cat:"p2"},
+  {term:"Verplaatsing uit een (v,t)-diagram",def:"De oppervlakte onder de grafiek. Bij constante v: rechthoek v · Δt. Anders: hokjes tellen of schatten met een driehoek/rechthoek.",cat:"p2"},
+  {term:"Hokjes tellen: hoe?",def:"Bereken wat één hokje waard is (breedte in s × hoogte in m/s = meters), tel de hokjes onder de grafiek (halve hokjes samenvoegen), vermenigvuldig.",cat:"p2"},
+  {term:"Eenparige rechtlijnige beweging",def:"Beweging langs een rechte lijn met constante snelheid.",cat:"p2"},
+  {term:"Versnelling a",def:"De mate waarin de snelheid per seconde toeneemt. Eenheid m/s² (meter per seconde per seconde). a = 3 m/s² betekent: elke seconde 3 m/s erbij.",cat:"p3"},
+  {term:"Gemiddelde versnelling (formule)",def:"a_gem = Δv / Δt. Snelheidstoename (m/s) gedeeld door tijdsduur (s).",cat:"p3"},
+  {term:"Versnelling op één tijdstip",def:"Steilheid van de raaklijn aan de (v,t)-grafiek: a = (Δv/Δt)_raaklijn.",cat:"p3"},
+  {term:"Eenparig versnelde beweging",def:"De versnelling is constant: elke seconde evenveel snelheid erbij. De (v,t)-grafiek is een schuine rechte lijn.",cat:"p3"},
+  {term:"Verplaatsing bij eenparig versnelde beweging",def:"Oppervlakte onder de (v,t)-grafiek = rechthoek (v_begin · Δt) + driehoek (½ · Δt · Δv).",cat:"p3"},
+  {term:"Vrije val",def:"Valbeweging waarbij alleen de zwaartekracht werkt (geen luchtweerstand). Eenparig versneld met a = g.",cat:"p3"},
+  {term:"Valversnelling g",def:"In Nederland 9,81 m/s². Bij de polen iets meer (9,83), bij de evenaar iets minder (9,78). Binas tabel 30B en 31.",cat:"p3"},
+  {term:"Val met luchtweerstand",def:"De luchtweerstand neemt toe met de snelheid → de versnelling neemt af → uiteindelijk a = 0 en constante snelheid (papiersnipper, regendruppel).",cat:"p3"},
+  {term:"Vertraging",def:"De snelheid neemt af: Δv < 0 en dus a < 0. De versnelling is tegen de bewegingsrichting in gericht. (v,t)-grafiek daalt.",cat:"p3"},
+  {term:"Worp omhoog",def:"Direct na het loslaten een eenparig vertraagde beweging met a = −g = −9,81 m/s². Op het hoogste punt is v = 0.",cat:"p3"},
+  {term:"Grootheid vs. eenheid",def:"Grootheid = wat je meet (snelheid). Eenheid = waarin je het uitdrukt (m/s). Meetwaarde = getal + eenheid.",cat:"p4"},
+  {term:"De vijf belangrijkste SI-grondeenheden",def:"lengte ℓ → meter (m); massa m → kilogram (kg); tijd t → seconde (s); stroomsterkte I → ampère (A); temperatuur T → kelvin (K).",cat:"p4"},
+  {term:"Wat betekent [v] = m/s?",def:"'De eenheid van v is meter per seconde.' Vierkante haken = 'de eenheid van'. Ook te schrijven als m·s⁻¹.",cat:"p4"},
+  {term:"Afgeleide eenheid",def:"Eenheid die je uitdrukt in grondeenheden via een formule, bv. [a] = m/s², [E] = kg·m²·s⁻².",cat:"p4"},
+  {term:"Regel voor eenheden in formules",def:"Altijd SI-eenheden zonder voorvoegsel invullen (m, s, niet km of min). Uitzondering: de kilogram is zelf de grondeenheid.",cat:"p4"},
+  {term:"1 m³ = ? L",def:"1000 L. (1 L = 1 dm³.) Ook: 1 kWh = 3,6·10⁶ J; 1 AE = 1,495 98·10¹¹ m.",cat:"p4"},
+  {term:"Oppervlakte cirkel en volume bol",def:"A = πr². V_bol = ⁴⁄₃πr³ (en bol-oppervlakte 4πr²). Cilinder: V = πr²h. Binas tabel 36B.",cat:"p4"},
+  {term:"Significante cijfers",def:"Het aantal cijfers dat iets zegt over de nauwkeurigheid, ongeacht de komma. Nullen vooraan tellen niet, nullen achter/tussen wel, 10-machten niet.",cat:"p5"},
+  {term:"Hoeveel significante cijfers: 0,034 en 3,400?",def:"0,034 → 2 (nullen vooraan tellen niet). 3,400 → 4 (nullen achteraan tellen wel).",cat:"p5"},
+  {term:"Vuistregel vermenigvuldigen/delen",def:"Uitkomst in het kleinste aantal significante cijfers van de gegevens. Bv. 8,6 / 1,33 = 6,5 (2 sig. cijfers).",cat:"p5"},
+  {term:"Vuistregel optellen/aftrekken",def:"Uitkomst in het kleinste aantal decimalen van de gegevens. Bv. 100,2 + 5,46 = 105,7 (1 decimaal).",cat:"p5"},
+  {term:"Tussenresultaten afronden?",def:"Nee! Alleen het eindantwoord afronden, anders reken je een fout in.",cat:"p5"},
+  {term:"Voorvoegsels M, k, c, m, µ",def:"mega 10⁶ · kilo 10³ · centi 10⁻² · milli 10⁻³ · micro 10⁻⁶.",cat:"p5"},
+  {term:"Wetenschappelijke notatie",def:"Een getal van 1 tot 10 maal een 10-macht. 444 m = 4,44·10² m; 0,035 s = 3,5·10⁻² s. Verandert het aantal significante cijfers niet.",cat:"p5"},
+  {term:"Formule omschrijven: basisregel",def:"Wat je links doet, doe je ook rechts (balans). Breng de gevraagde grootheid alleen naar links. Kwadraat weghalen = worteltrekken aan beide kanten.",cat:"p5"},
+  {term:"Recht evenredig verband",def:"Y ~ X: Y = c·X. Bij n× zo grote X wordt Y n× zo groot. Grafiek: rechte lijn door de oorsprong met steilheid c.",cat:"p5"},
+  {term:"Omgekeerd evenredig verband",def:"Y ~ 1/X: X·Y = c. Bij n× zo grote X wordt Y n× zo klein. Grafiek: hyperbool.",cat:"p5"},
+  {term:"Lineair verband vs. recht evenredig",def:"Beide een rechte lijn, maar recht evenredig gaat door de oorsprong. Een (v,t)-lijn met beginsnelheid is lineair, niet recht evenredig.",cat:"p5"}
+];
+let fcOrder=flashcards.map((_,i)=>i),fcIndex=0,fcFilter='all',fcMarked=new Set(load('fc-marked',[]));
+function fcFiltered(){const list=fcOrder.map(i=>flashcards[i]);if(fcFilter==='all')return list;if(fcFilter==='oefen')return list.filter(c=>fcMarked.has(flashcards.indexOf(c)));return list.filter(c=>c.cat===fcFilter);}
+function renderFc(){
+  const list=fcFiltered();
+  if(list.length===0){document.getElementById('fc-term').textContent='Geen kaarten';document.getElementById('fc-def').textContent='Markeer kaarten met "Nog oefenen" om ze hier terug te zien.';document.getElementById('fc-counter').textContent='0 van 0';return;}
+  if(fcIndex>=list.length)fcIndex=0;if(fcIndex<0)fcIndex=list.length-1;
+  const c=list[fcIndex];
+  document.getElementById('fc-term').textContent=c.term;
+  document.getElementById('fc-def').textContent=c.def;
+  document.getElementById('fc-counter').textContent=`Kaart ${fcIndex+1} van ${list.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const real=flashcards.indexOf(c),mb=document.getElementById('fc-mark');
+  if(fcMarked.has(real)){mb.textContent='✓ Gemarkeerd';mb.style.background='var(--green)';}else{mb.textContent='⚠️ Nog oefenen';mb.style.background='var(--orange)';}
+}
+document.getElementById('flashcard').addEventListener('click',()=>document.getElementById('flashcard').classList.toggle('flipped'));
+document.getElementById('fc-prev').addEventListener('click',()=>{fcIndex--;renderFc();});
+document.getElementById('fc-next').addEventListener('click',()=>{fcIndex++;renderFc();});
+document.getElementById('fc-mark').addEventListener('click',()=>{const list=fcFiltered();if(!list.length)return;const real=flashcards.indexOf(list[fcIndex]);if(fcMarked.has(real))fcMarked.delete(real);else fcMarked.add(real);store('fc-marked',[...fcMarked]);renderFc();});
+document.getElementById('fc-shuffle').addEventListener('click',()=>{for(let i=fcOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]];}fcIndex=0;renderFc();});
+document.querySelectorAll('.fc-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.fc-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');fcFilter=b.dataset.cat;fcIndex=0;renderFc();}));
+renderFc();
+
+// ---------- QUIZ ----------
+const quizQuestions=[
+  {level:1,q:"Wat betekent de Griekse letter Δ (delta) in Δx of Δt?",options:["Een gemiddelde","Een verschil of verandering","Een eenheid","Een raaklijn"],correct:1,explain:"Δx = x_eind − x_begin (verplaatsing), Δt = t₂ − t₁ (tijdsduur). Δ betekent altijd 'verschil'."},
+  {level:1,q:"Welke formule hoort bij de gemiddelde snelheid?",options:["v = Δt / Δx","v = Δx · Δt","v = Δx / Δt","v = a · t"],correct:2,explain:"Gemiddelde snelheid = verplaatsing gedeeld door tijdsduur: v_gem = Δx/Δt, in m/s."},
+  {level:1,q:"Wat is de eenheid van versnelling?",options:["m/s","m/s²","km/h","m²/s"],correct:1,explain:"Versnelling = snelheidstoename (m/s) per seconde (s) → m/s per s = m/s²."},
+  {level:1,q:"Hoe reken je m/s om naar km/h?",options:["Delen door 3,6","Vermenigvuldigen met 3,6","Vermenigvuldigen met 60","Delen door 1000"],correct:1,explain:"1 m/s = 3600 m per uur = 3,6 km/h. Dus × 3,6. Andersom (km/h → m/s) ÷ 3,6."},
+  {level:1,q:"Hoe groot is de valversnelling g in Nederland?",options:["9,81 m/s","9,81 m/s²","10 km/h","9,78 m/s²"],correct:1,explain:"g = 9,81 m/s² in Nederland (Binas tabel 7). 9,78 is de waarde bij de evenaar."},
+  {level:1,q:"Hoeveel significante cijfers heeft 0,0450?",options:["2","3","4","5"],correct:1,explain:"Nullen vooraan tellen niet (0,0), de nul achteraan wel: 4, 5, 0 → 3 significante cijfers."},
+  {level:1,q:"Welke van deze is een SI-grondeenheid?",options:["km","kg","km/h","g"],correct:1,explain:"De kilogram is de grondeenheid van massa; de enige grondeenheid mét voorvoegsel."},
+  {level:2,q:"Een (x,t)-grafiek loopt horizontaal. Wat doet het voorwerp?",options:["Het beweegt met constante snelheid","Het versnelt","Het staat stil","Het vertraagt"],correct:2,explain:"Horizontaal in het (x,t)-diagram: de plaats verandert niet → stilstand (v = 0). Let op: in een (v,t)-diagram betekent horizontaal juist constante snelheid."},
+  {level:2,q:"Een (v,t)-grafiek loopt horizontaal op 8 m/s. Wat doet het voorwerp?",options:["Het staat stil","Het beweegt eenparig met 8 m/s","Het versnelt met 8 m/s²","Het vertraagt"],correct:1,explain:"Horizontale (v,t)-lijn = de snelheid verandert niet = eenparige beweging. Het voorwerp beweegt dus wél."},
+  {level:2,q:"Wat stelt de steilheid van een (v,t)-grafiek voor?",options:["De snelheid","De verplaatsing","De versnelling","De tijd"],correct:2,explain:"Steilheid = Δv/Δt = versnelling. De snelheid lees je af op de verticale as; de verplaatsing is de oppervlakte onder de grafiek."},
+  {level:2,q:"Wat stelt de oppervlakte onder een (v,t)-grafiek voor?",options:["De versnelling","De verplaatsing","De gemiddelde snelheid","Niets"],correct:1,explain:"Oppervlakte = hoogte (v in m/s) × breedte (t in s) = meters = verplaatsing."},
+  {level:2,q:"Waarom kies je bij een raaklijn twee punten ver uit elkaar?",options:["Dat is verplicht volgens Binas","Afleesfoutjes wegen dan minder zwaar → nauwkeuriger","Omdat de grafiek dan recht wordt","Het maakt niet uit"],correct:1,explain:"Een afleesfout van bv. 1 mm heeft bij een groot Δt veel minder invloed op de steilheid dan bij een klein Δt."},
+  {level:2,q:"Wat is het verschil tussen een valbeweging en een vrije val?",options:["Geen verschil","Bij een vrije val werkt alleen de zwaartekracht (geen luchtweerstand)","Een vrije val is altijd op de maan","Bij een vrije val is de snelheid constant"],correct:1,explain:"Elke val is een valbeweging. Vrije val = het speciale geval zonder tegenwerkende kracht → eenparig versneld met a = g."},
+  {level:2,q:"Een kurk valt; de (v,t)-grafiek buigt af en wordt minder steil. Waarom?",options:["De zwaartekracht neemt af","De luchtweerstand neemt toe, dus de versnelling neemt af","De kurk wordt lichter","De snelheid neemt af"],correct:1,explain:"Hoe sneller de kurk, hoe groter de luchtweerstand. De netto versnelling wordt kleiner. Uiteindelijk a = 0 en constante snelheid."},
+  {level:2,q:"Je gooit een bal omhoog. Wat is de versnelling direct na het loslaten (luchtweerstand verwaarloosbaar)?",options:["+9,81 m/s²","−9,81 m/s²","0 m/s²","Hangt af van de gooisnelheid"],correct:1,explain:"De zwaartekracht remt de bal af: a = −g = −9,81 m/s². De versnelling is tegen de bewegingsrichting in gericht."},
+  {level:2,q:"Welke grafiek hoort bij een recht evenredig verband?",options:["Een hyperbool","Een rechte lijn die niet door de oorsprong gaat","Een rechte lijn door de oorsprong","Een kromme die steeds steiler wordt"],correct:2,explain:"Y = c·X: bij X = 0 is Y = 0, dus door de oorsprong, en de steilheid is overal c."},
+  {level:3,q:"Een auto rijdt 90 km/h gedurende 20 s. Hoeveel meter legt hij af?",options:["1800 m","500 m","4,5 m","300 m"],correct:1,explain:"Eerst SI: 90/3,6 = 25 m/s. s = v·t = 25 × 20 = 500 m. Vergeet je het omrekenen, dan krijg je 1800 (fout)."},
+  {level:3,q:"De snelheid van een fietser neemt toe van 2,0 m/s naar 8,0 m/s in 4,0 s. Wat is de gemiddelde versnelling?",options:["2,0 m/s²","1,5 m/s²","0,5 m/s²","6,0 m/s²"],correct:1,explain:"a = Δv/Δt = (8,0 − 2,0)/4,0 = 6,0/4,0 = 1,5 m/s²."},
+  {level:3,q:"Diezelfde fietser (2,0 → 8,0 m/s in 4,0 s): hoe groot is de verplaatsing?",options:["32 m","20 m","12 m","8 m"],correct:1,explain:"Rechthoek: 2,0 × 4,0 = 8 m. Driehoek: ½ × 4,0 × 6,0 = 12 m. Samen 20 m."},
+  {level:3,q:"Een steen valt 3,0 s in vrije val. Hoe groot is de snelheid dan?",options:["3,3 m/s","9,81 m/s","29 m/s","44 m/s"],correct:2,explain:"v = g·t = 9,81 × 3,0 = 29,4 ≈ 29 m/s (2 significante cijfers, want 3,0 heeft er twee)."},
+  {level:3,q:"8,6 m gedeeld door 1,33 s. Wat is het juiste antwoord?",options:["6,466 m/s","6,47 m/s","6,5 m/s","6,6 m/s"],correct:2,explain:"Delen → kleinste aantal significante cijfers = 2 (van 8,6). 6,466… → 6,5 m/s. Wie 1,33 eerst afrondt naar 1,3 krijgt 6,6: te vroeg afgerond."},
+  {level:3,q:"E = ½ m v². Welke omschrijving naar v is juist?",options:["v = 2E/m","v = √(2E/m)","v = √(E/2m)","v = 2E·m"],correct:1,explain:"Deel door ½m: v² = 2E/m. Dan worteltrekken aan beide kanten: v = √(2E/m)."},
+  {level:3,q:"Bij 10 m/s doe je 10 s over 100 m. Hoelang bij 25 m/s?",options:["25 s","4,0 s","2,5 s","40 s"],correct:1,explain:"Omgekeerd evenredig: v·t = 100. t = 100/25 = 4,0 s. (2,5× zo snel → 2,5× zo weinig tijd.)"},
+  {level:3,q:"Wat is 0,0025 s in wetenschappelijke notatie?",options:["2,5 · 10³ s","25 · 10⁻⁴ s","2,5 · 10⁻³ s","0,25 · 10⁻² s"],correct:2,explain:"Getal tussen 1 en 10: 2,5. De komma verschuift 3 plaatsen naar rechts → 10⁻³. Dus 2,5·10⁻³ s (2 significante cijfers)."}
+];
+let quizState={},quizFilter='all';
+function renderQuiz(){
+  const cont=document.getElementById('quiz-container');cont.innerHTML='';
+  const list=quizFilter==='all'?quizQuestions:quizQuestions.filter(q=>q.level==quizFilter);
+  list.forEach((q,idx)=>{
+    const real=quizQuestions.indexOf(q);
+    const card=document.createElement('div');card.className='quiz-card';
+    card.innerHTML=`<div class="quiz-q"><span class="pill ${q.level==1?'':q.level==2?'pill-green':'pill-orange'}">Niveau ${q.level}</span> ${idx+1}. ${q.q}</div>
+      <div class="quiz-options" id="opts-${real}">${q.options.map((o,i)=>`<button class="quiz-option" data-q="${real}" data-i="${i}">${o}</button>`).join('')}</div>
+      <div class="quiz-feedback" id="fb-${real}"></div>`;
+    cont.appendChild(card);
+  });
+  document.querySelectorAll('.quiz-option').forEach(b=>b.addEventListener('click',()=>answer(parseInt(b.dataset.q),parseInt(b.dataset.i))));
+  Object.keys(quizState).forEach(qi=>{
+    const s=quizState[qi];if(!s.answered)return;
+    const opts=document.querySelectorAll(`#opts-${qi} .quiz-option`);
+    opts.forEach((b,i)=>{b.disabled=true;if(i===quizQuestions[qi].correct)b.classList.add('correct');if(i===s.chosen&&s.chosen!==quizQuestions[qi].correct)b.classList.add('wrong');});
+    const fb=document.getElementById(`fb-${qi}`);if(fb){fb.classList.add('show',s.correct?'good':'bad');fb.innerHTML=(s.correct?'✅ <strong>Goed!</strong> ':'❌ <strong>Niet helemaal.</strong> ')+quizQuestions[qi].explain;}
+  });
+  updateScore();
+}
+function answer(qi,choice){
+  const q=quizQuestions[qi];const correct=choice===q.correct;
+  quizState[qi]={answered:true,chosen:choice,correct};
+  const opts=document.querySelectorAll(`#opts-${qi} .quiz-option`);
+  opts.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===choice&&!correct)b.classList.add('wrong');});
+  const fb=document.getElementById(`fb-${qi}`);fb.classList.add('show',correct?'good':'bad');
+  fb.innerHTML=(correct?'✅ <strong>Goed!</strong> ':'❌ <strong>Niet helemaal.</strong> ')+q.explain;
+  updateScore();
+}
+function updateScore(){
+  const total=quizQuestions.length,answered=Object.keys(quizState).length,correct=Object.values(quizState).filter(s=>s.correct).length;
+  document.getElementById('score-display').textContent=`Beantwoord: ${answered} / ${total} — Goed: ${correct}`;
+  document.getElementById('progress-fill').style.width=`${answered/total*100}%`;
+}
+function resetQuiz(){if(confirm('Alles opnieuw beginnen?')){quizState={};renderQuiz();}}
+document.querySelectorAll('.quiz-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.quiz-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');quizFilter=b.dataset.level;renderQuiz();}));
+renderQuiz();
+
+// ---------- LEERSCHEMA ----------
+const sessions=[
+  {title:'Sessie 1 · §1.1 Bewegingen vastleggen',dur:'45 min',items:['Theorie §1.1 lezen; speel met de grafiek "steilheid = snelheid" tot je snapt waarom steiler = sneller','Formule-trainer §1.1: gemiddelde snelheid, omrekenen km/h ↔ m/s, s = v·t, raaklijn (elk minstens 2× goed)','Flashcards §1.1 doorlopen, onbekende markeren','Oefenvragen niveau 1']},
+  {title:'Sessie 2 · §1.2 Snelheidsgrafieken',dur:'45 min',items:['Theorie §1.2 lezen; teken zelf een (x,t)- en (v,t)-grafiek van dezelfde beweging naast elkaar','Formule-trainer §1.2: rechthoek, driehoek, hokjes tellen','Flashcards §1.1 (herhaling) + §1.2','Oefenvragen niveau 2 over grafieken']},
+  {title:'Sessie 3 · §1.3 Versnellen en vertragen',dur:'45 min',items:['Theorie §1.3 lezen; speel met "oppervlakte = verplaatsing" (rechthoek + driehoek)','Formule-trainer §1.3: versnelling, eenparig versneld, vrije val, worp omhoog, vertraging','Flashcards §1.3','Voorbeeld 6 en 7 uit het boek zonder te kijken nadoen']},
+  {title:'Sessie 4 · §1.4 + §1.5 Eenheden en rekenen',dur:'40 min',items:['Theorie §1.4 en §1.5 lezen (eenheden, significante cijfers, notatie, formules omschrijven, evenredig)','Formule-trainer §1.4/1.5: significante cijfers, notatie, voorvoegsels, E = ½mv², evenredigheid','Flashcards §1.4 en §1.5','Oefenvragen niveau 2 en 3']},
+  {title:'Sessie 5 · Alles herhalen',dur:'40 min',items:['Spiekbriefje doorlezen; elke formule hardop uitleggen in gewone taal','Flashcards "Nog oefenen" tot ze allemaal goed zijn','Alle oefenvragen opnieuw (Opnieuw beginnen)','Formule-trainer: alle opgaven één keer met nieuwe getallen','Uit het boek: de Samengevat-blokken van §1.1 t/m §1.5 lezen']},
+  {title:'Dag van de toets',dur:'10 min',items:['Spiekbriefje 10 minuten doornemen, geen nieuwe stof','Bij elke rekenvraag: gegevens + eenheid opschrijven, omrekenen naar SI, formule, invullen, sig. cijfers']}
+];
+function fmtDate(d){return d.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'short'});}
+function buildPlan(){
+  const cont=document.getElementById('plan-container');cont.innerHTML='';
+  const val=document.getElementById('toets-datum').value;const done=load('plan-done',{});
+  const today=new Date();today.setHours(0,0,0,0);
+  let dates=null,info='';
+  if(val){
+    const toets=new Date(val+'T00:00:00');const N=Math.round((toets-today)/86400000);
+    if(N<0)info='Deze datum is al geweest.';
+    else if(N===0)info='De toets is vandaag! Doe alleen de laatste sessie.';
+    else{
+      info=`Nog ${N} dag${N===1?'':'en'} tot de toets.`;
+      dates=[];const studyDays=N; // days 0..N-1 available for sessions 1-5
+      for(let i=0;i<5;i++){let off;if(studyDays>=5){off=Math.round(i*(studyDays-1)/4);}else{off=Math.min(Math.floor(i*studyDays/5),studyDays-1);}const d=new Date(today);d.setDate(d.getDate()+off);dates.push(d);}
+      dates.push(toets);
+      if(N<5)info+=' Dat is krap: sommige sessies vallen op dezelfde dag. Doe ze dan met een pauze ertussen.';
+    }
+  } else info='Geen datum ingevuld: hieronder staat de volgorde zonder data.';
+  document.getElementById('dagen-over').textContent=info;
+  sessions.forEach((s,si)=>{
+    const div=document.createElement('div');div.className='plan-day';
+    const dateTxt=dates?fmtDate(dates[si]):'';
+    div.innerHTML=`<div class="d-head"><span class="d-date">${dateTxt?dateTxt+' · ':''}${s.title}</span><span class="d-dur">⏱ ${s.dur}</span></div>`+s.items.map((it,ii)=>{const k=si+'-'+ii;const ch=done[k]?'checked':'';return `<label class="${ch?'done':''}"><input type="checkbox" data-k="${k}" ${ch}><span>${it}</span></label>`;}).join('');
+    cont.appendChild(div);
+  });
+  cont.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',()=>{const d=load('plan-done',{});if(cb.checked)d[cb.dataset.k]=true;else delete d[cb.dataset.k];store('plan-done',d);cb.parentElement.classList.toggle('done',cb.checked);}));
+}
+const dateInput=document.getElementById('toets-datum');
+dateInput.value=load('toets-datum','');
+dateInput.addEventListener('change',()=>{store('toets-datum',dateInput.value);buildPlan();});
+document.getElementById('plan-reset').addEventListener('click',()=>{if(confirm('Alle vinkjes wissen?')){store('plan-done',{});buildPlan();}});
+buildPlan();
+</script>
+</body>
+</html>

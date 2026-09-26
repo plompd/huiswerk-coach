@@ -1,0 +1,492 @@
+<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Natuurkunde H1 — Leerdocument</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@page { size: A4; margin: 16mm 15mm; }
+.topbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;}
+.topbar a,.topbar button{font:inherit;font-size:10.5pt;text-decoration:none;border-radius:999px;padding:6px 14px;cursor:pointer;border:none;}
+.topbar a{background:#e3ebfb;color:#1e3a8a;}
+.topbar button{background:#1d4ed8;color:#fff;}
+@media print{.topbar{display:none;}}
+@media screen{body{max-width:820px;margin:0 auto;padding:20px 16px;}}
+body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.45;color:#1d2433;}
+h1{font-size:20pt;color:#1e3a8a;margin:0 0 4px;}
+h2{font-size:14pt;color:#1e3a8a;border-bottom:2px solid #1d4ed8;padding-bottom:3px;margin:18px 0 8px;page-break-after:avoid;}
+h3{font-size:11.5pt;color:#1d4ed8;margin:12px 0 4px;page-break-after:avoid;}
+p{margin:5px 0;}
+blockquote{border-left:3px solid #f08a3e;background:#fff8e1;margin:8px 0;padding:6px 10px;font-size:10pt;}
+table{border-collapse:collapse;width:100%;margin:6px 0;font-size:9.5pt;page-break-inside:avoid;}
+th,td{border:1px solid #d9e0ec;padding:4px 6px;text-align:left;vertical-align:top;}
+th{background:#e3ebfb;color:#1e3a8a;}
+.formula{background:#eef2fb;border-left:3px solid #1d4ed8;padding:6px 10px;font-family:Menlo,Consolas,monospace;margin:6px 0;font-size:10pt;}
+ul,ol{margin:4px 0;padding-left:20px;}
+li{margin-bottom:2px;}
+hr{border:none;border-top:1px solid #d9e0ec;margin:12px 0;}
+code{font-family:Menlo,Consolas,monospace;font-size:9.5pt;}
+</style></head><body><div class="topbar"><a href="index.html">&larr; Overzicht</a><a href="natuurkunde-h1.html">▶ Dashboard</a><button onclick="window.print()">🖨️ Printen / opslaan als PDF</button></div><h1>Natuurkunde H1 — Bewegen in beeld (HAVO 4)</h1>
+<blockquote>
+<p>Leerdocument bij §1.1 t/m §1.5. Gebruik dit naast het interactieve dashboard (natuurkunde-h1.html) met formule-trainer, flashcards, oefenvragen en leerschema.</p>
+</blockquote>
+<h2>Waar gaat dit hoofdstuk over?</h2>
+<p>Het hele hoofdstuk draait om drie vragen over een bewegend voorwerp:</p>
+<ol>
+<li><strong>Waar</strong> is het op welk moment? (plaats x, tijd t)</li>
+<li><strong>Hoe snel</strong> gaat het? (snelheid v)</li>
+<li><strong>Hoe snel verandert die snelheid?</strong> (versnelling a)</li>
+</ol>
+<p>Alles wat je leert (grafieken, formules, eenheden, significante cijfers) is gereedschap om die vragen te beantwoorden en je antwoord netjes op te schrijven.</p>
+<h3>De drie inzichten die alles verbinden</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>(x,t)-diagram</th>
+<th>(v,t)-diagram</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Steilheid</strong> =</td>
+<td>snelheid v</td>
+<td>versnelling a</td>
+</tr>
+<tr>
+<td><strong>Oppervlakte onder de grafiek</strong> =</td>
+<td>(niets)</td>
+<td>verplaatsing Δx</td>
+</tr>
+<tr>
+<td><strong>Horizontale lijn</strong> =</td>
+<td>stilstaan</td>
+<td>constante snelheid</td>
+</tr>
+<tr>
+<td><strong>Rechte schuine lijn</strong> =</td>
+<td>eenparige beweging</td>
+<td>eenparig versneld of vertraagd</td>
+</tr>
+<tr>
+<td><strong>Steeds steiler</strong> =</td>
+<td>versnellen</td>
+<td>versnelling neemt toe</td>
+</tr>
+<tr>
+<td><strong>Steeds vlakker</strong> =</td>
+<td>vertragen</td>
+<td>versnelling neemt af (luchtweerstand)</td>
+</tr>
+</tbody>
+</table>
+<p>Snap je deze tabel, dan snap je het grootste deel van de toets.</p>
+<hr />
+<h2>§1.1 Bewegingen vastleggen</h2>
+<p><strong>Waarom?</strong> Om iets over een beweging te zeggen moet je meten waar iets is en wanneer. Uit die metingen haal je de snelheid.</p>
+<h3>Begrippen</h3>
+<ul>
+<li><strong>Plaats x</strong> (m) en <strong>tijd t</strong> (s). Beginpunt: x₀ = 0 m op t = 0 s.</li>
+<li><strong>Verplaatsing Δx</strong> = x_eind − x_begin. De letter <strong>Δ (delta) betekent "verschil"</strong>; Δt is een tijdsduur.</li>
+<li><strong>(x,t)-diagram</strong>: plaats verticaal, tijd horizontaal.</li>
+</ul>
+<h3>Meetmethoden</h3>
+<table>
+<thead>
+<tr>
+<th>Methode</th>
+<th>Wanneer</th>
+<th>Hoe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meetlint + stopwatch</td>
+<td>Langzaam</td>
+<td>Handmatig</td>
+</tr>
+<tr>
+<td>Stroboscoop</td>
+<td>Snel</td>
+<td>Flitst met vaste tussenpozen; 50 flitsen/s → 1/50 = 0,020 s tussen flitsen</td>
+</tr>
+<tr>
+<td>Videometing</td>
+<td>Snel</td>
+<td>Foto's met vaste tussenpoos; 0,04 s → 25 beelden/s (25 Hz); hogesnelheidscamera 1000 Hz → 1 ms</td>
+</tr>
+</tbody>
+</table>
+<h3>Gemiddelde snelheid</h3>
+<div class="formula">v_gem = Δx / Δt</div>
+<p>Dafne Schippers: 100 m / 10,91 s = <strong>9,17 m/s</strong>.</p>
+<p><strong>Omrekenen:</strong> m/s → km/h: <strong>× 3,6</strong>; km/h → m/s: <strong>÷ 3,6</strong>. (1 m/s = 3600 m per uur = 3,6 km/h.) Check: het getal in km/h is altijd groter.</p>
+<p>Voorbeeld 1 (trajectcontrole): 25 km in 15 min = 0,25 h → 25/0,25 = 100 km/h → bekeuring.</p>
+<h3>Snelheid op één tijdstip (momentane snelheid)</h3>
+<p>De steilheid van de <strong>raaklijn</strong> aan de (x,t)-grafiek op dat tijdstip:</p>
+<div class="formula">v = (Δx / Δt)_raaklijn</div>
+<ol>
+<li>Teken de raaklijn op het gevraagde tijdstip.</li>
+<li>Trek hem ver door en kies <strong>twee punten ver uit elkaar</strong> (nauwkeuriger).</li>
+<li>Lees x en t af en reken (x₂ − x₁)/(t₂ − t₁).</li>
+</ol>
+<p>Voorbeeld 2: raaklijn op t = 1,0 s door (0,5 s; 0 m) en (4,0 s; 19 m) → v = 19/3,5 = <strong>5,4 m/s</strong>.</p>
+<h3>Eenparige beweging</h3>
+<p>Constante snelheid: elke seconde evenveel meter erbij. (x,t)-grafiek = rechte schuine lijn.</p>
+<div class="formula">s = v · t</div>
+<p>Voorbeeld 3: punten (4,0 s; 30 m) en (10,91 s; 100 m) → v = 70/6,91 = <strong>10,1 m/s = 36 km/h</strong>.</p>
+<hr />
+<h2>§1.2 Snelheidsgrafieken</h2>
+<p><strong>Waarom?</strong> Een (v,t)-grafiek laat direct zien hoe snel iets gaat en of dat verandert. En je kunt eruit terugrekenen hoe ver iets gekomen is.</p>
+<p><strong>Het idee:</strong> 2 uur lang 100 km/h = 200 km. In een (v,t)-grafiek is dat een rechthoek (hoogte 100, breedte 2). <strong>Oppervlakte onder de (v,t)-grafiek = verplaatsing.</strong> Dat geldt altijd, ook als de snelheid verandert.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Periode I (0–3 s)</th>
+<th>Periode II (na 3 s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(x,t)-grafiek</td>
+<td>steeds steiler</td>
+<td>rechte lijn</td>
+</tr>
+<tr>
+<td>(v,t)-grafiek</td>
+<td>stijgt 0 → 10,1 m/s</td>
+<td>horizontaal op 10,1 m/s</td>
+</tr>
+<tr>
+<td>Beweging</td>
+<td>versnelt</td>
+<td>eenparig rechtlijnig</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Let op:</strong> horizontale (x,t)-lijn = stilstaan. Horizontale (v,t)-lijn = constante snelheid (dus wél bewegen).</p>
+<h3>Verplaatsing bepalen</h3>
+<ul>
+<li><strong>Constante snelheid</strong>: rechthoek, Δx = v · Δt. Dafne 5,0–10,0 s: 10,1 × 5,0 = 51 m.</li>
+<li><strong>Snelheid niet constant</strong>, twee manieren:<ol>
+<li><strong>Hokjes tellen</strong>: waarde van één hokje = breedte (s) × hoogte (m/s). Voorbeeld 4: 0,5 s × 1 m/s = 0,5 m per hokje; 60 hokjes → 30 m.</li>
+<li><strong>Schatten met een figuur</strong>: driehoek ½ × basis × hoogte = ½ × 4,0 × 15 = 30 m. Te veel en te weinig compenseren elkaar.</li>
+</ol>
+</li>
+</ul>
+<hr />
+<h2>§1.3 Versnellen en vertragen</h2>
+<p><strong>Waarom?</strong> "Van 0 naar 100 in 2,15 s" zegt hoe snel de snelheid verandert. Nodig voor remwegen, valbewegingen, optrekken.</p>
+<p><strong>Het idee:</strong> snelheid = meters erbij per seconde. Versnelling = <strong>m/s erbij per seconde</strong> → eenheid m/s². a = 3 m/s² betekent: elke seconde wordt v 3 m/s groter.</p>
+<h3>Formules</h3>
+<div class="formula">a_gem = Δv / Δt      a = (Δv / Δt)_raaklijn</div>
+<ul>
+<li>DUT15: 100 km/h = 27,8 m/s in 2,15 s → a = 12,9 m/s². (Eerst omrekenen naar m/s!)</li>
+<li>Voorbeeld 5: a_gem van 0 tot 0,40 s = 12/0,40 = 30 m/s²; raaklijn op t = 1,0 s door (0; 11,5) en (1,8; 30) → a = 18,5/1,8 = 10 m/s². In het begin is de grafiek steiler, dus daar is a groter.</li>
+</ul>
+<h3>Eenparig versnelde beweging</h3>
+<p>Versnelling constant → (v,t)-grafiek is een schuine rechte lijn. Verplaatsing = <strong>rechthoek + driehoek</strong>:</p>
+<div class="formula">Δx = v_begin · Δt + ½ · Δt · Δv</div>
+<p>Voorbeeld 6 (fietser 1,7 → 6,8 m/s in 4,0 s):</p>
+<ul>
+<li>a = 5,1/4,0 = <strong>1,3 m/s²</strong></li>
+<li>Δx = 4,0 × 1,7 + ½ × 4,0 × 5,1 = 6,8 + 10,2 = <strong>17 m</strong></li>
+<li>Wanneer 30 km/h = 8,3 m/s? Nodig 8,3 − 1,7 = 6,6 m/s; per seconde 1,3 erbij → <strong>5,1 s</strong></li>
+</ul>
+<h3>Vrije val</h3>
+<ul>
+<li><strong>Valbeweging</strong> = versnelde beweging. <strong>Vrije val</strong> = alleen zwaartekracht, geen luchtweerstand (maan: hamer en veer vallen even snel).</li>
+<li>Eenparig versneld met <strong>a = g = 9,81 m/s²</strong> (Nederland; polen 9,83, evenaar 9,78; Binas tabel 7, 30B, 31).</li>
+<li>Voorbeeld 7 (knikker, 2,5 s): v = 2,5 × 9,81 = 24,5 m/s; Δx = ½ × 2,5 × 24,5 = <strong>31 m</strong>. (x,t)-grafiek wordt steeds steiler.</li>
+</ul>
+<h3>Val met luchtweerstand</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>(v,t)-grafiek</th>
+<th>Uitleg</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A kogeltje</td>
+<td>rechte lijn, a = g</td>
+<td>vrije val</td>
+</tr>
+<tr>
+<td>B kurk</td>
+<td>buigt af</td>
+<td>luchtweerstand neemt toe → a neemt af</td>
+</tr>
+<tr>
+<td>C papiersnipper</td>
+<td>wordt horizontaal</td>
+<td>a = 0 → constante snelheid (ook regendruppels)</td>
+</tr>
+</tbody>
+</table>
+<h3>Vertraging</h3>
+<p>Snelheid neemt af → Δv = v_eind − v_begin &lt; 0 → <strong>a &lt; 0</strong>, tegen de bewegingsrichting in. Eenparig vertraagd: dalende rechte (v,t)-lijn.
+<strong>Worp omhoog</strong>: direct na loslaten a = −g = −9,81 m/s². Op het hoogste punt v = 0.
+Voorbeeld 8: v₀ = 13 m/s → tijd tot hoogste punt = 13/9,81 = <strong>1,3 s</strong>.</p>
+<hr />
+<h2>§1.4 Grootheden en hun eenheden</h2>
+<p><strong>Waarom?</strong> Zonder eenheid is een getal betekenisloos ("80" in de VS is 80 mph = 129 km/h). Afspraken over eenheden zorgen dat formules kloppen.</p>
+<ul>
+<li><strong>Grootheid</strong> = wat je meet (snelheid). <strong>Eenheid</strong> = waarin (m/s). Meetwaarde = <strong>getal + eenheid</strong>.</li>
+<li><strong>SI</strong> (Système International): zeven basisgrootheden met grondeenheden (Binas tabel 3).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Basisgrootheid</th>
+<th>Symbool</th>
+<th>Grondeenheid</th>
+<th>Symbool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lengte</td>
+<td>ℓ</td>
+<td>meter</td>
+<td>m</td>
+</tr>
+<tr>
+<td>massa</td>
+<td>m</td>
+<td>kilogram</td>
+<td>kg</td>
+</tr>
+<tr>
+<td>tijd</td>
+<td>t</td>
+<td>seconde</td>
+<td>s</td>
+</tr>
+<tr>
+<td>stroomsterkte</td>
+<td>I</td>
+<td>ampère</td>
+<td>A</td>
+</tr>
+<tr>
+<td>temperatuur</td>
+<td>T</td>
+<td>kelvin</td>
+<td>K</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>In formules: <strong>SI-eenheid zonder voorvoegsel</strong> (m, s, niet km of min). Uitzondering: de <strong>kilogram</strong>.</li>
+<li>Notatie <strong>[t] = s</strong> = "de eenheid van t is de seconde".</li>
+<li><strong>Afgeleide eenheden</strong> via de formule: [v] = m/s = m·s⁻¹; [a] = m/s²; Voorbeeld 9: [E] = [½·m·v²] = kg·m²·s⁻² (het getal ½ heeft geen eenheid).</li>
+<li>Negatieve machten: s⁻¹ = 1/s; 10⁻² = 1/100 = 0,01.</li>
+<li>Omrekenen (Binas 4, 5): 1 L = 1 dm³; 1 m³ = 1000 L; 1 AE = 1,495 98·10¹¹ m; 1 kWh = 3,6·10⁶ J.</li>
+</ul>
+<p><strong>Omtrek, oppervlakte, volume (Binas 36B):</strong> rechthoek O = 2ℓ + 2b, A = ℓ·b; cirkel O = 2πr, A = πr²; balk V = ℓ·b·h; cilinder V = πr²·h; bol V = ⁴⁄₃πr³, A = 4πr². Eenheden volgen uit de formule: [A] = m², [V] = m³.</p>
+<hr />
+<h2>§1.5 Wiskundig gereedschap</h2>
+<p><strong>Waarom?</strong> Een meting is nooit perfect; je antwoord mag niet nauwkeuriger lijken dan je metingen. En je moet formules kunnen omschrijven en verbanden herkennen.</p>
+<h3>Significante cijfers</h3>
+<p>Aantal cijfers dat iets zegt over de nauwkeurigheid, <strong>ongeacht de komma</strong>.</p>
+<ul>
+<li>Nullen <strong>vooraan</strong> tellen niet: 0,034 → 2</li>
+<li>Nullen <strong>achter/tussen</strong> tellen wel: 3,400 → 4; 205 → 3</li>
+<li>10-machten tellen niet: 3,4·10² → 2</li>
+<li>15 mm en 1,5 cm hebben allebei 2 (decimalen zeggen niets)</li>
+</ul>
+<p><strong>Drie vuistregels:</strong></p>
+<ol>
+<li><strong>× en ÷</strong> → kleinste aantal significante cijfers van de gegevens</li>
+<li><strong>+ en −</strong> → kleinste aantal decimalen</li>
+<li><strong>Tussenresultaten niet afronden</strong>, alleen het eindantwoord</li>
+</ol>
+<p>Voorbeeld 10: 8,6/1,33 = 6,46… → <strong>6,5 m/s</strong> (2 sig.). Eerst 1,33 → 1,3 afronden geeft 6,6: fout. 100,2 + 5,46 = 105,66 → <strong>105,7 g</strong> (1 decimaal).</p>
+<h3>Voorvoegsels en 10-machten</h3>
+<table>
+<thead>
+<tr>
+<th>M</th>
+<th>k</th>
+<th>c</th>
+<th>m</th>
+<th>µ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10⁶</td>
+<td>10³</td>
+<td>10⁻²</td>
+<td>10⁻³</td>
+<td>10⁻⁶</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Wetenschappelijke notatie</strong>: getal van 1 tot 10 × 10-macht. 1 km = 1·10³ m; 0,035 s = 3,5·10⁻² s; 444 m = 4,44·10² m. Positieve exponent = komma naar rechts, negatieve = naar links. Verandert het aantal significante cijfers niet.</p>
+<h3>Formules omschrijven</h3>
+<p>Balans: wat je links doet, doe je ook rechts. Breng de gevraagde grootheid alleen naar links.</p>
+<ul>
+<li>Voorbeeld 11: v = Δx/Δt → Δt = Δx/v. 355 m met 25 km/h (= 6,94 m/s): Δt = 355/6,94 = <strong>51 s</strong>.</li>
+<li>Voorbeeld 12: E = ½mv² → v² = 2E/m → <strong>v = √(2E/m)</strong> (wortel aan beide kanten).</li>
+<li>Formuledriehoek: Δx boven, v en Δt onder. Dek af wat je zoekt.</li>
+</ul>
+<h3>Verbanden</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Recht evenredig</th>
+<th>Omgekeerd evenredig</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notatie</td>
+<td>Y ~ X</td>
+<td>Y ~ 1/X</td>
+</tr>
+<tr>
+<td>Formule</td>
+<td>Y = c·X (Y/X = c)</td>
+<td>Y = c/X (X·Y = c)</td>
+</tr>
+<tr>
+<td>Grafiek</td>
+<td>rechte lijn <strong>door de oorsprong</strong></td>
+<td>hyperbool</td>
+</tr>
+<tr>
+<td>X n× zo groot</td>
+<td>Y n× zo groot</td>
+<td>Y n× zo klein</td>
+</tr>
+<tr>
+<td>Voorbeeld</td>
+<td>x = v·t; v = a·t</td>
+<td>100 m: v = 5 → t = 20; v = 20 → t = 5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lineair verband</strong> = rechte lijn die niet per se door de oorsprong gaat (bv. (v,t)-lijn met beginsnelheid). Dat is dan niet recht evenredig.</p>
+<hr />
+<h2>Formuleblad (Binas tabel 35)</h2>
+<table>
+<thead>
+<tr>
+<th>Formule</th>
+<th>Betekenis</th>
+<th>Eenheden</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v_gem = Δx / Δt</td>
+<td>gemiddelde snelheid</td>
+<td>m/s, m, s</td>
+</tr>
+<tr>
+<td>v = (Δx/Δt)_raaklijn</td>
+<td>snelheid op één tijdstip</td>
+<td>steilheid raaklijn (x,t)</td>
+</tr>
+<tr>
+<td>s = v · t</td>
+<td>verplaatsing bij eenparige beweging</td>
+<td>m, m/s, s</td>
+</tr>
+<tr>
+<td>a_gem = Δv / Δt</td>
+<td>gemiddelde versnelling</td>
+<td>m/s², m/s, s</td>
+</tr>
+<tr>
+<td>a = (Δv/Δt)_raaklijn</td>
+<td>versnelling op één tijdstip</td>
+<td>steilheid raaklijn (v,t)</td>
+</tr>
+<tr>
+<td>Δx = oppervlakte onder (v,t)</td>
+<td>rechthoek b·h, driehoek ½·b·h, hokjes</td>
+<td>m</td>
+</tr>
+<tr>
+<td>a = g = 9,81 m/s²</td>
+<td>vrije val (worp omhoog: −9,81)</td>
+<td></td>
+</tr>
+<tr>
+<td>× 3,6 / ÷ 3,6</td>
+<td>m/s → km/h / km/h → m/s</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Stappenplan rekenopgave</h2>
+<ol>
+<li>Gegevens opschrijven <strong>met eenheid</strong>; gevraagde grootheid noteren.</li>
+<li>Alles naar <strong>SI</strong> (km/h ÷ 3,6; min × 60; km × 1000).</li>
+<li>Formule kiezen waarin de gevraagde grootheid staat.</li>
+<li>Formule <strong>omschrijven</strong> (gevraagde grootheid alleen links).</li>
+<li>Invullen en rekenen, <strong>niet tussentijds afronden</strong>.</li>
+<li>Eindantwoord: juist aantal <strong>significante cijfers + eenheid</strong>. Klopt de orde van grootte?</li>
+</ol>
+<h2>Veelgemaakte fouten</h2>
+<ul>
+<li>Horizontale (v,t)-lijn is niet stilstaan maar constante snelheid.</li>
+<li>Steilheid van (v,t) is de versnelling, niet de snelheid.</li>
+<li>km/h direct in een formule met meters invullen (eerst ÷ 3,6).</li>
+<li>Tussenresultaat afronden en doorrekenen.</li>
+<li>Raaklijn met twee punten dicht bij elkaar (onnauwkeurig).</li>
+<li>Bij vertragen of een worp omhoog is a negatief.</li>
+</ul>
+<h2>Leerschema (5 sessies + toetsdag)</h2>
+<table>
+<thead>
+<tr>
+<th>Sessie</th>
+<th>Stof</th>
+<th>Doen</th>
+<th>Tijd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>§1.1</td>
+<td>Theorie, grafiek "steilheid = snelheid", formule-trainer §1.1, flashcards §1.1, quiz niveau 1</td>
+<td>45 min</td>
+</tr>
+<tr>
+<td>2</td>
+<td>§1.2</td>
+<td>Theorie, zelf (x,t) en (v,t) naast elkaar tekenen, trainer §1.2, flashcards §1.1+1.2, quiz niveau 2</td>
+<td>45 min</td>
+</tr>
+<tr>
+<td>3</td>
+<td>§1.3</td>
+<td>Theorie, "oppervlakte = verplaatsing", trainer §1.3, flashcards §1.3, voorbeeld 6 en 7 nadoen</td>
+<td>45 min</td>
+</tr>
+<tr>
+<td>4</td>
+<td>§1.4 + 1.5</td>
+<td>Theorie, trainer §1.4/1.5, flashcards §1.4+1.5, quiz niveau 2 en 3</td>
+<td>40 min</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Alles</td>
+<td>Spiekbriefje hardop uitleggen, "nog oefenen"-kaarten, alle quizvragen, trainer met nieuwe getallen, Samengevat-blokken in het boek</td>
+<td>40 min</td>
+</tr>
+<tr>
+<td>Toetsdag</td>
+<td></td>
+<td>Spiekbriefje 10 min, geen nieuwe stof</td>
+<td>10 min</td>
+</tr>
+</tbody>
+</table>
+<p>Korter en vaker werkt beter dan één lange avond: slaap zet het vast. In het dashboard kun je de toetsdatum invullen; het schema verdeelt de sessies dan over de beschikbare dagen.</p></body></html>
