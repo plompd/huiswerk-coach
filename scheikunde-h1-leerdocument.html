@@ -1,0 +1,546 @@
+<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Scheikunde H1 — Leerdocument</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@page { size: A4; margin: 16mm 15mm; }
+.topbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;}
+.topbar a,.topbar button{font:inherit;font-size:10.5pt;text-decoration:none;border-radius:999px;padding:6px 14px;cursor:pointer;border:none;}
+.topbar a{background:#e6f4ec;color:#155735;}
+.topbar button{background:#1f7a4d;color:#fff;}
+@media print{.topbar{display:none;}}
+@media screen{body{max-width:820px;margin:0 auto;padding:20px 16px;}}
+body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:10.5pt;line-height:1.45;color:#1d2b25;}
+h1{font-size:20pt;color:#155735;margin:0 0 4px;}
+h2{font-size:14pt;color:#155735;border-bottom:2px solid #1f7a4d;padding-bottom:3px;margin:18px 0 8px;page-break-after:avoid;}
+h3{font-size:11.5pt;color:#1f7a4d;margin:12px 0 4px;page-break-after:avoid;}
+p{margin:5px 0;}
+blockquote{border-left:3px solid #f08a3e;background:#fff8e1;margin:8px 0;padding:6px 10px;font-size:10pt;}
+table{border-collapse:collapse;width:100%;margin:6px 0;font-size:9.5pt;page-break-inside:avoid;}
+th,td{border:1px solid #d8e1dc;padding:4px 6px;text-align:left;vertical-align:top;}
+th{background:#e6f4ec;color:#155735;}
+.formula{background:#edf6f0;border-left:3px solid #1f7a4d;padding:6px 10px;font-family:Menlo,Consolas,monospace;margin:6px 0;font-size:10pt;}
+pre{background:#edf6f0;border-left:3px solid #1f7a4d;padding:6px 10px;font-family:Menlo,Consolas,monospace;font-size:9pt;margin:6px 0;white-space:pre;overflow-x:auto;}
+ul,ol{margin:4px 0;padding-left:20px;}
+li{margin-bottom:2px;}
+hr{border:none;border-top:1px solid #d8e1dc;margin:12px 0;}
+code{font-family:Menlo,Consolas,monospace;font-size:9.5pt;}
+sub,sup{line-height:0;}
+</style></head><body><div class="topbar"><a href="index.html">&larr; Overzicht</a><a href="scheikunde-h1.html">▶ Dashboard</a><button onclick="window.print()">🖨️ Printen / opslaan als PDF</button></div><h1>Scheikunde H1 — Chemisch rekenen (HAVO 4)</h1>
+<blockquote>
+<p>Leerdocument bij §1 Atoombouw en periodiek systeem, §2 De chemische hoeveelheid en §3 Rekenen aan gehaltes. Gebruik dit naast het <a href="scheikunde-h1.html">interactieve dashboard</a> met atoombouwer, mol-machine, formule-trainer, flashcards, oefenvragen en leerschema.</p>
+</blockquote>
+<h2>Waar gaat dit hoofdstuk over?</h2>
+<p>Het hoofdstuk heet "Chemisch rekenen", maar het draait om één vraag: <strong>hoeveel deeltjes zitten er in een hoeveelheid stof, en hoe reken je daarmee?</strong> Atomen zijn zo klein dat je ze niet kunt tellen. Daarom:</p>
+<ol>
+<li><strong>§1</strong> leer je hoe een atoom in elkaar zit en wat het periodiek systeem je over een element vertelt.</li>
+<li><strong>§2</strong> leer je met de eenheid <strong>mol</strong> toch te "tellen" door te wegen.</li>
+<li><strong>§3</strong> leer je uitrekenen hoeveel van een stof in een mengsel zit, en hoe nauwkeurig je dat mag opschrijven.</li>
+</ol>
+<h3>De drie inzichten die alles verbinden</h3>
+<table>
+<thead>
+<tr>
+<th>Inzicht</th>
+<th>Wat het betekent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Het atoomnummer bepaalt alles</strong></td>
+<td>Protonen = atoomnummer = plek in het periodiek systeem. Neutraal atoom: elektronen = protonen. De buitenste elektronen (valentie-elektronen) bepalen hoe het atoom reageert.</td>
+</tr>
+<tr>
+<td><strong>Mol is een telwoord, net als dozijn</strong></td>
+<td>Dozijn = 12, mol = 6,02·10²³. De massa van 1 mol stof in gram is hetzelfde getal als de molecuulmassa in u. Wegen = tellen.</td>
+</tr>
+<tr>
+<td><strong>Alles hangt aan het blokschema</strong></td>
+<td>V ⇄ m ⇄ n ⇄ N (en n ⇄ [A]). Ken je de pijlen, dan kun je elke rekenopgave oplossen door stap voor stap door het schema te lopen.</td>
+</tr>
+</tbody>
+</table>
+<pre><code> V (volume) --×ρ--&gt;  m (massa) --:M--&gt;  n (mol) --×N_A--&gt;  N (deeltjes)
+            &lt;--:ρ--             &lt;--×M--          &lt;--:N_A--
+                                                  |
+                                          :V_opl  |  ×V_opl
+                                                  v
+                                            [A] (molariteit)
+</code></pre>
+<p>Snap je deze drie, dan snap je het grootste deel van de toets. Elke rekenvraag is een wandeling door het blokschema, met aan het eind netjes afronden op significante cijfers.</p>
+<hr />
+<h2>§1 Atoombouw en periodiek systeem</h2>
+<p><strong>Waarom?</strong> Als je weet hoe een atoom is opgebouwd, snap je waarom natrium heftig reageert, waarom helium nergens mee reageert en waarom chloor altijd een ion met lading 1− wordt. Het periodiek systeem is de plattegrond van alle atoomsoorten: weet je waar een element staat, dan kun je zijn gedrag voorspellen.</p>
+<p><strong>Het idee:</strong> een atoom is een piepklein zonnestelsel: een zware kern (protonen en neutronen) met daaromheen lichte elektronen in schillen. Alleen de buitenste elektronen doen mee aan reacties.</p>
+<h3>De ontwikkeling van het atoommodel (tabel 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Jaar</th>
+<th>Wie</th>
+<th>Nieuw idee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>± 420 v.Chr.</td>
+<td>Demokritos</td>
+<td>Materie bestaat uit ondeelbare deeltjes (<em>atomos</em>)</td>
+</tr>
+<tr>
+<td>1808</td>
+<td>Dalton</td>
+<td>Atomen zijn massieve, ondeelbare bolletjes; verklaart behoud van massa</td>
+</tr>
+<tr>
+<td>1897</td>
+<td>Thomson</td>
+<td>Positieve en negatieve ladingen in het atoom</td>
+</tr>
+<tr>
+<td>1911</td>
+<td>Rutherford</td>
+<td>Positieve kern, elektronen in een wolk eromheen</td>
+</tr>
+<tr>
+<td>1914</td>
+<td>Bohr</td>
+<td>Elektronen in vaste banen (schillen)</td>
+</tr>
+<tr>
+<td>1932</td>
+<td>Chadwick</td>
+<td>Neutronen in de kern</td>
+</tr>
+</tbody>
+</table>
+<p>Onthoud de volgorde en wat er nieuw was: ondeelbaar → ladingen → kern → schillen → neutronen.</p>
+<h3>Het huidige atoommodel</h3>
+<ul>
+<li><strong>Kern:</strong> protonen (lading +, 1 u) en neutronen (geen lading, 1 u). Vrijwel alle massa zit in de kern.</li>
+<li><strong>Elektronenwolk:</strong> elektronen (lading −, massa verwaarloosbaar) in schillen <strong>K, L, M, N, …</strong> Maximaal <strong>K 2, L 8, M 18</strong>. Voor de eerste 20 elementen: K2, L8, M8, N2. Elektronenconfiguratie: Binas tabel 99.</li>
+<li>Een atoom is <strong>neutraal</strong>: elektronen = protonen.</li>
+<li><strong>Valentie-elektronen</strong> = elektronen in de buitenste schil. Alleen die doen mee aan reacties.</li>
+</ul>
+<p>Voorbeeld Na-23: 11 p, 12 n, 11 e verdeeld als K 2, L 8, M 1 → 1 valentie-elektron. Daarom wordt natrium graag Na⁺.</p>
+<h3>Atoomnummer, massagetal, isotopen</h3>
+<div class="formula">atoomnummer  Z = aantal protonen&nbsp;&nbsp;&nbsp;&nbsp;massagetal  A = protonen + neutronen</div>
+
+<ul>
+<li><strong>Neutronen = A − Z.</strong> Notatie: ³⁷₁₇Cl, ³⁷Cl of Cl-37 (massagetal linksboven, atoomnummer linksonder).</li>
+<li>Het atoomnummer bepaalt het element: 17 protonen is altijd chloor.</li>
+<li><strong>Isotopen</strong>: zelfde atoomnummer, ander aantal neutronen. Cl-35 heeft 18 neutronen, Cl-37 heeft 20.</li>
+</ul>
+<p>Voorbeeldopdracht 2: ³⁷₁₇Cl → 17 p, 37 − 17 = 20 n, 17 e (K 2, L 8, M 7).</p>
+<h3>Ionen</h3>
+<p>Een <strong>ion</strong> is een atoom dat elektronen heeft afgestaan of opgenomen. Het aantal protonen verandert nooit.</p>
+<div class="formula">lading = protonen - elektronen</div>
+
+<ul>
+<li>Na⁺: 11 p, 10 e. Cl⁻: 17 p, 18 e. Mg²⁺: 12 p, 10 e.</li>
+<li><strong>Positief = elektronen kwijt</strong> (metalen). <strong>Negatief = elektronen erbij</strong> (niet-metalen).</li>
+</ul>
+<h3>Relatieve atoom- en molecuulmassa</h3>
+<ul>
+<li>Massa van atomen in <strong>u</strong> (1 u = 1,66·10⁻²⁴ g).</li>
+<li><strong>Relatieve atoommassa A<sub>r</sub></strong> = gewogen gemiddelde van de isotopen (Binas 99; percentages in Binas 25A). Daarom A<sub>r</sub>(Cl) = 35,45 en geen heel getal.</li>
+<li><strong>Relatieve molecuulmassa M<sub>r</sub></strong> = de A<sub>r</sub> van alle atomen in de formule opgeteld.</li>
+</ul>
+<p>Voorbeeldopdracht 3: M<sub>r</sub>(C₆H₁₂O₆) = 6 × 12,01 + 12 × 1,008 + 6 × 16,00 = <strong>180,16 u</strong>. Let op indexen en haakjes: Mg(OH)₂ bevat 1 Mg, 2 O en 2 H.</p>
+<h3>Periodiek systeem</h3>
+<ul>
+<li>Mendelejev (1869): op volgorde van atoommassa, vergelijkbare elementen onder elkaar, gaten opengelaten en eigenschappen voorspeld (eka-silicium = germanium, tabel 4).</li>
+<li>Nu: op volgorde van <strong>atoomnummer</strong> (Binas 99).</li>
+<li><strong>Perioden</strong> = rijen (7). Periodenummer = aantal schillen met elektronen.</li>
+<li><strong>Groepen</strong> = kolommen (18). Zelfde groep = evenveel valentie-elektronen = vergelijkbare eigenschappen. Groep 1-2: valentie-elektronen = groepnummer; groep 13-18: groepnummer − 10.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Metalen</th>
+<th>Niet-metalen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plek</td>
+<td>links en midden</td>
+<td>rechtsboven (+ H)</td>
+</tr>
+<tr>
+<td>Deeltjes</td>
+<td>geen moleculen: Fe(s), Cu(s)</td>
+<td>vaak tweeatomig: H₂ N₂ O₂ F₂ Cl₂ Br₂ I₂</td>
+</tr>
+<tr>
+<td>Eigenschappen</td>
+<td>glanzend, geleiden stroom en warmte</td>
+<td>vaak gas, geleiden niet</td>
+</tr>
+<tr>
+<td>Bij reactie</td>
+<td>staan elektronen af → positief ion</td>
+<td>nemen elektronen op → negatief ion</td>
+</tr>
+</tbody>
+</table>
+<p>Ezelsbrug tweeatomige elementen: <strong>H</strong>eb <strong>N</strong>ooit <strong>O</strong>ngerust <strong>F</strong>lauwe <strong>Cl</strong>ub <strong>Br</strong>ood <strong>I</strong>n.</p>
+<h3>Edelgasconfiguratie en reactiviteit</h3>
+<ul>
+<li><strong>Edelgassen</strong> (groep 18) hebben 8 valentie-elektronen (He: 2) en reageren vrijwel niet: de <strong>edelgasconfiguratie</strong>. Andere atomen reageren om die verdeling ook te krijgen.</li>
+<li><strong>Halogenen</strong> (groep 17): 7 valentie-elektronen, nemen er 1 op → 1−.</li>
+<li><strong>Alkalimetalen</strong> (groep 1): staan er 1 af → 1+. <strong>Aardalkalimetalen</strong> (groep 2): staan er 2 af → 2+. Meest reactieve metalen.</li>
+</ul>
+<div class="formula">2 Na + Cl<sub>2</sub> → 2 Na<sup>+</sup> + 2 Cl<sup>-</sup></div>
+
+<p>Elk Na-atoom staat één elektron af, elk Cl-atoom neemt er één op. Allebei edelgasconfiguratie, maar nu geladen.</p>
+<h3>Covalentie</h3>
+<p>Niet-metalen kunnen ook een elektronenpaar <strong>delen</strong> (atoombinding). Het aantal atoombindingen dat een atoom vormt = <strong>covalentie</strong> = 8 − valentie-elektronen. Uitzondering waterstof: H streeft naar 2 elektronen (zoals helium), dus 2 − 1 = 1.</p>
+<table>
+<thead>
+<tr>
+<th>Atoomsoort</th>
+<th>Groep</th>
+<th>Covalentie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>F, Cl, Br, I</td>
+<td>17</td>
+<td>1</td>
+</tr>
+<tr>
+<td>O, S</td>
+<td>16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>N, P</td>
+<td>15</td>
+<td>3</td>
+</tr>
+<tr>
+<td>C, Si</td>
+<td>14</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Check met water H₂O: O heeft covalentie 2, dus twee H (elk 1).</p>
+<hr />
+<h2>§2 De chemische hoeveelheid</h2>
+<p><strong>Waarom?</strong> Stoffen reageren in vaste verhoudingen van deeltjes, maar je weegt gram af. Om te weten hoeveel van stof A nodig is om alle stof B te laten reageren, moet je van gram naar deeltjes kunnen rekenen en terug.</p>
+<p><strong>Het idee:</strong> een mol is een telwoord (zoals dozijn = 12): 1 mol = 6,02·10²³ deeltjes. Het getal is zó gekozen dat 1 mol stof in gram evenveel weegt als de molecuulmassa in u. Water: M<sub>r</sub> = 18,0 u, dus 1 mol water weegt 18,0 g. Daardoor kun je tellen door te wegen.</p>
+<h3>Mol en getal van Avogadro</h3>
+<ul>
+<li><strong>Chemische hoeveelheid n</strong>, eenheid <strong>mol</strong>. 1 mol = 6,02·10²³ deeltjes.</li>
+<li><strong>Getal van Avogadro N<sub>A</sub></strong> = 6,02·10²³ mol⁻¹ (Binas 7).</li>
+<li>Molverhouding uit de formule: 1 mol NH₃ bevat 1 mol N en 3 mol H (1 : 1 : 3), net als 1 dozijn NH₃ = 3 dozijn H.</li>
+</ul>
+<div class="formula">N = n · N<sub>A</sub></div>
+
+<p>N = aantal deeltjes, n in mol, N<sub>A</sub> = 6,02·10²³ mol⁻¹.</p>
+<h3>Molaire massa</h3>
+<p>In 1 gram passen 1 / 1,66·10⁻²⁴ = 6,02·10²³ u. Dus 1,00 mol C-atomen (12,01 u) weegt 12,01 g.</p>
+<p><strong>Molaire massa M (g/mol) = M<sub>r</sub> (u), hetzelfde getal.</strong> Binas 98, of zelf optellen met Binas 99.</p>
+<div class="formula">m = n · M&nbsp;&nbsp;&nbsp;&nbsp;n = m / M</div>
+
+<p>m in g, n in mol, M in g/mol.</p>
+<p>Voorbeeldopdracht 1: 33 g CO₂. M(CO₂) = 44,010 g/mol. n = 33 / 44,010 = <strong>0,75 mol</strong> (2 significante cijfers).</p>
+<p>Check: g ÷ g/mol = mol. Van gram naar mol wordt het getal kleiner.</p>
+<h3>Dichtheid</h3>
+<p>Om stoffen eerlijk te vergelijken neem je van elk hetzelfde volume: 1,00 cm³ aluminium weegt 2,70 g, 1,00 cm³ ijzer 7,87 g. Die stofeigenschap is de <strong>dichtheid ρ</strong> (Binas 8-12, 40A).</p>
+<div class="formula">ρ = m / V&nbsp;&nbsp;&nbsp;&nbsp;m = ρ · V&nbsp;&nbsp;&nbsp;&nbsp;V = m / ρ</div>
+
+<p>Eenheid kg/m³ of g/cm³ (= g/mL). Omrekenen: 1 g/mL = 1,0·10³ kg/m³. Aluminium 2,70·10³ kg/m³ = 2,70 g/cm³.</p>
+<h3>Het blokschema (figuur 5)</h3>
+<table>
+<thead>
+<tr>
+<th>Van → naar</th>
+<th>Bewerking</th>
+<th>Formule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V → m</td>
+<td>× ρ</td>
+<td>m = ρ · V</td>
+</tr>
+<tr>
+<td>m → V</td>
+<td>: ρ</td>
+<td>V = m / ρ</td>
+</tr>
+<tr>
+<td>m → n</td>
+<td>: M</td>
+<td>n = m / M</td>
+</tr>
+<tr>
+<td>n → m</td>
+<td>× M</td>
+<td>m = n · M</td>
+</tr>
+<tr>
+<td>n → N</td>
+<td>× N<sub>A</sub></td>
+<td>N = n · N<sub>A</sub></td>
+</tr>
+<tr>
+<td>N → n</td>
+<td>: N<sub>A</sub></td>
+<td>n = N / N<sub>A</sub></td>
+</tr>
+</tbody>
+</table>
+<p>Voorbeeldopdracht 2: volume van 2,0 mol ethanol C₂H₆O(l). Route n → m → V.</p>
+<ol>
+<li>M = 46,069 g/mol → m = 2,0 × 46,069 = 92,138 g.</li>
+<li>ρ = 0,80·10³ kg/m³ = 0,80 g/mL → V = 92,138 / 0,80 = 115,17 mL.</li>
+<li>Afronden op 2 significante cijfers: <strong>V = 1,2·10² mL</strong>. Niet tussendoor afronden.</li>
+</ol>
+<hr />
+<h2>§3 Rekenen aan gehaltes</h2>
+<p><strong>Waarom?</strong> Je werkt bijna altijd met mengsels (zeewater, lucht, frisdrank, een medicijn). Dan wil je weten hoeveel van een bestanddeel erin zit: het <strong>gehalte</strong>. En omdat elke meting beperkt nauwkeurig is, leer je een antwoord eerlijk op te schrijven: niet nauwkeuriger dan je meting.</p>
+<p><strong>Het idee:</strong> een gehalte is altijd <strong>deel gedeeld door geheel</strong>. × 100 = procent, × 10⁶ = ppm, × 10⁹ = ppb. Molariteit is hetzelfde idee: mol stof per liter oplossing.</p>
+<h3>Meetwaarden en significante cijfers</h3>
+<ul>
+<li><strong>Meetwaarde</strong>: uit een instrument, beperkt nauwkeurig. Het aantal <strong>significante cijfers</strong> geeft de nauwkeurigheid aan.</li>
+<li><strong>Tellen:</strong> vanaf het eerste cijfer ≠ 0, alles rechts daarvan telt mee, óók nullen aan het eind. 0,002 30 → 3; 50,00 → 4; 50 → 2. De macht van 10 telt niet mee.</li>
+<li>Instrument bepaalt de nauwkeurigheid (figuur 1): bekerglas 50 mL (2), maatcilinder 50,0 mL (3), maatkolf en volpipet 50,00 mL (4).</li>
+<li><strong>Telwaarden</strong> (11 protonen, 100%, de 2 in Cl₂) zijn exact en tellen niet mee.</li>
+</ul>
+<h3>Wetenschappelijke notatie</h3>
+<p>Eén cijfer vóór de komma × macht van 10: 0,002 30 = 2,30·10⁻³; 40,8 = 4,08·10¹; 0,0054 = 5,4·10⁻³; N<sub>A</sub> = 6,02·10²³. Rekenmachine in <em>scientific mode</em>. Maakt de significantie zichtbaar: eindnullen tellen mee, dus "120 mL" zou 3 significante cijfers betekenen; 1,2·10² mL laat zien dat het er 2 zijn.</p>
+<h3>De drie vuistregels</h3>
+<table>
+<thead>
+<tr>
+<th>Bewerking</th>
+<th>Regel</th>
+<th>Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Optellen / aftrekken</strong></td>
+<td>afronden op minste aantal <strong>decimalen</strong></td>
+<td>1,003 + 0,5 = 1,503 → <strong>1,5</strong></td>
+</tr>
+<tr>
+<td><strong>2. Vermenigvuldigen / delen</strong></td>
+<td>afronden op minste aantal <strong>significante cijfers</strong></td>
+<td>3,34 × 5,026 = 16,786… → <strong>16,8</strong></td>
+</tr>
+<tr>
+<td><strong>3. Combinatie</strong></td>
+<td>eerst regel 1, dan regel 2</td>
+<td>(1,003 + 0,5) × 3,33 = 1,503 × 3,33 = 5,004… → <strong>5,0</strong> (de som 1,5 heeft 2 sig. cijfers)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tussenuitkomsten nooit afronden</strong>; alleen het eindantwoord. Laat de waarde in je rekenmachine staan.</p>
+<p>Voorbeeldopdracht 1: 10,0 + 4,55 = 14,55 → <strong>14,6 mL</strong> (1 decimaal). Voorbeeldopdracht 2: ρ = 42,5 / 50,00 = 0,8500 → <strong>0,850 g/mL</strong> (3 sig. cijfers; de laatste 0 hoort erbij).</p>
+<h3>Massa- en volumegehaltes</h3>
+<div class="formula">volume% = V(A) / V(mengsel) · 100%&nbsp;&nbsp;&nbsp;&nbsp;massa% = m(A) / m(mengsel) · 100%</div>
+
+<div class="formula">massa-ppm = m(A) / m(mengsel) · 10<sup>6</sup>&nbsp;&nbsp;&nbsp;&nbsp;massa-ppb = m(A) / m(mengsel) · 10<sup>9</sup></div>
+
+<ul>
+<li>(A) = de stof waarvan je het gehalte berekent. Teller en noemer in <strong>dezelfde eenheid</strong>.</li>
+<li>Vloeistofmengsels → volume%; vaste mengsels en voedsel → massa%.</li>
+<li>Heel lage gehaltes → ppm (gram per miljoen gram = mg per kg) of ppb (µg per kg). 2 µg per 100 g = 0,000 002 massa% = 0,02 ppm = 20 ppb.</li>
+</ul>
+<p>Voorbeeld: flesje bier 330 mL, 5,0 volume% → V(alcohol) = 0,050 × 330 = 16,5 mL → m = 0,80 × 16,5 = <strong>13 g</strong>.</p>
+<h3>Molariteit</h3>
+<p><strong>Concentratie</strong> = hoeveelheid opgeloste stof per liter oplossing (bv. g/L). In <strong>mol</strong> per liter heet het <strong>molariteit</strong> [A], eenheid mol/L = M.</p>
+<div class="formula">[A] = n(A) / V<sub>opl</sub></div>
+
+<p>V<sub>opl</sub> in <strong>liter</strong>: 750 mL = 0,750 L.</p>
+<p>Voorbeeldopdracht 4: 3,8 g glucose in 750 mL.</p>
+<ol>
+<li>n = m / M = 3,8 / 180,16 = 0,021 092 mol.</li>
+<li>[glucose] = 0,021 092 / 0,750 = 2,812·10⁻².</li>
+<li>2 sig. cijfers: <strong>[C₆H₁₂O₆] = 2,8·10⁻² M</strong>.</li>
+</ol>
+<p>Klassieke fouten: mL laten staan (eerst naar L) en gram delen door liter (dat is g/L, geen molariteit; eerst naar mol).</p>
+<hr />
+<h2>Spiekbriefje</h2>
+<h3>Formules</h3>
+<table>
+<thead>
+<tr>
+<th>Formule</th>
+<th>Betekenis</th>
+<th>Eenheden</th>
+<th>Binas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ρ = m / V</td>
+<td>dichtheid</td>
+<td>g/mL (= g/cm³) of kg/m³</td>
+<td>8-12, 40A</td>
+</tr>
+<tr>
+<td>m = n · M</td>
+<td>massa ↔ mol</td>
+<td>g = mol × g/mol</td>
+<td>98, 99</td>
+</tr>
+<tr>
+<td>N = n · N<sub>A</sub></td>
+<td>mol ↔ deeltjes</td>
+<td>N<sub>A</sub> = 6,02·10²³ mol⁻¹</td>
+<td>7</td>
+</tr>
+<tr>
+<td>[A] = n(A) / V<sub>opl</sub></td>
+<td>molariteit</td>
+<td>mol/L = M, V in liter</td>
+<td>–</td>
+</tr>
+<tr>
+<td>massa% = m(A)/m(mengsel) · 100%</td>
+<td>massagehalte</td>
+<td>zelfde eenheid</td>
+<td>ppm · 10⁶, ppb · 10⁹</td>
+</tr>
+<tr>
+<td>volume% = V(A)/V(mengsel) · 100%</td>
+<td>volumegehalte</td>
+<td>zelfde eenheid</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<h3>Atoombouw en periodiek systeem</h3>
+<ul>
+<li>Z = protonen; A = protonen + neutronen; neutronen = A − Z. Isotopen: zelfde Z, andere A.</li>
+<li>Ion: lading = protonen − elektronen. Positief = elektronen kwijt (metaal), negatief = erbij (niet-metaal).</li>
+<li>Schillen K2 L8 M18 (Z ≤ 20: K2 L8 M8 N2). Periode = aantal schillen. Groep = valentie-elektronen (groep 13-18: −10).</li>
+<li>Groep 1 (1+), 2 (2+), 17 (1−), 18 (edelgas, reageert niet). Edelgasconfiguratie = 8 buiten (He 2).</li>
+<li>Covalentie = 8 − valentie-elektronen (H: 2 − 1 = 1): H 1 · F Cl Br I 1 · O S 2 · N P 3 · C Si 4.</li>
+<li>Tweeatomig: H₂ N₂ O₂ F₂ Cl₂ Br₂ I₂. Metalen: alleen het symbool.</li>
+<li>M<sub>r</sub>: alle A<sub>r</sub> optellen; index hoort bij het atoom ervoor; index achter haakjes geldt voor alles erbinnen.</li>
+</ul>
+<h3>Significante cijfers</h3>
+<ul>
+<li>Tellen vanaf eerste cijfer ≠ 0, eindnullen tellen mee, macht van 10 niet. Telwaarden tellen niet mee.</li>
+<li>Optellen en aftrekken → minste decimalen. Vermenigvuldigen en delen → minste sig. cijfers. Combinatie: eerst + / −, dan × / :.</li>
+<li>Tussenuitkomst nooit afronden. Eindantwoord in wetenschappelijke notatie als het aantal sig. cijfers anders onduidelijk is.</li>
+</ul>
+<h2>Stappenplan rekenopgave</h2>
+<ol>
+<li><strong>Gegevens</strong> opschrijven met symbool en eenheid: m(CO₂) = 33 g.</li>
+<li><strong>Gevraagd</strong> opschrijven: n(CO₂) = ? mol.</li>
+<li>Bepaal in het <strong>blokschema</strong> waar je staat en waar je heen moet. Elke pijl = één formule.</li>
+<li><strong>Binas-waarden</strong> opzoeken (M, ρ, N<sub>A</sub>) en noteren met tabelnummer.</li>
+<li><strong>Eenheden kloppend maken</strong>: mL → L bij molariteit; kg/m³ → g/mL bij dichtheid.</li>
+<li>Rekenen, <strong>tussenuitkomsten niet afronden</strong>.</li>
+<li>Eindantwoord in het <strong>juiste aantal significante cijfers</strong>, met eenheid.</li>
+</ol>
+<h2>Veelgemaakte fouten</h2>
+<ul>
+<li>Positief ion → elektronen erbij tellen (fout: positief = elektronen kwijt).</li>
+<li>Neutronen = massagetal (fout: massagetal − atoomnummer).</li>
+<li>Bij M<sub>r</sub> de index vergeten of haakjes niet doorvermenigvuldigen.</li>
+<li>Delen en vermenigvuldigen verwisselen; check met eenheden (g ÷ g/mol = mol).</li>
+<li>Molariteit met V in mL, of met massa in gram in plaats van mol.</li>
+<li>Te vroeg afronden of het verkeerde aantal significante cijfers.</li>
+<li>Bij gehaltes teller en noemer in verschillende eenheden.</li>
+</ul>
+<hr />
+<h2>Oefenopgaven (antwoorden onderaan)</h2>
+<ol>
+<li>Hoeveel protonen, neutronen en elektronen heeft ⁴⁰₂₀Ca? En Ca²⁺?</li>
+<li>Geef de elektronenconfiguratie van S (Z = 16). Hoeveel valentie-elektronen? Welk ion vormt zwavel?</li>
+<li>Bereken M<sub>r</sub> van Ca(NO₃)₂ (Ca 40,08; N 14,01; O 16,00).</li>
+<li>Waarom is A<sub>r</sub>(Cl) = 35,45 en geen heel getal?</li>
+<li>Hoeveel mol is 4,4 g CO₂ (M = 44,01 g/mol)? Hoeveel moleculen is dat?</li>
+<li>Wat is de massa van 0,250 mol NaCl (M = 58,44 g/mol)?</li>
+<li>Wat is het volume van 15,0 g ethanol (ρ = 0,80 g/mL)?</li>
+<li>Hoeveel mol ijzer zit er in een blokje van 20,0 cm³ (ρ = 7,87 g/cm³, M = 55,85 g/mol)?</li>
+<li>Hoeveel significante cijfers: (a) 0,0450 (b) 2,00·10³ (c) 1200 (d) 7,008?</li>
+<li>Geef in de juiste significantie: (a) 25,0 mL + 0,375 mL (b) 12,5 g / 4,0 mL.</li>
+<li>Een reep van 45 g bevat 12 g suiker. Bereken het massapercentage suiker.</li>
+<li>In 5,0 kg vis zit 1,5 mg kwik. Bereken het gehalte in massa-ppm en massa-ppb.</li>
+<li>11,7 g NaCl wordt opgelost tot 250 mL oplossing. Bereken de molariteit.</li>
+<li>Hoeveel gram glucose (M = 180,16 g/mol) heb je nodig voor 500 mL oplossing van 0,10 M?</li>
+</ol>
+<h3>Antwoorden</h3>
+<ol>
+<li>Ca: 20 p, 40 − 20 = 20 n, 20 e. Ca²⁺: 20 p, 20 n, 18 e.</li>
+<li>K 2, L 8, M 6 → 6 valentie-elektronen (groep 16). Neemt 2 elektronen op → S²⁻.</li>
+<li>1 × 40,08 + 2 × 14,01 + 6 × 16,00 = 40,08 + 28,02 + 96,00 = <strong>164,10 u</strong>.</li>
+<li>Chloor bestaat in de natuur uit ± 75% Cl-35 en ± 25% Cl-37; A<sub>r</sub> is het gewogen gemiddelde.</li>
+<li>n = 4,4 / 44,01 = 0,099 977… = <strong>0,10 mol</strong>. N = 0,099 977 × 6,02·10²³ = <strong>6,0·10²² moleculen</strong>.</li>
+<li>m = 0,250 × 58,44 = <strong>14,6 g</strong>.</li>
+<li>V = 15,0 / 0,80 = 18,75 → <strong>19 mL</strong> (2 sig. cijfers door 0,80).</li>
+<li>m = 7,87 × 20,0 = 157,4 g; n = 157,4 / 55,85 = <strong>2,82 mol</strong>.</li>
+<li>(a) 3 (b) 3 (c) 4, want eindnullen tellen mee; wil je aangeven dat het er 2 zijn, schrijf dan 1,2·10³ (d) 4.</li>
+<li>(a) 25,375 → <strong>25,4 mL</strong> (1 decimaal). (b) 3,125 → <strong>3,1 g/mL</strong> (2 sig. cijfers).</li>
+<li>12 / 45 × 100% = <strong>27 massa%</strong>.</li>
+<li>1,5 mg / 5,0 kg = <strong>0,30 ppm</strong> = <strong>3,0·10² ppb</strong> (0,0015 g / 5000 g × 10⁶ = 0,30).</li>
+<li>n = 11,7 / 58,44 = 0,200 21 mol; [NaCl] = 0,200 21 / 0,250 = <strong>0,801 mol/L</strong>.</li>
+<li>n = 0,10 × 0,500 = 0,050 mol; m = 0,050 × 180,16 = <strong>9,0 g</strong>.</li>
+</ol>
+<hr />
+<h2>Leerschema (5 sessies + toetsdag)</h2>
+<table>
+<thead>
+<tr>
+<th>Sessie</th>
+<th>Stof</th>
+<th>Doen</th>
+<th>Tijd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>§1 atoombouw</td>
+<td>Theorie t/m M<sub>r</sub>, atoombouwer (alle 20 elementen), trainer §1 (neutronen, ionen, configuratie, M<sub>r</sub>), flashcards §1, quiz niveau 1</td>
+<td>45 min</td>
+</tr>
+<tr>
+<td>2</td>
+<td>§1 periodiek systeem</td>
+<td>Theorie vanaf periodiek systeem, atoombouwer (ionen maken), trainer §1 (valentie, covalentie, ionlading), flashcards §1, quiz niveau 2</td>
+<td>40 min</td>
+</tr>
+<tr>
+<td>3</td>
+<td>§2</td>
+<td>Theorie, blokschema uit je hoofd tekenen, mol-machine, trainer §2 (ook meerstaps), flashcards §2, voorbeeldopdracht 1 en 2 nadoen</td>
+<td>50 min</td>
+</tr>
+<tr>
+<td>4</td>
+<td>§3</td>
+<td>Theorie (vuistregels, notatie, gehaltes, molariteit), trainer §3, flashcards §3, quiz niveau 2 en 3, voorbeeldopdracht 4 nadoen</td>
+<td>50 min</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Alles</td>
+<td>Spiekbriefje hardop uitleggen, "nog oefenen"-kaarten, alle quizvragen, trainer met nieuwe getallen, oefenopgaven hierboven, leerdoelen in het boek langslopen</td>
+<td>40 min</td>
+</tr>
+<tr>
+<td>Toetsdag</td>
+<td></td>
+<td>Spiekbriefje 10 min, geen nieuwe stof</td>
+<td>10 min</td>
+</tr>
+</tbody>
+</table>
+<p>Korter en vaker werkt beter dan één lange avond: slaap zet het vast. In het dashboard kun je de toetsdatum invullen; het schema verdeelt de sessies dan over de beschikbare dagen.</p></body></html>

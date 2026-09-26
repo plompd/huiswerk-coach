@@ -12,6 +12,14 @@ De startpagina (`index.html`) is een menu naar alle vakken.
 
 ### HAVO 4
 
+#### Scheikunde
+- **Hoofdstuk 1 — Chemisch rekenen** (`scheikunde-h1.html`, Chemie §1 t/m §3): atoombouw en periodiek systeem (atoommodel, isotopen, ionen, A<sub>r</sub>/M<sub>r</sub>, groepen en perioden, edelgasconfiguratie, covalentie), de chemische hoeveelheid (mol, getal van Avogadro, molaire massa, dichtheid, blokschema V ⇄ m ⇄ n ⇄ N) en rekenen aan gehaltes (significante cijfers, wetenschappelijke notatie, massa%, volume%, ppm, ppb, molariteit).
+  - Theorie per paragraaf met "waarom leer je dit" en "in gewone taal", plus twee interactieve onderdelen: een atoombouwer (eerste 20 elementen, schillen, ionen maken) en een mol-machine die het blokschema stap voor stap doorloopt.
+  - Formule-trainer: 32 opgavetypes met steeds nieuwe getallen, controle en stapsgewijze uitwerking.
+  - 55 flashcards, 25 oefenvragen op 3 niveaus, spiekbriefje.
+  - Leerschema: toetsdatum invullen, 5 sessies worden over de dagen verdeeld; vinkjes worden op het apparaat onthouden.
+  - `scheikunde-h1-leerdocument.html`: samenvatting, formuleblad, stappenplan, 14 oefenopgaven met antwoorden, leerschema (ook als `scheikunde-h1-leerdocument.pdf`).
+
 #### Natuurkunde
 - **Hoofdstuk 1 — Bewegen in beeld** (`natuurkunde-h1.html`, Pulsar §1.1 t/m §1.5): plaats, snelheid en versnelling, (x,t)- en (v,t)-diagrammen, vrije val, grootheden en eenheden, significante cijfers, formules omschrijven, evenredigheid.
   - Theorie per paragraaf met "waarom leer je dit" en "in gewone taal", plus twee interactieve grafieken (steilheid = snelheid; oppervlakte = verplaatsing).
@@ -38,6 +46,8 @@ Open de URL in Safari → deelmenu → **Voeg toe aan beginscherm**. Daarna star
 ## 📝 Bestanden
 
 - `index.html` — startpagina / menu
+- `scheikunde-h1.html` — scheikunde-dashboard H1 (HAVO 4)
+- `scheikunde-h1-leerdocument.html` / `.pdf` — leerdocument scheikunde H1
 - `natuurkunde-h1.html` — natuurkunde-dashboard H1 (HAVO 4)
 - `natuurkunde-h1-leerdocument.html` / `.pdf` — leerdocument natuurkunde H1
 - `scheikunde-h4.html` — scheikunde-dashboard H4

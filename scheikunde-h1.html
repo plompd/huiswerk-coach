@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scheikunde H1 — Chemisch rekenen</title>
+<style>
+  :root{--green:#1f7a4d;--green-light:#e6f4ec;--green-dark:#155735;--orange:#f08a3e;--red:#d94f4f;--blue:#1d4ed8;--purple:#7c5cd6;--bg:#f7f9f8;--card:#fff;--text:#1d2b25;--muted:#6b7770;--border:#d8e1dc;--shadow:0 2px 8px rgba(0,0,0,0.06);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.55;}
+  header{background:linear-gradient(135deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+  header .home{color:#fff;text-decoration:none;font-size:.78rem;opacity:.9;}
+  header h1{margin:4px 0 0;font-size:1.1rem;font-weight:600;}
+  header .sub{font-size:.8rem;opacity:.85;margin-top:2px;}
+  nav{background:var(--card);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;position:sticky;top:68px;z-index:99;-webkit-overflow-scrolling:touch;}
+  nav button{flex:0 0 auto;background:none;border:none;padding:12px 14px;font-size:.85rem;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;font-weight:500;font-family:inherit;}
+  nav button.active{color:var(--green);border-bottom-color:var(--green);}
+  main{padding:16px;max-width:840px;margin:0 auto;}
+  section{display:none;}
+  section.active{display:block;}
+  h2{color:var(--green-dark);font-size:1.2rem;margin:8px 0 12px;}
+  h3{color:var(--green);font-size:1rem;margin:18px 0 8px;}
+  h4{margin:14px 0 6px;font-size:.95rem;color:var(--green-dark);}
+  p{margin:8px 0;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .pill{display:inline-block;background:var(--green-light);color:var(--green-dark);padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;margin-right:6px;margin-bottom:4px;}
+  .pill-orange{background:#fdebd9;color:#a85410;}
+  .pill-red{background:#fbe4e4;color:#a82929;}
+  .pill-blue{background:#e3ebfb;color:#1e3a8a;}
+  .key{background:#fff7d6;padding:0 4px;border-radius:3px;font-weight:600;}
+  .formula{background:#edf6f0;border-left:3px solid var(--green);padding:10px 14px;font-family:"Consolas","Menlo",monospace;margin:10px 0;border-radius:4px;font-size:.95rem;}
+  .formula small{font-family:inherit;color:var(--muted);display:block;margin-top:4px;font-size:.8rem;}
+  .why{background:#eef8f2;border-left:3px solid var(--green);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .why::before{content:"🎯 Waarom leer je dit? ";font-weight:600;}
+  .idea{background:#f3f0ff;border-left:3px solid var(--purple);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .idea::before{content:"🧠 In gewone taal: ";font-weight:600;}
+  .tip{background:#fff8e1;border-left:3px solid var(--orange);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .tip::before{content:"💡 ";}
+  .warning{background:#fdecea;border-left:3px solid var(--red);padding:10px 14px;margin:10px 0;border-radius:4px;font-size:.92rem;}
+  .warning::before{content:"⚠️ ";}
+  .example{background:#fafbfd;border:1px dashed var(--border);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.92rem;}
+  .example .ex-title{font-weight:600;color:var(--green-dark);margin-bottom:4px;}
+  ul,ol{padding-left:20px;}li{margin-bottom:4px;}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0;}
+  th,td{padding:7px 9px;border:1px solid var(--border);text-align:left;vertical-align:top;}
+  th{background:var(--green-light);color:var(--green-dark);}
+  details{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:8px;}
+  details summary{cursor:pointer;font-weight:500;}
+  details[open] summary{color:var(--green);}
+  .steps{counter-reset:s;padding-left:0;list-style:none;}
+  .steps li{counter-increment:s;padding-left:32px;position:relative;margin-bottom:6px;}
+  .steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:.75rem;font-weight:600;display:flex;align-items:center;justify-content:center;}
+  sub,sup{line-height:0;}
+  .iso{display:inline-flex;flex-direction:column;align-items:flex-end;font-size:.68em;line-height:1.05;vertical-align:middle;margin-right:1px;}
+  /* rekenschema blokken */
+  .chain{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:10px 0;font-size:.85rem;}
+  .chain .box{background:#fde68a;border:1px solid #f0c419;border-radius:6px;padding:6px 10px;text-align:center;min-width:86px;}
+  .chain .box b{display:block;font-size:1rem;}
+  .chain .arr{display:flex;flex-direction:column;align-items:center;font-family:"Consolas","Menlo",monospace;font-size:.78rem;color:var(--green-dark);min-width:60px;}
+  .chain .arr span{white-space:nowrap;}
+  /* interactives */
+  .inter{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0;}
+  .ctrl-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:.9rem;flex-wrap:wrap;}
+  .ctrl-row input[type=range]{flex:1;min-width:140px;}
+  .ctrl-row select,.ctrl-row input[type=text]{padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:1rem;font-family:inherit;}
+  svg{width:100%;height:auto;background:#fff;border:1px solid var(--border);border-radius:8px;}
+  .readout{font-family:"Consolas","Menlo",monospace;background:#edf6f0;padding:8px 10px;border-radius:6px;font-size:.86rem;margin-top:8px;line-height:1.6;}
+  .atom-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+  @media(min-width:640px){.atom-grid{grid-template-columns:1fr 1fr;align-items:start;}}
+  .ptable{display:grid;grid-template-columns:repeat(18,1fr);gap:2px;margin:8px 0;}
+  .ptable button{border:1px solid var(--border);background:#fff;border-radius:4px;font-size:.72rem;padding:4px 0;cursor:pointer;font-family:inherit;font-weight:600;}
+  .ptable button.metal{background:#fdf1c7;}
+  .ptable button.nonmetal{background:#d9eefb;}
+  .ptable button.noble{background:#f3e0f7;}
+  .ptable button.active{outline:3px solid var(--green);}
+  .ptable .gap{visibility:hidden;}
+  /* Flashcards */
+  .flashcard-stack{perspective:1200px;}
+  .flashcard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px 18px;min-height:210px;box-shadow:var(--shadow);cursor:pointer;transition:transform .5s;transform-style:preserve-3d;position:relative;}
+  .flashcard.flipped{transform:rotateY(180deg);}
+  .flashcard .front,.flashcard .back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;padding:24px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+  .flashcard .back{transform:rotateY(180deg);background:var(--green-light);border-radius:12px;}
+  .flashcard .term{font-size:1.2rem;font-weight:600;color:var(--green-dark);}
+  .flashcard .def{font-size:.93rem;color:var(--text);}
+  .flashcard .hint{font-size:.7rem;color:var(--muted);position:absolute;bottom:10px;}
+  .flash-controls{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:6px;}
+  .flash-controls button{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 14px;font-size:.88rem;cursor:pointer;font-weight:500;font-family:inherit;}
+  .filter-bar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+  .filter-bar button{background:var(--card);border:1px solid var(--border);padding:6px 12px;border-radius:16px;font-size:.8rem;cursor:pointer;color:var(--muted);font-family:inherit;}
+  .filter-bar button.active{background:var(--green);color:#fff;border-color:var(--green);}
+  /* Quiz */
+  .quiz-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .quiz-q{font-weight:600;margin-bottom:10px;}
+  .quiz-options{display:flex;flex-direction:column;gap:6px;}
+  .quiz-option{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;text-align:left;cursor:pointer;font-size:.92rem;transition:all .15s;font-family:inherit;color:var(--text);}
+  .quiz-option:hover{background:#e9f1ec;}
+  .quiz-option.correct{background:#d4edda;border-color:#2d7a3e;color:#1d4d28;}
+  .quiz-option.wrong{background:#f8d7da;border-color:#a82929;color:#6a1f1f;}
+  .quiz-option:disabled{cursor:not-allowed;}
+  .quiz-feedback{margin-top:10px;padding:10px 12px;border-radius:6px;font-size:.9rem;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.good{background:#d4edda;color:#1d4d28;}
+  .quiz-feedback.bad{background:#f8d7da;color:#6a1f1f;}
+  .progress-bar{background:var(--border);border-radius:8px;height:8px;margin:16px 0;overflow:hidden;}
+  .progress-fill{background:var(--green);height:100%;transition:width .4s;width:0%;}
+  .score-display{text-align:center;font-size:.95rem;color:var(--muted);margin-bottom:12px;}
+  .btn{background:var(--green);color:#fff;border:none;border-radius:6px;padding:8px 14px;cursor:pointer;font-size:.88rem;font-weight:500;font-family:inherit;}
+  .btn.ghost{background:#fff;color:var(--green);border:1px solid var(--green);}
+  .btn.grey{background:var(--muted);}
+  /* Rekenen */
+  .ex-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);}
+  .ex-card .ex-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+  .ex-card .ex-q{margin:6px 0 10px;font-size:.95rem;}
+  .ex-input{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .ex-input input{width:120px;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:1rem;font-family:inherit;}
+  .ex-input .unit{font-family:"Consolas","Menlo",monospace;color:var(--muted);}
+  .ex-fb{margin-top:8px;padding:8px 12px;border-radius:6px;font-size:.9rem;display:none;}
+  .ex-fb.show{display:block;}
+  .ex-fb.good{background:#d4edda;color:#1d4d28;}
+  .ex-fb.bad{background:#f8d7da;color:#6a1f1f;}
+  .ex-sol{margin-top:8px;background:#fafbfd;border:1px dashed var(--border);border-radius:8px;padding:10px 12px;font-size:.9rem;display:none;}
+  .ex-sol.show{display:block;}
+  /* Schema */
+  .plan-day{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:10px;box-shadow:var(--shadow);}
+  .plan-day .d-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;}
+  .plan-day .d-date{font-weight:600;color:var(--green-dark);}
+  .plan-day .d-dur{font-size:.8rem;color:var(--muted);}
+  .plan-day label{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:.92rem;cursor:pointer;}
+  .plan-day input[type=checkbox]{margin-top:4px;}
+  .plan-day label.done{color:var(--muted);text-decoration:line-through;}
+  .date-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0;}
+  .date-row input[type=date]{padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:1rem;font-family:inherit;}
+  footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:.8rem;}
+  @media (max-width:640px){table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}th,td{word-break:break-word;}}
+  main{overflow-x:hidden;}
+  @media (min-width:700px){main{padding:24px;}header h1{font-size:1.3rem;}}
+</style>
+</head>
+<body>
+<header>
+  <a class="home" href="index.html">&larr; Overzicht</a>
+  <h1>Scheikunde Hoofdstuk 1 — Chemisch rekenen</h1>
+  <div class="sub">§1 Atoombouw en periodiek systeem · §2 Chemische hoeveelheid · §3 Gehaltes · Chemie · HAVO 4</div>
+</header>
+<nav>
+  <button class="tab-btn active" data-tab="start">🏠 Start</button>
+  <button class="tab-btn" data-tab="theorie">📖 Theorie</button>
+  <button class="tab-btn" data-tab="rekenen">🧮 Formule-trainer</button>
+  <button class="tab-btn" data-tab="flashcards">🎴 Flashcards</button>
+  <button class="tab-btn" data-tab="quiz">✏️ Oefenvragen</button>
+  <button class="tab-btn" data-tab="cheatsheet">📋 Spiekbriefje</button>
+  <button class="tab-btn" data-tab="schema">📅 Leerschema</button>
+</nav>
+<main>
+
+<!-- ======================= START ======================= -->
+<section id="start" class="active">
+  <h2>Welkom!</h2>
+  <div class="card">
+    <p>Dit dashboard helpt je hoofdstuk 1 <strong>echt te snappen</strong>, niet alleen te stampen. Het hoofdstuk heet "Chemisch rekenen", maar het draait om één vraag: <em>hoeveel deeltjes zitten er eigenlijk in een hoeveelheid stof, en hoe reken je daarmee?</em> Atomen zijn zo klein dat je ze niet kunt tellen. Daarom leer je eerst hoe een atoom in elkaar zit (§1), dan hoe je met de eenheid <strong>mol</strong> toch kunt "tellen" door te wegen (§2), en tot slot hoe je netjes uitrekent hoeveel van een stof er in een mengsel zit (§3).</p>
+  </div>
+
+  <h3>🗺️ De rode draad van het hoofdstuk</h3>
+  <div class="card">
+    <table>
+      <tr><th>Paragraaf</th><th>Vraag die je leert beantwoorden</th><th>Gereedschap</th></tr>
+      <tr><td><strong>§1</strong> Atoombouw en periodiek systeem</td><td>Hoe zit een atoom in elkaar, en wat vertelt het periodiek systeem je over een element?</td><td>atoommodel (kern + schillen), atoomnummer, massagetal, isotopen, ionen, A<sub>r</sub> en M<sub>r</sub>, groepen en perioden, edelgasconfiguratie, covalentie</td></tr>
+      <tr><td><strong>§2</strong> De chemische hoeveelheid</td><td>Hoeveel deeltjes zitten er in een afgewogen hoeveelheid stof?</td><td>mol, getal van Avogadro N<sub>A</sub>, molaire massa M, dichtheid ρ, het blokschema V ⇄ m ⇄ n ⇄ N</td></tr>
+      <tr><td><strong>§3</strong> Rekenen aan gehaltes</td><td>Hoeveel van een stof zit er in een mengsel, en hoe nauwkeurig mag je dat opschrijven?</td><td>significante cijfers, wetenschappelijke notatie, massa%, volume%, ppm, ppb, molariteit [A]</td></tr>
+    </table>
+  </div>
+
+  <h3>🔑 De drie inzichten die alles verbinden</h3>
+  <div class="card">
+    <ol>
+      <li><strong>Het atoomnummer bepaalt alles.</strong> Aantal protonen = atoomnummer = plek in het periodiek systeem. Van een neutraal atoom is het aantal elektronen gelijk aan het aantal protonen. Het aantal elektronen in de buitenste schil (valentie-elektronen) bepaalt hoe het atoom reageert.</li>
+      <li><strong>Mol is gewoon een telwoord, net als dozijn.</strong> Een dozijn = 12, een mol = 6,02·10<sup>23</sup>. De truc: de massa van 1 mol stof in gram is hetzelfde getal als de molecuulmassa in u. Dus wegen = tellen.</li>
+      <li><strong>Alles hangt aan het blokschema.</strong> V ⇄ m ⇄ n ⇄ N (en n ⇄ [A]). Ken je de pijlen (×ρ, :M, ×N<sub>A</sub>, :V), dan kun je elke rekenopgave van dit hoofdstuk oplossen door stap voor stap door het schema te lopen.</li>
+    </ol>
+    <div class="tip">Snap je deze drie, dan snap je het grootste deel van de toets. Elke rekenvraag uit het boek is een wandeling door het blokschema, met aan het eind netjes afronden op significante cijfers.</div>
+  </div>
+
+  <h3>🎯 Zo gebruik je dit dashboard</h3>
+  <div class="card">
+    <ol>
+      <li>Zet je <strong>toetsdatum</strong> in het tabblad <strong>📅 Leerschema</strong>; je krijgt dan een planning per dag.</li>
+      <li>Lees per sessie de <strong>📖 Theorie</strong> van één paragraaf. Speel met de <em>atoombouwer</em> en de <em>mol-machine</em> tot je ze snapt.</li>
+      <li>Oefen in de <strong>🧮 Formule-trainer</strong>: steeds nieuwe getallen, met uitwerking als je vastloopt.</li>
+      <li>Doe de <strong>🎴 Flashcards</strong> en markeer wat je nog niet kent.</li>
+      <li>Test jezelf met de <strong>✏️ Oefenvragen</strong>. Fout? Lees de uitleg en probeer het een dag later opnieuw.</li>
+      <li>Op de dag voor de toets: <strong>📋 Spiekbriefje</strong> doornemen en de "nog oefenen"-kaarten.</li>
+    </ol>
+    <div class="tip">Houd je Binas erbij: tabel 7 (N<sub>A</sub>), 8 t/m 12 (dichtheden), 98 (molaire massa's) en 99 (periodiek systeem). Op de toets mag je die gebruiken, dus oefen ermee.</div>
+  </div>
+</section>
+
+<!-- ======================= THEORIE ======================= -->
+<section id="theorie">
+  <h2>📖 Theorie</h2>
+  <p style="color:var(--muted);font-size:.9rem;">Klik een paragraaf open. Elke paragraaf begint met <em>waarom</em> je het leert en <em>wat het betekent</em>, daarna pas de formules.</p>
+
+  <!-- §1 -->
+  <details open>
+    <summary><strong>§1 Atoombouw en periodiek systeem</strong> — hoe een atoom in elkaar zit en wat het periodiek systeem je vertelt</summary>
+    <div class="why">Alles om je heen bestaat uit atomen. Als je weet hoe een atoom is opgebouwd, snap je waarom natrium heftig reageert met water, waarom helium nergens mee reageert, en waarom een chlooratoom altijd een lading van 1− krijgt. Het periodiek systeem is de "plattegrond" van alle atoomsoorten: als je weet waar een element staat, kun je zijn gedrag voorspellen zonder het uit je hoofd te leren.</div>
+    <div class="idea">Een atoom is een piepklein zonnestelsel: een zware kern in het midden (protonen en neutronen) met daaromheen lichte elektronen in "banen" (schillen). Alleen de buitenste elektronen doen mee aan chemische reacties. Het periodiek systeem zet atomen op een rij op aantal protonen, en atomen die in dezelfde kolom staan, gedragen zich hetzelfde omdat ze evenveel buitenste elektronen hebben.</div>
+
+    <h4>De ontwikkeling van het atoommodel</h4>
+    <p>Het atoommodel is steeds verfijnd doordat wetenschappers waarnemingen deden die het oude model niet kon verklaren (tabel 1 in het boek):</p>
+    <table>
+      <tr><th>Jaar</th><th>Wie</th><th>Idee</th></tr>
+      <tr><td>± 420 v.Chr.</td><td>Demokritos</td><td>Alle materie bestaat uit kleine, ondeelbare deeltjes: <em>atomos</em> = niet-deelbaar.</td></tr>
+      <tr><td>1808</td><td>Dalton</td><td>Atomen zijn massieve, ondeelbare bolletjes. Verklaart waarom bij een reactie geen massa verdwijnt of ontstaat.</td></tr>
+      <tr><td>1897</td><td>Thomson</td><td>In een atoom zitten positieve en negatieve ladingen (ontdekking van het elektron).</td></tr>
+      <tr><td>1911</td><td>Rutherford</td><td>Positieve kern, elektronen in een wolk om de kern.</td></tr>
+      <tr><td>1914</td><td>Bohr</td><td>Elektronen bewegen in vaste banen (schillen K, L, M …).</td></tr>
+      <tr><td>1932</td><td>Chadwick</td><td>In de kern zitten ook neutronen (ongeladen).</td></tr>
+    </table>
+    <div class="tip">Je hoeft geen jaartallen te kennen, wel de <em>volgorde</em> en <em>wat er nieuw was</em>: ondeelbaar → ladingen → kern → schillen → neutronen.</div>
+
+    <h4>Het huidige atoommodel</h4>
+    <ul>
+      <li><strong>Kern:</strong> <span class="key">protonen</span> (lading +, massa 1 u) en <span class="key">neutronen</span> (geen lading, massa 1 u). Vrijwel alle massa van het atoom zit in de kern.</li>
+      <li><strong>Elektronenwolk:</strong> <span class="key">elektronen</span> (lading −, massa verwaarloosbaar) bewegen in vaste banen: de <span class="key">elektronenschillen</span> K, L, M, N, O, P, Q (van binnen naar buiten).</li>
+      <li>Een atoom is <strong>neutraal</strong>: aantal elektronen = aantal protonen.</li>
+      <li>Maximaal aantal elektronen: <strong>K = 2, L = 8, M = 18</strong> (tabel 2). Voor de eerste 20 elementen vul je K en L helemaal, en dan M tot 8; de 19e en 20e elektron gaan naar de N-schil (Binas tabel 99 geeft de <span class="key">elektronenconfiguratie</span> van elk atoom).</li>
+      <li>De elektronen in de <em>buitenste</em> schil heten <span class="key">valentie-elektronen</span>. Alleen die doen mee aan reacties, dus die zijn voor een scheikundige het belangrijkst.</li>
+    </ul>
+    <div class="example"><div class="ex-title">Voorbeeld: natrium-23 (figuur 1)</div>Kern: 11 protonen en 12 neutronen. Elektronen: 11, verdeeld als K 2, L 8, M 1. Natrium heeft dus <strong>1 valentie-elektron</strong>. Dat verklaart meteen waarom natrium zo graag een Na<sup>+</sup>-ion wordt: één elektron kwijt en de buitenste schil (L, met 8) is "vol".</div>
+
+    <h4>Atoomnummer, massagetal en isotopen</h4>
+    <div class="formula">atoomnummer Z = aantal protonen<br>massagetal A = aantal protonen + aantal neutronen<small>Dus: aantal neutronen = A − Z. Notatie: <span class="iso"><span>A</span><span>Z</span></span>X, bijvoorbeeld <span class="iso"><span>37</span><span>17</span></span>Cl, ook geschreven als <sup>37</sup>Cl of Cl-37.</small></div>
+    <ul>
+      <li>Het <span class="key">atoomnummer</span> bepaalt welk element het is: 17 protonen = altijd chloor. In het periodiek systeem staan de elementen op volgorde van atoomnummer.</li>
+      <li>Het <span class="key">massagetal</span> kan per atoom van hetzelfde element verschillen. Atomen met hetzelfde atoomnummer maar een ander aantal neutronen heten <span class="key">isotopen</span>. Cl-35 heeft 35 − 17 = 18 neutronen, Cl-37 heeft 37 − 17 = 20 neutronen. Zelfde element, iets andere massa.</li>
+    </ul>
+    <div class="example"><div class="ex-title">Voorbeeldopdracht 2 uit het boek: teken <span class="iso"><span>37</span><span>17</span></span>Cl</div>
+      <ol class="steps">
+        <li>Atoomnummer 17 → <strong>17 protonen</strong>.</li>
+        <li>Massagetal 37 → neutronen = 37 − 17 = <strong>20 neutronen</strong>.</li>
+        <li>Geen lading → elektronen = protonen = <strong>17 elektronen</strong>.</li>
+        <li>Verdeel over de schillen: K 2, L 8, M 7. (7 valentie-elektronen: chloor zit in groep 17.)</li>
+      </ol>
+    </div>
+
+    <h4>Ionen: geladen atomen</h4>
+    <p>Een atoom dat elektronen heeft afgestaan of opgenomen heet een <span class="key">ion</span>. Het aantal protonen verandert <em>nooit</em> (dan zou het een ander element zijn); alleen het aantal elektronen verandert.</p>
+    <div class="formula">lading = aantal protonen − aantal elektronen<small>Na<sup>+</sup>: 11 p en 10 e (één elektron kwijt). Cl<sup>−</sup>: 17 p en 18 e (één elektron erbij). Mg<sup>2+</sup>: 12 p en 10 e.</small></div>
+    <div class="warning">Veelgemaakte fout: bij een positief ion het aantal elektronen <em>optellen</em>. Positief betekent juist elektronen <em>kwijt</em> (elektronen zijn negatief). Metaalatomen worden altijd positieve ionen, niet-metaalatomen negatieve.</div>
+
+    <h4>Relatieve atoommassa en molecuulmassa</h4>
+    <ul>
+      <li>De massa van een atoom druk je uit in de atomaire massa-eenheid <strong>u</strong> (1 u = 1,66·10<sup>−24</sup> g).</li>
+      <li>Omdat van bijna elk element meerdere isotopen in de natuur voorkomen, is de <span class="key">relatieve atoommassa A<sub>r</sub></span> een <em>gewogen gemiddelde</em>. Daarom is A<sub>r</sub>(Cl) = 35,45 en geen heel getal: ongeveer 75% is Cl-35 en 25% Cl-37 (percentages in Binas tabel 25A, A<sub>r</sub> in Binas tabel 99).</li>
+      <li>De <span class="key">relatieve molecuulmassa M<sub>r</sub></span> bereken je door de atoommassa's van alle atomen in de molecuulformule op te tellen.</li>
+    </ul>
+    <div class="example"><div class="ex-title">Voorbeeldopdracht 3 uit het boek: M<sub>r</sub> van glucose C<sub>6</sub>H<sub>12</sub>O<sub>6</sub></div>M<sub>r</sub> = 6 × A<sub>r</sub>(C) + 12 × A<sub>r</sub>(H) + 6 × A<sub>r</sub>(O) = 6 × 12,01 + 12 × 1,008 + 6 × 16,00 = 72,06 + 12,096 + 96,00 = <strong>180,16 u</strong>.<br><span style="color:var(--muted)">Let op de index: de 6 achter C geldt voor C, de 12 achter H voor H. Bij haakjes zoals Mg(OH)<sub>2</sub> geldt de 2 voor alles binnen de haakjes: 1 Mg, 2 O, 2 H.</span></div>
+
+    <h4>Het periodiek systeem</h4>
+    <p>Mendelejev (1869) zette de elementen op volgorde van atoommassa en plaatste elementen met vergelijkbare eigenschappen onder elkaar. Hij liet gaten open voor onbekende elementen en voorspelde hun eigenschappen; toen germanium (zijn "eka-silicium") werd gevonden met precies die eigenschappen (tabel 4), werd zijn systeem geaccepteerd. Het huidige periodiek systeem (Binas tabel 99) staat op volgorde van <strong>atoomnummer</strong>.</p>
+    <ul>
+      <li><span class="key">Perioden</span> = de horizontale rijen (7 stuks). Het periodenummer = het aantal schillen dat elektronen bevat.</li>
+      <li><span class="key">Groepen</span> = de verticale kolommen (18 stuks). Elementen in één groep hebben evenveel valentie-elektronen en dus vergelijkbare eigenschappen. Voor groep 1 en 2: aantal valentie-elektronen = groepnummer; voor groep 13 t/m 18: groepnummer − 10.</li>
+    </ul>
+    <table>
+      <tr><th></th><th>Metalen</th><th>Niet-metalen</th></tr>
+      <tr><td>Waar?</td><td>Links en midden</td><td>Rechts (boven), plus waterstof H linksboven</td></tr>
+      <tr><td>Deeltjes</td><td>Geen moleculen; formule van het element = het symbool: Fe(s), Cu(s)</td><td>Vaak twee-atomige moleculen: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub> (tabel 5)</td></tr>
+      <tr><td>Eigenschappen</td><td>Glanzend, geleiden stroom en warmte</td><td>Vaak gasvormig, geleiden geen stroom</td></tr>
+      <tr><td>Bij reactie met elkaar</td><td>Staan elektronen af → positief ion</td><td>Nemen elektronen op → negatief ion</td></tr>
+    </table>
+    <div class="tip">Ezelsbrug voor de twee-atomige gassen: <strong>H</strong>eb <strong>N</strong>ooit <strong>O</strong>ngerust <strong>F</strong>lauwe <strong>Cl</strong>ub <strong>Br</strong>ood <strong>I</strong>n (H<sub>2</sub> N<sub>2</sub> O<sub>2</sub> F<sub>2</sub> Cl<sub>2</sub> Br<sub>2</sub> I<sub>2</sub>). Een niet-ontleedbare stof (element) van een niet-metaal krijgt dus vaak een 2 in de formule; een metaal nooit.</div>
+
+    <h4>Edelgasconfiguratie: waarom atomen reageren</h4>
+    <div class="idea">Atomen "willen" een buitenste schil met 8 elektronen (helium: 2), net als de edelgassen. Wie te veel heeft, geeft weg; wie er een paar tekortkomt, pakt erbij of deelt. Dat ene idee verklaart bijna alle reactiviteit in het periodiek systeem.</div>
+    <ul>
+      <li><span class="key">Edelgassen</span> (groep 18: He, Ne, Ar, …) hebben 8 valentie-elektronen (He: 2) en reageren vrijwel nergens mee. Deze stabiele verdeling heet de <span class="key">edelgasconfiguratie</span>.</li>
+      <li><span class="key">Halogenen</span> (groep 17: F, Cl, Br, I) hebben 7 valentie-elektronen: één tekort. Ze nemen makkelijk één elektron op → ion met lading 1−.</li>
+      <li><span class="key">Alkalimetalen</span> (groep 1: Li, Na, K) hebben 1 valentie-elektron: staan die makkelijk af → 1+. <span class="key">Aardalkalimetalen</span> (groep 2: Mg, Ca) staan er 2 af → 2+. Dit zijn de meest reactieve metalen.</li>
+    </ul>
+    <div class="formula">2 Na + Cl<sub>2</sub> → 2 Na<sup>+</sup> + 2 Cl<sup>−</sup><small>Elk Na-atoom staat één elektron af (K2 L8 M1 → K2 L8), elk Cl-atoom neemt er één op (K2 L8 M7 → K2 L8 M8). Beide hebben nu de edelgasconfiguratie, maar ook een lading: het aantal protonen is niet meer gelijk aan het aantal elektronen.</small></div>
+
+    <h4>Covalentie: elektronen delen</h4>
+    <p>Niet-metalen kunnen de edelgasconfiguratie ook bereiken door een elektronenpaar te <em>delen</em> met een ander atoom: een <span class="key">atoombinding</span>. Het aantal atoombindingen dat een atoom vormt heet de <span class="key">covalentie</span>. Je leest hem af uit de groep: hoe verder van groep 18, hoe meer elektronen het atoom moet delen.</p>
+    <table>
+      <tr><th>Atoomsoort</th><th>Groep</th><th>Valentie-elektronen</th><th>Covalentie</th></tr>
+      <tr><td>H</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr><td>F, Cl, Br, I</td><td>17</td><td>7</td><td>1</td></tr>
+      <tr><td>O, S</td><td>16</td><td>6</td><td>2</td></tr>
+      <tr><td>N, P</td><td>15</td><td>5</td><td>3</td></tr>
+      <tr><td>C, Si</td><td>14</td><td>4</td><td>4</td></tr>
+    </table>
+    <div class="tip">Covalentie = 8 − (aantal valentie-elektronen). Uitzondering waterstof: H streeft naar 2 elektronen (zoals helium), dus 2 − 1 = 1. Check met water H<sub>2</sub>O: O heeft covalentie 2, dus twee H-atomen (elk covalentie 1). Klopt.</div>
+
+    <h4>🎛️ Probeer het zelf: de atoombouwer</h4>
+    <div class="inter">
+      <p style="margin-top:0;font-size:.9rem;">Klik een element (de eerste 20). Je ziet de kern, de schillen en wat het periodiek systeem je over dit element vertelt. Met de schuif maak je er een ion van.</p>
+      <div id="ptable" class="ptable"></div>
+      <div class="atom-grid">
+        <div><svg id="atom-svg" viewBox="0 0 300 300"></svg></div>
+        <div>
+          <div class="ctrl-row"><label for="sl-ion">Elektronen erbij/eraf:</label><input type="range" id="sl-ion" min="-3" max="3" step="1" value="0"><span id="sl-ion-val">0</span></div>
+          <div class="readout" id="atom-readout"></div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- §2 -->
+  <details>
+    <summary><strong>§2 De chemische hoeveelheid</strong> — mol, getal van Avogadro, molaire massa en dichtheid</summary>
+    <div class="why">Stoffen reageren in vaste verhoudingen van <em>deeltjes</em>: 2 H<sub>2</sub> met 1 O<sub>2</sub>. Maar in het lab weeg je gram af, geen moleculen. Als je precies wilt weten hoeveel van stof A je nodig hebt om alle stof B te laten reageren (in een fabriek, een medicijn, een lab), moet je van gram naar deeltjes kunnen rekenen en terug. Daarvoor is de mol bedacht.</div>
+    <div class="idea">Een mol is een telwoord, net als "dozijn" (12) of "gros" (144), alleen belachelijk groot: 602 000 000 000 000 000 000 000. Het is precies zó gekozen dat de massa van 1 mol stof in gram gelijk is aan de molecuulmassa in u. Water heeft M<sub>r</sub> = 18,0 u, dus 1 mol water weegt 18,0 g. Daardoor kun je deeltjes tellen door te wegen.</div>
+
+    <h4>Mol en het getal van Avogadro</h4>
+    <ul>
+      <li>De <span class="key">chemische hoeveelheid n</span> heeft als eenheid de <strong>mol</strong>. 1 mol = 6,02·10<sup>23</sup> deeltjes (atomen, moleculen of ionen).</li>
+      <li>Dat getal heet het <span class="key">getal van Avogadro N<sub>A</sub></span> = 6,02·10<sup>23</sup> mol<sup>−1</sup> (Binas tabel 7).</li>
+      <li>Dozijn-analogie: 1 dozijn NH<sub>3</sub>-moleculen bevat 1 dozijn N-atomen en 3 dozijn H-atomen. Vervang "dozijn" door "mol": 1 mol NH<sub>3</sub> bevat 1 mol N en 3 mol H. De <strong>molverhouding</strong> NH<sub>3</sub> : N : H = 1 : 1 : 3, precies de indexen in de formule.</li>
+    </ul>
+    <div class="formula">N = n · N<sub>A</sub><small>N = aantal deeltjes · n = chemische hoeveelheid (mol) · N<sub>A</sub> = 6,02·10<sup>23</sup> mol<sup>−1</sup></small></div>
+    <div class="chain"><div class="box">n<b>mol</b></div><div class="arr"><span>× N<sub>A</sub> →</span><span>← : N<sub>A</sub></span></div><div class="box">N<b>deeltjes</b></div></div>
+
+    <h4>Molaire massa</h4>
+    <p>Waarom juist 6,02·10<sup>23</sup>? Omdat dat precies het aantal u is dat in 1 gram past: 1 g / 1,66·10<sup>−24</sup> g = 6,02·10<sup>23</sup>. Gevolg: weeg je 1,00 mol koolstofatomen af (A<sub>r</sub> = 12,01 u), dan wijst de weegschaal 12,01 g aan. Dus:</p>
+    <div class="formula">M (molaire massa, in g/mol) = M<sub>r</sub> (in u), hetzelfde getal<small>Binas tabel 98 geeft M van veel stoffen. Staat de stof er niet in: zelf optellen met de A<sub>r</sub>-waarden uit Binas tabel 99.</small></div>
+    <div class="formula">m = n · M<small>m = massa (g) · n = chemische hoeveelheid (mol) · M = molaire massa (g/mol). Omschrijven: n = m / M.</small></div>
+    <div class="chain"><div class="box">m<b>gram</b></div><div class="arr"><span>: M →</span><span>← × M</span></div><div class="box">n<b>mol</b></div><div class="arr"><span>× N<sub>A</sub> →</span><span>← : N<sub>A</sub></span></div><div class="box">N<b>deeltjes</b></div></div>
+    <div class="example"><div class="ex-title">Voorbeeldopdracht 1 uit het boek: je ademt per uur 33 g CO<sub>2</sub> uit. Hoeveel mol is dat?</div>
+      <strong>Gegevens</strong> m(CO<sub>2</sub>) = 33 g · <strong>Gevraagd</strong> n(CO<sub>2</sub>) in mol<br>
+      <strong>Uitwerking</strong> m = n · M, dus n = m / M. M(CO<sub>2</sub>) = 44,010 g/mol (Binas 98).<br>
+      n(CO<sub>2</sub>) = 33 / 44,010 = 0,7498… = <strong>0,75 mol</strong> (twee significante cijfers, want 33 heeft er twee).
+    </div>
+    <div class="tip">Twijfel je of je moet delen of vermenigvuldigen? Kijk naar de eenheden: g gedeeld door g/mol geeft mol. En: de molaire massa is altijd veel groter dan 1, dus van gram naar mol wordt het getal <em>kleiner</em>.</div>
+
+    <h4>Dichtheid</h4>
+    <p>Aluminium is "lichter" dan ijzer, maar een aluminium fietsframe kan best zwaarder zijn dan een ijzeren fietsstuur. Om eerlijk te vergelijken neem je van elke stof hetzelfde volume, bijvoorbeeld 1,00 cm<sup>3</sup>: aluminium weegt dan 2,70 g, ijzer 7,87 g. Die stofeigenschap heet de <span class="key">dichtheid ρ</span> (Binas tabel 8 t/m 12 en 40A).</p>
+    <div class="formula">ρ = m / V<small>ρ = dichtheid (kg/m<sup>3</sup>, of g/cm<sup>3</sup> = g/mL) · m = massa · V = volume. Omschrijven: m = ρ · V en V = m / ρ.</small></div>
+    <div class="tip">Eenheden omrekenen: 1 g/cm<sup>3</sup> = 1 g/mL = 1,0·10<sup>3</sup> kg/m<sup>3</sup>. Aluminium: 2,70·10<sup>3</sup> kg/m<sup>3</sup> = 2,70 g/cm<sup>3</sup>. Kies de eenheid die bij de opgave past, en zorg dat m en V bij elkaar passen (gram bij mL, kg bij m<sup>3</sup>).</div>
+
+    <h4>Het totale blokschema (figuur 5)</h4>
+    <div class="chain"><div class="box">V<b>volume</b></div><div class="arr"><span>× ρ →</span><span>← : ρ</span></div><div class="box">m<b>massa</b></div><div class="arr"><span>: M →</span><span>← × M</span></div><div class="box">n<b>mol</b></div><div class="arr"><span>× N<sub>A</sub> →</span><span>← : N<sub>A</sub></span></div><div class="box">N<b>deeltjes</b></div></div>
+    <div class="idea">Dit schema is de kern van het hoofdstuk. Elke opgave is: "ik sta in vakje X en moet naar vakje Y". Je loopt stap voor stap, elke pijl is één formule. Van links naar rechts: ×ρ, :M, ×N<sub>A</sub>. Van rechts naar links precies andersom: :N<sub>A</sub>, ×M, :ρ.</div>
+    <div class="example"><div class="ex-title">Voorbeeldopdracht 2 uit het boek: het volume van 2,0 mol ethanol C<sub>2</sub>H<sub>6</sub>O(l) in mL</div>
+      Route: n → m → V (twee pijlen naar links).<br>
+      <ol class="steps">
+        <li>M(C<sub>2</sub>H<sub>6</sub>O) = 46,069 g/mol (Binas 98). m = n · M = 2,0 × 46,069 = 92,138 g.</li>
+        <li>ρ(ethanol) = 0,80·10<sup>3</sup> kg/m<sup>3</sup> = 0,80 g/mL (Binas 11). V = m / ρ = 92,138 / 0,80 = 115,17 mL.</li>
+        <li>Afronden op twee significante cijfers (2,0 en 0,80): <strong>V = 1,2·10<sup>2</sup> mL</strong>.</li>
+      </ol>
+      <span style="color:var(--muted)">Let op: niet tussendoor afronden. 92,138 blijft in je rekenmachine staan.</span>
+    </div>
+
+    <h4>🎛️ Probeer het zelf: de mol-machine</h4>
+    <div class="inter">
+      <p style="margin-top:0;font-size:.9rem;">Kies een stof, kies wat je weet en vul een getal in. De machine loopt het hele blokschema voor je door en laat elke stap zien. Probeer eerst zelf, kijk dan na.</p>
+      <div class="ctrl-row">
+        <label for="mm-stof">Stof:</label><select id="mm-stof"></select>
+      </div>
+      <div class="ctrl-row">
+        <label for="mm-what">Ik weet:</label><select id="mm-what"><option value="m">massa m (g)</option><option value="V">volume V (mL)</option><option value="n">chemische hoeveelheid n (mol)</option><option value="N">aantal deeltjes N (× 10²³)</option></select>
+        <input type="text" id="mm-val" inputmode="decimal" value="10" style="width:100px;">
+      </div>
+      <div class="readout" id="mm-readout"></div>
+    </div>
+  </details>
+
+  <!-- §3 -->
+  <details>
+    <summary><strong>§3 Rekenen aan gehaltes</strong> — significante cijfers, massa%, volume%, ppm, ppb en molariteit</summary>
+    <div class="why">In de scheikunde werk je bijna altijd met mengsels: zeewater, lucht, een medicijn, frisdrank. Dan wil je weten <em>hoeveel</em> van een bestanddeel erin zit: het <strong>gehalte</strong>. Bij een drankje is dat volume% alcohol, bij gif in voedsel massa-ppm, bij een oplossing in het lab de molariteit. En omdat elke meting een beperkte nauwkeurigheid heeft, leer je ook hoe je een antwoord <em>eerlijk</em> opschrijft: niet nauwkeuriger dan je meting was.</div>
+    <div class="idea">Een gehalte is altijd "deel gedeeld door geheel": de hoeveelheid van de stof gedeeld door de hoeveelheid van het hele mengsel. Vermenigvuldig je met 100 dan heb je een percentage, met 10<sup>6</sup> dan ppm (parts per million), met 10<sup>9</sup> dan ppb. Molariteit is hetzelfde idee, maar dan mol stof per liter oplossing.</div>
+
+    <h4>Meetwaarden en significante cijfers</h4>
+    <ul>
+      <li>Een <span class="key">meetwaarde</span> komt uit een meetinstrument en is nooit oneindig nauwkeurig. Hoe nauwkeuriger het instrument, hoe meer <span class="key">significante cijfers</span> (betekenisvolle cijfers) de meetwaarde heeft.</li>
+      <li><strong>Tellen:</strong> begin bij het eerste cijfer dat geen 0 is en tel alles rechts daarvan mee, <em>ook nullen aan het eind</em>. 0,002 30 m → 2, 3, 0 → <strong>3</strong> significante cijfers.</li>
+      <li>Het instrument bepaalt het aantal (figuur 1): bekerglas 50 mL (2), maatcilinder 50,0 mL (3), maatkolf of volpipet 50,00 mL (4).</li>
+      <li><span class="key">Telwaarden</span> zijn precies en hebben geen invloed op de significantie: 3 moleculen, 11 protonen, de 2 in "2 Na", de 100% in een percentage.</li>
+    </ul>
+
+    <h4>Wetenschappelijke notatie</h4>
+    <div class="formula">0,002 30 m = 2,30·10<sup>−3</sup> m &nbsp;&nbsp;·&nbsp;&nbsp; 40,8 = 4,08·10<sup>1</sup> &nbsp;&nbsp;·&nbsp;&nbsp; 0,0054 = 5,4·10<sup>−3</sup> &nbsp;&nbsp;·&nbsp;&nbsp; N<sub>A</sub> = 6,02·10<sup>23</sup><small>Eén cijfer vóór de komma, de rest erachter, maal een macht van 10. Handig bij heel grote en heel kleine getallen. Zet je rekenmachine in <em>scientific mode</em>; hij toont dan bijvoorbeeld 6.02E23.</small></div>
+    <div class="tip">Wetenschappelijke notatie maakt het aantal significante cijfers zichtbaar. Eindnullen tellen mee, dus "120 mL" zou 3 significante cijfers betekenen. Wil je laten zien dat het er 2 zijn, dan schrijf je 1,2·10<sup>2</sup> mL. Daarom doet het boek dat.</div>
+
+    <h4>Rekenen met significante cijfers (de drie vuistregels)</h4>
+    <table>
+      <tr><th>Bewerking</th><th>Regel</th><th>Voorbeeld</th></tr>
+      <tr><td><strong>1. Optellen / aftrekken</strong></td><td>Afronden op het aantal <em>decimalen</em> van de meetwaarde met de minste decimalen</td><td>1,003 m + 0,5 m = 1,503 → <strong>1,5 m</strong></td></tr>
+      <tr><td><strong>2. Vermenigvuldigen / delen</strong></td><td>Afronden op het aantal <em>significante cijfers</em> van de meetwaarde met de minste significante cijfers</td><td>3,34 m × 5,026 m = 16,786 84 → <strong>16,8 m<sup>2</sup></strong></td></tr>
+      <tr><td><strong>3. Combinatie</strong></td><td>Eerst regel 1 (voor het optel-deel), dan regel 2</td><td>(1,003 s + 0,5 s) × 3,33 m/s = 1,503 × 3,33 = 5,004 99 → de som 1,5 heeft 2 sig. cijfers, dus <strong>5,0 m</strong></td></tr>
+    </table>
+    <div class="warning">Een <strong>tussenuitkomst rond je nooit af</strong>. Laat die in je rekenmachine staan (of schrijf hem op met minstens twee extra cijfers). Alleen het <em>eindantwoord</em> rond je af. Rond je te vroeg af, dan sluipt er een fout in je antwoord.</div>
+    <div class="example"><div class="ex-title">Voorbeeldopdracht 1 en 2 uit het boek</div>
+      <strong>1.</strong> 10,0 mL spiritus + 4,55 mL spiritus = 14,55 mL → optellen, minste decimalen is 1 → <strong>14,6 mL</strong>.<br>
+      <strong>2.</strong> ρ = m / V = 42,5 g / 50,00 mL = 0,8500 → delen, minste sig. cijfers is 3 (van 42,5) → <strong>0,850 g/mL</strong>. (Die laatste 0 hoort erbij: hij is het derde significante cijfer.)
+    </div>
+
+    <h4>Massa- en volumegehaltes</h4>
+    <div class="formula">volume% = V(A) / V(mengsel) · 100%<br>massa% = m(A) / m(mengsel) · 100%<br>massa-ppm = m(A) / m(mengsel) · 10<sup>6</sup><br>massa-ppb = m(A) / m(mengsel) · 10<sup>9</sup><small>(A) is de stof waarvan je het gehalte berekent. m en V mogen in elke eenheid, <em>zolang teller en noemer dezelfde eenheid hebben</em>. ppm = parts per million (gram per miljoen gram), ppb = parts per billion (gram per miljard gram).</small></div>
+    <ul>
+      <li>Bij vloeistofmengsels (bier, wijn, spiritus) gebruik je meestal <span class="key">volumepercentage</span>; bij vaste mengsels en voedsel <span class="key">massapercentage</span>.</li>
+      <li>Bij heel lage gehaltes (gifstoffen, vervuiling) is een percentage onhandig: 2 µg per 100 g = 0,000 002 massa%. Daarom <span class="key">massa-ppm</span> en <span class="key">massa-ppb</span>: dat is hetzelfde als 0,02 ppm = 20 ppb.</li>
+      <li>Handig: 1 massa-ppm = 1 mg per kg = 1 µg per g. 1 massa-ppb = 1 µg per kg.</li>
+    </ul>
+    <div class="example"><div class="ex-title">Voorbeeld: hoeveel gram alcohol zit in een flesje bier van 330 mL met 5,0 volume%?</div>
+      V(alcohol) = 5,0/100 × 330 = 16,5 mL. Dichtheid van ethanol 0,80 g/mL → m = ρ · V = 0,80 × 16,5 = 13,2 → <strong>13 g</strong> (2 sig. cijfers). Twee formules gecombineerd: eerst het gehalte, dan het blokschema.
+    </div>
+
+    <h4>Molariteit: het gehalte van een oplossing</h4>
+    <p>Voor oplossingen gebruik je vaak de <span class="key">concentratie</span>: hoeveel opgeloste stof per liter oplossing. In gram per liter heet dat gewoon concentratie (g/L); in <em>mol</em> per liter heet het de <span class="key">molariteit</span>, met het symbool [A] (vierkante haken) en de eenheid mol/L, afgekort M.</p>
+    <div class="formula">[A] = n(A) / V<sub>opl</sub><small>[A] = molariteit van stof A (mol/L of M) · n(A) = chemische hoeveelheid van A (mol) · V<sub>opl</sub> = volume van de <em>oplossing</em> in liter (L). 750 mL = 0,750 L!</small></div>
+    <div class="chain"><div class="box">n<b>mol</b></div><div class="arr"><span>: V<sub>opl</sub> →</span><span>← × V<sub>opl</sub></span></div><div class="box">[A]<b>mol/L</b></div></div>
+    <div class="example"><div class="ex-title">Voorbeeldopdracht 4 uit het boek: 3,8 g glucose opgelost in 750 mL. Bereken de molariteit.</div>
+      <ol class="steps">
+        <li>Van massa naar mol: n = m / M = 3,8 / 180,16 = 0,021 092 mol.</li>
+        <li>Van mol naar molariteit: [C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>] = n / V<sub>opl</sub> = 0,021 092 / 0,750 = 2,812·10<sup>−2</sup>.</li>
+        <li>Afronden op 2 significante cijfers (3,8): <strong>[C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>] = 2,8·10<sup>−2</sup> M</strong>.</li>
+      </ol>
+    </div>
+    <div class="warning">Twee klassieke fouten: (1) het volume in mL laten staan in plaats van omrekenen naar L; (2) de massa in gram delen door het volume: dan heb je g/L, geen molariteit. Eerst naar mol!</div>
+
+    <h4>Het complete blokschema (figuur 5 in §3)</h4>
+    <div class="chain"><div class="box">V<b>volume</b></div><div class="arr"><span>× ρ →</span><span>← : ρ</span></div><div class="box">m<b>massa</b></div><div class="arr"><span>: M →</span><span>← × M</span></div><div class="box">n<b>mol</b></div><div class="arr"><span>× N<sub>A</sub> →</span><span>← : N<sub>A</sub></span></div><div class="box">N<b>deeltjes</b></div></div>
+    <div class="chain" style="margin-top:0"><div class="arr"><span>n : V<sub>opl</sub> = [A]</span><span>[A] × V<sub>opl</sub> = n</span></div><div class="box">[A]<b>molariteit</b></div></div>
+    <div class="tip">Vier vakjes, vijf pijlen, alles wat je in dit hoofdstuk moet kunnen rekenen. Teken dit schema uit je hoofd voordat je aan de toets begint.</div>
+  </details>
+</section>
+
+<!-- ======================= FORMULE-TRAINER ======================= -->
+<section id="rekenen">
+  <h2>🧮 Formule-trainer</h2>
+  <div class="card">
+    <p style="margin-top:0">Elke opgave krijgt <strong>steeds nieuwe getallen</strong>. Reken op papier, vul je antwoord in en controleer. Klik op "Uitwerking" om stap voor stap te zien hoe het moet. Gebruik je Binas voor A<sub>r</sub>, M en ρ; in de uitwerking staan de waarden die je nodig had.</p>
+    <p style="margin-bottom:0;font-size:.9rem;color:var(--muted)">Een komma of punt mag allebei. Een antwoord wordt goedgekeurd als het binnen ongeveer 2,5% van het juiste antwoord ligt; bij significante cijfers en telvragen moet het precies kloppen.</p>
+  </div>
+  <div class="filter-bar">
+    <button class="ex-filter active" data-cat="all">Alle</button>
+    <button class="ex-filter" data-cat="p1">§1 Atoombouw</button>
+    <button class="ex-filter" data-cat="p2">§2 Mol en dichtheid</button>
+    <button class="ex-filter" data-cat="p3">§3 Significantie en gehaltes</button>
+  </div>
+  <div class="score-display" id="ex-score">Goed: 0 · Fout: 0</div>
+  <div id="ex-container"></div>
+</section>
+
+<!-- ======================= FLASHCARDS ======================= -->
+<section id="flashcards">
+  <h2>🎴 Flashcards</h2>
+  <p style="color:var(--muted);font-size:.9rem;">Lees de voorkant, zeg het antwoord hardop, tik om te controleren. Weet je het niet? Markeer "Nog oefenen": die kaarten kun je apart herhalen. De markeringen worden op dit apparaat onthouden.</p>
+  <div class="filter-bar">
+    <button class="fc-filter active" data-cat="all">Alle</button>
+    <button class="fc-filter" data-cat="p1">§1</button>
+    <button class="fc-filter" data-cat="p2">§2</button>
+    <button class="fc-filter" data-cat="p3">§3</button>
+    <button class="fc-filter" data-cat="oefen">⚠️ Nog oefenen</button>
+  </div>
+  <div class="score-display" id="fc-counter">Kaart 1 van …</div>
+  <div class="flashcard-stack">
+    <div class="flashcard" id="flashcard">
+      <div class="front"><div class="term" id="fc-term">Begin</div><div class="hint">tik om te draaien</div></div>
+      <div class="back"><div class="def" id="fc-def">...</div><div class="hint">tik om terug te draaien</div></div>
+    </div>
+  </div>
+  <div class="flash-controls">
+    <button id="fc-prev">← Vorige</button>
+    <button id="fc-mark" style="background:var(--orange);">⚠️ Nog oefenen</button>
+    <button id="fc-next">Volgende →</button>
+  </div>
+  <div style="text-align:center;margin-top:12px;"><button class="btn ghost" id="fc-shuffle">🔀 Schud de kaarten</button></div>
+</section>
+
+<!-- ======================= QUIZ ======================= -->
+<section id="quiz">
+  <h2>✏️ Oefenvragen</h2>
+  <div class="score-display" id="score-display">Beantwoord: 0 / 0 — Goed: 0</div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="filter-bar">
+    <button class="quiz-filter active" data-level="all">Alle</button>
+    <button class="quiz-filter" data-level="1">Niveau 1: Onthouden</button>
+    <button class="quiz-filter" data-level="2">Niveau 2: Begrijpen</button>
+    <button class="quiz-filter" data-level="3">Niveau 3: Toepassen</button>
+  </div>
+  <div id="quiz-container"></div>
+  <div style="text-align:center;margin-top:12px;">
+    <button class="btn grey" onclick="resetQuiz()">🔄 Opnieuw beginnen</button>
+  </div>
+</section>
+
+<!-- ======================= CHEATSHEET ======================= -->
+<section id="cheatsheet">
+  <h2>📋 Spiekbriefje — alles op één pagina</h2>
+  <div class="card">
+    <h3 style="margin-top:0">Het blokschema (hét gereedschap van dit hoofdstuk)</h3>
+    <div class="chain"><div class="box">V<b>volume</b></div><div class="arr"><span>× ρ →</span><span>← : ρ</span></div><div class="box">m<b>massa</b></div><div class="arr"><span>: M →</span><span>← × M</span></div><div class="box">n<b>mol</b></div><div class="arr"><span>× N<sub>A</sub> →</span><span>← : N<sub>A</sub></span></div><div class="box">N<b>deeltjes</b></div></div>
+    <div class="chain" style="margin-top:0"><div class="arr"><span>n : V<sub>opl</sub> = [A]</span><span>[A] × V<sub>opl</sub> = n</span></div><div class="box">[A]<b>molariteit</b></div></div>
+    <table>
+      <tr><th>Formule</th><th>Betekenis</th><th>Eenheden</th><th>Waar vind je het getal?</th></tr>
+      <tr><td>ρ = m / V</td><td>dichtheid</td><td>g/mL (= g/cm<sup>3</sup>) of kg/m<sup>3</sup></td><td>Binas 8 t/m 12, 40A</td></tr>
+      <tr><td>m = n · M</td><td>massa ↔ mol</td><td>g = mol × g/mol</td><td>M: Binas 98, of zelf optellen met Binas 99</td></tr>
+      <tr><td>N = n · N<sub>A</sub></td><td>mol ↔ deeltjes</td><td>N<sub>A</sub> = 6,02·10<sup>23</sup> mol<sup>−1</sup></td><td>Binas 7</td></tr>
+      <tr><td>[A] = n(A) / V<sub>opl</sub></td><td>molariteit</td><td>mol/L = M; V in <strong>liter</strong></td><td>–</td></tr>
+      <tr><td>massa% = m(A)/m(mengsel) · 100%</td><td>massagehalte</td><td>zelfde eenheid boven en onder</td><td>ppm: · 10<sup>6</sup>, ppb: · 10<sup>9</sup></td></tr>
+      <tr><td>volume% = V(A)/V(mengsel) · 100%</td><td>volumegehalte</td><td>zelfde eenheid boven en onder</td><td>–</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Atoombouw</h3>
+    <ul>
+      <li><strong>Atoomnummer Z</strong> = aantal protonen = plek in het periodiek systeem. Neutraal atoom: elektronen = protonen.</li>
+      <li><strong>Massagetal A</strong> = protonen + neutronen → neutronen = A − Z. Notatie <span class="iso"><span>A</span><span>Z</span></span>X, <sup>A</sup>X of X-A.</li>
+      <li><strong>Isotopen</strong>: zelfde Z, andere A (ander aantal neutronen). Daarom is A<sub>r</sub> een gewogen gemiddelde (Cl: 35,45).</li>
+      <li><strong>Ion</strong>: lading = protonen − elektronen. Positief = elektronen kwijt (metalen), negatief = elektronen erbij (niet-metalen).</li>
+      <li><strong>Schillen</strong> K 2, L 8, M 18 (voor Z ≤ 20: K2, L8, M8, N2). Buitenste schil = valentie-elektronen = wat reageert.</li>
+      <li><strong>M<sub>r</sub></strong>: tel de A<sub>r</sub> van alle atomen op; index geldt voor het atoom ervoor, index achter haakjes voor alles erbinnen.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Periodiek systeem</h3>
+    <ul>
+      <li><strong>Periode</strong> = rij = aantal schillen met elektronen. <strong>Groep</strong> = kolom = aantal valentie-elektronen (groep 1, 2: = groepnummer; groep 13–18: groepnummer − 10).</li>
+      <li><strong>Metalen</strong> links/midden: geen moleculen (Fe), worden + ionen. <strong>Niet-metalen</strong> rechts: vaak tweeatomig (H<sub>2</sub> N<sub>2</sub> O<sub>2</sub> F<sub>2</sub> Cl<sub>2</sub> Br<sub>2</sub> I<sub>2</sub>), worden − ionen.</li>
+      <li><strong>Groep 1</strong> alkalimetalen (1+), <strong>groep 2</strong> aardalkalimetalen (2+), <strong>groep 17</strong> halogenen (1−), <strong>groep 18</strong> edelgassen (reageren niet).</li>
+      <li><strong>Edelgasconfiguratie</strong>: 8 elektronen in de buitenste schil (He: 2). Atomen reageren om dit te bereiken: elektronen afstaan, opnemen of delen.</li>
+      <li><strong>Covalentie</strong> = aantal atoombindingen = 8 − valentie-elektronen (H: 2 − 1 = 1): H 1 · F Cl Br I 1 · O S 2 · N P 3 · C Si 4.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Significante cijfers</h3>
+    <ul>
+      <li><strong>Tellen</strong> vanaf het eerste cijfer ≠ 0; nullen aan het eind tellen mee. 0,002 30 → 3; 50,00 → 4; 50 → 2.</li>
+      <li><strong>Telwaarden</strong> (3 moleculen, 100%, de 2 in Cl<sub>2</sub>) tellen niet mee.</li>
+      <li><strong>+ en −</strong> → minste <em>decimalen</em>. <strong>× en :</strong> → minste <em>significante cijfers</em>. Combinatie: eerst + / −, dan × / :.</li>
+      <li><strong>Tussenuitkomst nooit afronden</strong>; alleen het eindantwoord.</li>
+      <li><strong>Wetenschappelijke notatie</strong>: 1,2·10<sup>2</sup> mL laat zien dat het 2 significante cijfers zijn (120 mL zou er 3 betekenen). 0,0054 = 5,4·10<sup>−3</sup>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Stappenplan rekenopgave</h3>
+    <ol class="steps">
+      <li><strong>Gegevens</strong> opschrijven met symbool én eenheid: m(CO<sub>2</sub>) = 33 g.</li>
+      <li><strong>Gevraagd</strong> opschrijven: n(CO<sub>2</sub>) = ? mol.</li>
+      <li>Bepaal in het <strong>blokschema</strong> waar je staat en waar je heen moet. Elke pijl = één formule.</li>
+      <li>Zoek de <strong>Binas-waarden</strong> op (M, ρ, N<sub>A</sub>) en schrijf ze op met tabelnummer.</li>
+      <li><strong>Eenheden kloppend maken</strong>: mL → L bij molariteit; kg/m<sup>3</sup> → g/mL bij dichtheid.</li>
+      <li>Reken uit, <strong>tussenuitkomsten niet afronden</strong>.</li>
+      <li>Eindantwoord in het <strong>juiste aantal significante cijfers</strong>, met eenheid.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Veelgemaakte fouten</h3>
+    <ul>
+      <li>Positief ion → elektronen <em>erbij</em> tellen. Fout: positief = elektronen <em>kwijt</em>.</li>
+      <li>Aantal neutronen = massagetal. Fout: neutronen = massagetal − atoomnummer.</li>
+      <li>Bij M<sub>r</sub> de index vergeten of bij haakjes niet doorvermenigvuldigen: Mg(OH)<sub>2</sub> heeft 2 O en 2 H.</li>
+      <li>Delen in plaats van vermenigvuldigen (of andersom). Check met de eenheden: g ÷ g/mol = mol.</li>
+      <li>Molariteit met V in mL. Altijd eerst naar liter.</li>
+      <li>Molariteit berekenen met de massa in gram in plaats van mol.</li>
+      <li>Te vroeg afronden, of afronden op het verkeerde aantal significante cijfers.</li>
+      <li>Bij gehaltes teller en noemer in verschillende eenheden (mg boven, g onder).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======================= LEERSCHEMA ======================= -->
+<section id="schema">
+  <h2>📅 Leerschema</h2>
+  <div class="card">
+    <p style="margin-top:0">Vul je toetsdatum in. De vijf sessies worden dan over de dagen tot de toets verdeeld. Korter en vaker werkt beter dan één lange avond: je hersenen zetten de stof vast terwijl je slaapt. Vinkjes worden op dit apparaat onthouden.</p>
+    <div class="date-row"><label for="toets-datum"><strong>Toetsdatum:</strong></label><input type="date" id="toets-datum"><span id="dagen-over" style="color:var(--muted);font-size:.9rem;"></span></div>
+  </div>
+  <div id="plan-container"></div>
+  <div style="text-align:center;margin-top:12px;"><button class="btn grey" id="plan-reset">🔄 Vinkjes wissen</button></div>
+</section>
+
+</main>
+<footer>Gemaakt voor scheikunde H1 — Chemisch rekenen · Chemie HAVO 4</footer>
+
+<script>
+// ---------- helpers ----------
+function nl(x,dec){ if(dec===undefined){dec = Math.abs(x)>=100?0:Math.abs(x)>=10?1:2;} return x.toFixed(dec).replace('.',','); }
+function rnd(min,max,step){ step=step||1; const n=Math.round((max-min)/step); return min+Math.round(Math.random()*n)*step; }
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+const SUP={'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};
+function sup(n){return String(n).split('').map(c=>SUP[c]||c).join('');}
+function sci(x,sig){ if(x===0)return '0'; const e=Math.floor(Math.log10(Math.abs(x))); let m=x/Math.pow(10,e); let s=m.toFixed(sig-1); if(parseFloat(s)>=10){m=m/10;s=m.toFixed(sig-1);return s.replace('.',',')+'·10'+sup(e+1);} return s.replace('.',',')+'·10'+sup(e); }
+function fsig(x,sig){ // getal in sig significante cijfers, in gewone notatie als dat kan
+  if(x===0)return '0'; const p=x.toPrecision(sig); if(p.indexOf('e')>=0||Math.abs(x)>=1e5||Math.abs(x)<1e-3)return sci(x,sig); return p.replace('.',','); }
+function store(k,v){ try{localStorage.setItem('sk-h1-'+k,JSON.stringify(v));}catch(e){} }
+function load(k,def){ try{const v=localStorage.getItem('sk-h1-'+k);return v===null?def:JSON.parse(v);}catch(e){return def;} }
+const NA=6.02e23;
+
+// ---------- sticky nav onder de header ----------
+function fixNavTop(){document.querySelector('nav').style.top=document.querySelector('header').offsetHeight+'px';}
+window.addEventListener('resize',fixNavTop);fixNavTop();
+
+// ---------- TABS ----------
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ---------- ELEMENTEN (eerste 20) ----------
+const ELEMENTS=[
+ {Z:1,sym:'H',name:'waterstof',A:1,Ar:1.008,g:1,p:1,type:'nm'},
+ {Z:2,sym:'He',name:'helium',A:4,Ar:4.003,g:18,p:1,type:'noble'},
+ {Z:3,sym:'Li',name:'lithium',A:7,Ar:6.941,g:1,p:2,type:'m'},
+ {Z:4,sym:'Be',name:'beryllium',A:9,Ar:9.012,g:2,p:2,type:'m'},
+ {Z:5,sym:'B',name:'boor',A:11,Ar:10.81,g:13,p:2,type:'mt'},
+ {Z:6,sym:'C',name:'koolstof',A:12,Ar:12.01,g:14,p:2,type:'nm'},
+ {Z:7,sym:'N',name:'stikstof',A:14,Ar:14.01,g:15,p:2,type:'nm'},
+ {Z:8,sym:'O',name:'zuurstof',A:16,Ar:16.00,g:16,p:2,type:'nm'},
+ {Z:9,sym:'F',name:'fluor',A:19,Ar:19.00,g:17,p:2,type:'nm'},
+ {Z:10,sym:'Ne',name:'neon',A:20,Ar:20.18,g:18,p:2,type:'noble'},
+ {Z:11,sym:'Na',name:'natrium',A:23,Ar:22.99,g:1,p:3,type:'m'},
+ {Z:12,sym:'Mg',name:'magnesium',A:24,Ar:24.31,g:2,p:3,type:'m'},
+ {Z:13,sym:'Al',name:'aluminium',A:27,Ar:26.98,g:13,p:3,type:'m'},
+ {Z:14,sym:'Si',name:'silicium',A:28,Ar:28.09,g:14,p:3,type:'mt'},
+ {Z:15,sym:'P',name:'fosfor',A:31,Ar:30.97,g:15,p:3,type:'nm'},
+ {Z:16,sym:'S',name:'zwavel',A:32,Ar:32.06,g:16,p:3,type:'nm'},
+ {Z:17,sym:'Cl',name:'chloor',A:35,Ar:35.45,g:17,p:3,type:'nm'},
+ {Z:18,sym:'Ar',name:'argon',A:40,Ar:39.95,g:18,p:3,type:'noble'},
+ {Z:19,sym:'K',name:'kalium',A:39,Ar:39.10,g:1,p:4,type:'m'},
+ {Z:20,sym:'Ca',name:'calcium',A:40,Ar:40.08,g:2,p:4,type:'m'}
+];
+function valence(el){return el.g<=2?el.g:el.g-10;}
+function shells(e){const s=[Math.min(2,e),Math.min(8,Math.max(0,e-2)),Math.min(8,Math.max(0,e-10)),Math.max(0,e-18)];return s;}
+function ionInfo(el){
+  if(el.type==='noble')return {q:0,txt:'Edelgas: heeft al de edelgasconfiguratie en vormt geen ion.'};
+  if(el.sym==='H')return {q:1,txt:'Waterstof staat in groep 1 en kan één elektron afstaan: H⁺.'};
+  if(el.type==='mt'||el.sym==='C')return {q:0,txt:'Vormt in de praktijk geen ion: te veel elektronen om af te staan of op te nemen. Bereikt de edelgasconfiguratie door elektronen te delen (covalentie '+(el.sym==='B'?3:8-valence(el))+').'};
+  if(el.type==='m'){const q=valence(el);return {q:q,txt:`Metaal in groep ${el.g}: staat ${q} elektron${q>1?'en':''} af → ${el.sym}${sup(q>1?q:'')}⁺.`};}
+  const q=8-valence(el);return {q:-q,txt:`Niet-metaal in groep ${el.g}: neemt ${q} elektron${q>1?'en':''} op → ${el.sym}${sup(q>1?q:'')}⁻ (covalentie ${q}).`};
+}
+// periodiek systeem
+(function(){
+  const pt=document.getElementById('ptable');
+  ELEMENTS.forEach(el=>{
+    const b=document.createElement('button');b.textContent=el.sym;b.dataset.z=el.Z;
+    b.className=el.type==='m'?'metal':el.type==='noble'?'noble':'nonmetal';
+    b.style.gridColumn=el.g;b.style.gridRow=el.p;b.title=el.name;
+    b.addEventListener('click',()=>{atomZ=el.Z;document.getElementById('sl-ion').value=0;drawAtom();});
+    pt.appendChild(b);
+  });
+})();
+let atomZ=11;
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!==undefined)e.textContent=text;return e;}
+function drawAtom(){
+  const e0=ELEMENTS[atomZ-1];const delta=parseInt(document.getElementById('sl-ion').value);
+  const electrons=Math.max(0,e0.Z+delta);const charge=e0.Z-electrons;
+  document.querySelectorAll('#ptable button').forEach(b=>b.classList.toggle('active',+b.dataset.z===atomZ));
+  document.getElementById('sl-ion-val').textContent=(delta>0?'+':'')+delta+(delta===0?' (neutraal atoom)':delta>0?' elektron(en) erbij':' elektron(en) eraf');
+  const svg=document.getElementById('atom-svg');svg.innerHTML='';
+  const cx=150,cy=150;const sh=shells(electrons);const radii=[42,72,102,132];
+  sh.forEach((cnt,i)=>{if(cnt>0||i<e0.p){svg.appendChild(el('circle',{cx,cy,r:radii[i],fill:'none',stroke:'#4a8bd6','stroke-width':1}));svg.appendChild(el('text',{x:cx+radii[i]+3,y:cy-3,'font-size':'9',fill:'#667085'},'KLMN'[i]));}
+    for(let k=0;k<cnt;k++){const a=-Math.PI/2+k*2*Math.PI/cnt;svg.appendChild(el('circle',{cx:cx+radii[i]*Math.cos(a),cy:cy+radii[i]*Math.sin(a),r:4.5,fill:'#d94f4f'}));}
+  });
+  svg.appendChild(el('circle',{cx,cy,r:22,fill:'#4a8bd6'}));
+  svg.appendChild(el('text',{x:cx,y:cy-2,'font-size':'9','text-anchor':'middle',fill:'#fff','font-weight':'600'},e0.Z+' p⁺'));
+  svg.appendChild(el('text',{x:cx,y:cy+9,'font-size':'9','text-anchor':'middle',fill:'#fff','font-weight':'600'},(e0.A-e0.Z)+' n'));
+  const lab=charge===0?e0.sym:e0.sym+(Math.abs(charge)>1?Math.abs(charge):'')+(charge>0?'+':'−');
+  svg.appendChild(el('text',{x:12,y:22,'font-size':'16','font-weight':'700',fill:'#155735'},lab));
+  svg.appendChild(el('text',{x:12,y:38,'font-size':'10',fill:'#667085'},e0.name+'-'+e0.A));
+  const shellsTxt=sh.map((c,i)=>c>0?'KLMN'[i]+' '+c:null).filter(Boolean).join(', ');
+  const outer=sh.filter(c=>c>0);const last=outer.length?outer[outer.length-1]:0;const outerIdx=outer.length-1;
+  const edel=(outerIdx===0&&last===2)||(outerIdx>0&&last===8);
+  const ii=ionInfo(e0);
+  const typeTxt=e0.type==='m'?'metaal':e0.type==='noble'?'edelgas (niet-metaal)':e0.type==='mt'?'metalloïde (op de grens)':'niet-metaal';
+  const groupName=e0.g===1&&e0.sym!=='H'?' (alkalimetalen)':e0.g===2?' (aardalkalimetalen)':e0.g===17?' (halogenen)':e0.g===18?' (edelgassen)':'';
+  document.getElementById('atom-readout').innerHTML=
+    `<strong>${lab}</strong> — ${e0.name}, atoomnummer ${e0.Z}, groep ${e0.g}${groupName}, periode ${e0.p}, ${typeTxt}<br>`+
+    `protonen: ${e0.Z} · neutronen (${e0.sym}-${e0.A}): ${e0.A} − ${e0.Z} = ${e0.A-e0.Z} · elektronen: ${electrons}<br>`+
+    `lading = protonen − elektronen = ${e0.Z} − ${electrons} = ${charge>0?'+':charge<0?'−':''}${Math.abs(charge)}<br>`+
+    `elektronenconfiguratie: ${shellsTxt} → ${last} valentie-elektron${last===1?'':'en'} (neutraal atoom: ${valence(e0)})<br>`+
+    `edelgasconfiguratie? ${edel?'✅ ja, buitenste schil is vol':'❌ nee'}<br>`+
+    `A<sub>r</sub> = ${nl(e0.Ar,e0.Ar<10?3:2)} u (gewogen gemiddelde van de isotopen)<br>`+
+    `<em>${ii.txt}</em>`+(delta!==0&&charge===ii.q&&ii.q!==0?' ✅ Dit is het ion dat dit element in de praktijk vormt.':'');
+}
+document.getElementById('sl-ion').addEventListener('input',drawAtom);
+drawAtom();
+
+// ---------- STOFFEN ----------
+const STOFFEN=[
+ {name:'water H₂O (l)',f:'H<sub>2</sub>O',M:18.02,rho:0.998,rs:'0,998',deel:'moleculen'},
+ {name:'ethanol C₂H₆O (l)',f:'C<sub>2</sub>H<sub>6</sub>O',M:46.07,rho:0.80,rs:'0,80',deel:'moleculen'},
+ {name:'glucose C₆H₁₂O₆ (s)',f:'C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>',M:180.16,rho:1.54,rs:'1,54',deel:'moleculen'},
+ {name:'keukenzout NaCl (s)',f:'NaCl',M:58.44,rho:2.16,rs:'2,16',deel:'formule-eenheden'},
+ {name:'aluminium Al (s)',f:'Al',M:26.98,rho:2.70,rs:'2,70',deel:'atomen'},
+ {name:'ijzer Fe (s)',f:'Fe',M:55.85,rho:7.87,rs:'7,87',deel:'atomen'},
+ {name:'koper Cu (s)',f:'Cu',M:63.55,rho:8.96,rs:'8,96',deel:'atomen'},
+ {name:'sacharose (suiker) C₁₂H₂₂O₁₁ (s)',f:'C<sub>12</sub>H<sub>22</sub>O<sub>11</sub>',M:342.30,rho:1.59,rs:'1,59',deel:'moleculen'},
+ {name:'goud Au (s)',f:'Au',M:196.97,rho:19.3,rs:'19,3',deel:'atomen'},
+ {name:'azijnzuur C₂H₄O₂ (l)',f:'C<sub>2</sub>H<sub>4</sub>O<sub>2</sub>',M:60.05,rho:1.05,rs:'1,05',deel:'moleculen'}
+];
+(function(){const s=document.getElementById('mm-stof');STOFFEN.forEach((st,i)=>{const o=document.createElement('option');o.value=i;o.textContent=st.name;s.appendChild(o);});})();
+function molMachine(){
+  const st=STOFFEN[+document.getElementById('mm-stof').value];const what=document.getElementById('mm-what').value;
+  const raw=document.getElementById('mm-val').value.trim().replace(',','.');const v=parseFloat(raw);
+  const out=document.getElementById('mm-readout');
+  if(isNaN(v)||v<=0){out.innerHTML='Vul een positief getal in.';return;}
+  let n,steps=[];
+  const Mtxt=`M(${st.f}) = ${nl(st.M,2)} g/mol`,Rtxt=`ρ = ${st.rs} g/mL`;
+  if(what==='m'){n=v/st.M;steps.push(`m = ${nl(v,2)} g`);steps.push(`n = m / M = ${nl(v,2)} / ${nl(st.M,2)} = <strong>${fsig(n,4)} mol</strong> &nbsp;(${Mtxt})`);}
+  else if(what==='V'){const m=v*st.rho;n=m/st.M;steps.push(`V = ${nl(v,2)} mL`);steps.push(`m = ρ · V = ${st.rs} × ${nl(v,2)} = <strong>${fsig(m,4)} g</strong> &nbsp;(${Rtxt})`);steps.push(`n = m / M = ${fsig(m,4)} / ${nl(st.M,2)} = <strong>${fsig(n,4)} mol</strong> &nbsp;(${Mtxt})`);}
+  else if(what==='n'){n=v;steps.push(`n = ${fsig(v,3)} mol`);}
+  else {n=v*1e23/NA;steps.push(`N = ${nl(v,2)}·10²³ ${st.deel}`);steps.push(`n = N / N<sub>A</sub> = ${nl(v,2)}·10²³ / 6,02·10²³ = <strong>${fsig(n,4)} mol</strong>`);}
+  const m=n*st.M,V=m/st.rho,N=n*NA;
+  if(what!=='m'&&what!=='V')steps.push(`m = n · M = ${fsig(n,4)} × ${nl(st.M,2)} = <strong>${fsig(m,4)} g</strong> &nbsp;(${Mtxt})`);
+  if(what!=='V')steps.push(`V = m / ρ = ${fsig(m,4)} / ${st.rs} = <strong>${fsig(V,4)} mL</strong> &nbsp;(${Rtxt})`);
+  if(what!=='N')steps.push(`N = n · N<sub>A</sub> = ${fsig(n,4)} × 6,02·10²³ = <strong>${sci(N,3)} ${st.deel}</strong>`);
+  out.innerHTML=steps.join('<br>')+`<br><span style="color:var(--muted)">Overzicht: V = ${fsig(V,3)} mL · m = ${fsig(m,3)} g · n = ${fsig(n,3)} mol · N = ${sci(N,3)}. In een echte opgave rond je pas het eindantwoord af, op het aantal significante cijfers van de gegevens.</span>`;
+}
+['mm-stof','mm-what','mm-val'].forEach(id=>{document.getElementById(id).addEventListener('input',molMachine);document.getElementById(id).addEventListener('change',molMachine);});
+molMachine();
+
+// ---------- FORMULE-TRAINER ----------
+const AR={H:1.008,C:12.01,N:14.01,O:16.00,Na:22.99,Mg:24.31,S:32.06,Cl:35.45,Ca:40.08,K:39.10,Fe:55.85,Al:26.98,P:30.97};
+const FORMULES=[
+ {f:'H<sub>2</sub>O',c:{H:2,O:1}},{f:'CO<sub>2</sub>',c:{C:1,O:2}},{f:'NH<sub>3</sub>',c:{N:1,H:3}},{f:'CH<sub>4</sub>',c:{C:1,H:4}},{f:'NaCl',c:{Na:1,Cl:1}},
+ {f:'C<sub>2</sub>H<sub>6</sub>O',c:{C:2,H:6,O:1}},{f:'C<sub>6</sub>H<sub>12</sub>O<sub>6</sub>',c:{C:6,H:12,O:6}},{f:'H<sub>2</sub>SO<sub>4</sub>',c:{H:2,S:1,O:4}},{f:'CaCO<sub>3</sub>',c:{Ca:1,C:1,O:3}},
+ {f:'Mg(OH)<sub>2</sub>',c:{Mg:1,O:2,H:2}},{f:'NaOH',c:{Na:1,O:1,H:1}},{f:'O<sub>2</sub>',c:{O:2}},{f:'Cl<sub>2</sub>',c:{Cl:2}},{f:'C<sub>3</sub>H<sub>8</sub>',c:{C:3,H:8}},
+ {f:'Fe<sub>2</sub>O<sub>3</sub>',c:{Fe:2,O:3}},{f:'KNO<sub>3</sub>',c:{K:1,N:1,O:3}},{f:'Ca(NO<sub>3</sub>)<sub>2</sub>',c:{Ca:1,N:2,O:6}},{f:'Al<sub>2</sub>O<sub>3</sub>',c:{Al:2,O:3}},{f:'H<sub>3</sub>PO<sub>4</sub>',c:{H:3,P:1,O:4}}
+];
+const ISOTOPEN=[['C',6,12],['C',6,14],['N',7,14],['O',8,16],['O',8,18],['Na',11,23],['Mg',12,24],['Al',13,27],['S',16,32],['Cl',17,35],['Cl',17,37],['K',19,39],['Ca',20,40],['Fe',26,56],['Cu',29,63],['Br',35,79],['Ag',47,107],['I',53,127],['Pb',82,207],['U',92,238]];
+const IONEN=[['Na',11,'⁺',1],['Mg',12,'²⁺',2],['Al',13,'³⁺',3],['K',19,'⁺',1],['Ca',20,'²⁺',2],['Cl',17,'⁻',-1],['O',8,'²⁻',-2],['S',16,'²⁻',-2],['F',9,'⁻',-1],['N',7,'³⁻',-3],['Fe',26,'³⁺',3],['Cu',29,'²⁺',2],['Br',35,'⁻',-1],['Li',3,'⁺',1],['Ba',56,'²⁺',2],['I',53,'⁻',-1]];
+const COVAL=[['H',1,1],['F',17,1],['Cl',17,1],['Br',17,1],['I',17,1],['O',16,2],['S',16,2],['N',15,3],['P',15,3],['C',14,4],['Si',14,4]];
+const ELPS=ELEMENTS.filter(e=>e.type!=='mt');
+function formuleTxt(fo){return Object.keys(fo.c).map(k=>`${fo.c[k]} × ${nl(AR[k],AR[k]<10?3:2)}`).join(' + ');}
+function Mr(fo){return Object.keys(fo.c).reduce((s,k)=>s+fo.c[k]*AR[k],0);}
+const exTypes=[
+ // §1
+ {cat:'p1',title:'Neutronen uit de notatie',gen(){const it=pick(ISOTOPEN);return{q:`Hoeveel neutronen zitten er in de kern van <strong><span class="iso"><span>${it[2]}</span><span>${it[1]}</span></span>${it[0]}</strong> (${it[0]}-${it[2]})?`,ans:it[2]-it[1],unit:'neutronen',dec:0,exact:true,sol:`<ol><li>Het getal linksonder is het atoomnummer = aantal protonen = ${it[1]}.</li><li>Het getal linksboven is het massagetal = protonen + neutronen = ${it[2]}.</li><li>Neutronen = ${it[2]} − ${it[1]} = <strong>${it[2]-it[1]}</strong>.</li></ol>`};}},
+ {cat:'p1',title:'Elektronen in een ion',gen(){const it=pick(IONEN);const e=it[1]-it[3];return{q:`Het ion <strong>${it[0]}${it[2]}</strong> heeft atoomnummer ${it[1]}. Hoeveel elektronen heeft dit ion?`,ans:e,unit:'elektronen',dec:0,exact:true,sol:`<ol><li>Protonen = atoomnummer = ${it[1]} (verandert nooit).</li><li>Lading = protonen − elektronen, dus elektronen = protonen − lading = ${it[1]} − (${it[3]>0?'+':''}${it[3]}) = <strong>${e}</strong>.</li><li>${it[3]>0?'Positief ion: elektronen kwijt, dus minder dan '+it[1]+'.':'Negatief ion: elektronen erbij, dus meer dan '+it[1]+'.'}</li></ol>`};}},
+ {cat:'p1',title:'Valentie-elektronen uit de groep',gen(){const e=pick(ELPS.filter(x=>x.Z>2));const v=valence(e);return{q:`<strong>${e.name.charAt(0).toUpperCase()+e.name.slice(1)} (${e.sym})</strong> staat in groep ${e.g}, periode ${e.p}. Hoeveel valentie-elektronen heeft een ${e.sym}-atoom?`,ans:v,unit:'valentie-elektronen',dec:0,exact:true,sol:`<ol><li>Groep 1 en 2: aantal valentie-elektronen = groepnummer. Groep 13 t/m 18: groepnummer − 10.</li><li>Groep ${e.g} → <strong>${v}</strong> valentie-elektron${v===1?'':'en'}. (Configuratie: ${shells(e.Z).map((c,i)=>c>0?'KLMN'[i]+c:null).filter(Boolean).join(' ')}; periode ${e.p} = ${e.p} schillen.)</li></ol>`};}},
+ {cat:'p1',title:'Elektronenconfiguratie',gen(){const e=pick(ELEMENTS.filter(x=>x.Z>=3&&x.Z<=18));const sh=shells(e.Z);const outer=sh.filter(c=>c>0);return{q:`Hoeveel elektronen zitten er in de <strong>buitenste schil</strong> van een neutraal <strong>${e.sym}-atoom</strong> (atoomnummer ${e.Z})?`,ans:outer[outer.length-1],unit:'elektronen',dec:0,exact:true,sol:`<ol><li>Neutraal atoom: elektronen = protonen = ${e.Z}.</li><li>Vul de schillen van binnen naar buiten: K max 2, L max 8, M max 8 (voor de eerste 20 elementen).</li><li>${e.Z} elektronen → ${sh.map((c,i)=>c>0?'KLMN'[i]+' '+c:null).filter(Boolean).join(', ')}. Buitenste schil: <strong>${outer[outer.length-1]}</strong>.</li></ol>`};}},
+ {cat:'p1',title:'Relatieve molecuulmassa M<sub>r</sub>',gen(){const fo=pick(FORMULES);const m=Mr(fo);return{q:`Bereken de relatieve molecuulmassa van <strong>${fo.f}</strong> (gebruik Binas 99: H 1,008 · C 12,01 · N 14,01 · O 16,00 · Na 22,99 · Mg 24,31 · Al 26,98 · P 30,97 · S 32,06 · Cl 35,45 · K 39,10 · Ca 40,08 · Fe 55,85).`,ans:m,unit:'u',dec:2,tol:0.06,sol:`<ol><li>Tel per atoomsoort: aantal × A<sub>r</sub>. Let op de indexen en op haakjes.</li><li>M<sub>r</sub> = ${formuleTxt(fo)} = <strong>${nl(m,2)} u</strong>.</li><li>Dit getal is ook de molaire massa: M = ${nl(m,2)} g/mol.</li></ol>`};}},
+ {cat:'p1',title:'Covalentie',gen(){const it=pick(COVAL);return{q:`<strong>${it[0]}</strong> staat in groep ${it[1]}. Wat is de covalentie van een ${it[0]}-atoom (hoeveel atoombindingen vormt het)?`,ans:it[2],unit:'bindingen',dec:0,exact:true,sol:`<ol><li>Valentie-elektronen: ${it[1]<=2?it[1]:it[1]-10}. Voor de edelgasconfiguratie zijn er 8 nodig (waterstof: 2).</li><li>Tekort = covalentie = ${it[0]==='H'?'2 − 1':'8 − '+(it[1]-10)} = <strong>${it[2]}</strong>. (Sneller: 18 − groepnummer${it[0]==='H'?', behalve bij H':''}.)</li></ol>`};}},
+ {cat:'p1',title:'Ionlading voorspellen',gen(){const e=pick(ELPS.filter(x=>x.type!=='noble'&&x.sym!=='C'&&x.sym!=='H'));const ii=ionInfo(e);return{q:`<strong>${e.name.charAt(0).toUpperCase()+e.name.slice(1)} (${e.sym})</strong> staat in groep ${e.g}. Welke lading krijgt het ion dat ${e.sym} vormt? (Geef een getal met teken: 2 voor 2+, −1 voor 1−.)`,ans:ii.q,unit:'(lading)',dec:0,exact:true,sol:`<ol><li>${e.type==='m'?'Metaal → staat elektronen af → positief.':'Niet-metaal → neemt elektronen op → negatief.'} Valentie-elektronen: ${valence(e)}.</li><li>${ii.txt}</li></ol>`};}},
+ // §2
+ {cat:'p2',title:'Van massa naar mol (n = m / M)',gen(){const st=pick(STOFFEN);const m=rnd(2,250,0.5);const n=m/st.M;return{q:`Je weegt <strong>${nl(m,1)} g</strong> ${st.name.split(' (')[0]} af. Bereken de chemische hoeveelheid in mol. (M = ${nl(st.M,2)} g/mol)`,ans:n,unit:'mol',dec:3,sol:`<ol><li>Gegeven m = ${nl(m,1)} g, gevraagd n. Formule: m = n · M, dus n = m / M.</li><li>n = ${nl(m,1)} / ${nl(st.M,2)} = <strong>${fsig(n,3)} mol</strong>.</li><li>Check: van gram naar mol wordt het getal kleiner. Eenheid: g ÷ g/mol = mol.</li></ol>`};}},
+ {cat:'p2',title:'Van mol naar massa (m = n · M)',gen(){const st=pick(STOFFEN);const n=rnd(0.1,5,0.05);const m=n*st.M;return{q:`Bereken de massa van <strong>${nl(n,2)} mol</strong> ${st.name.split(' (')[0]}. (M = ${nl(st.M,2)} g/mol)`,ans:m,unit:'g',dec:1,sol:`<ol><li>Formule: m = n · M.</li><li>m = ${nl(n,2)} × ${nl(st.M,2)} = <strong>${fsig(m,3)} g</strong>.</li><li>Eenheid: mol × g/mol = g.</li></ol>`};}},
+ {cat:'p2',title:'Van mol naar deeltjes (N = n · N<sub>A</sub>)',gen(){const st=pick(STOFFEN);const n=rnd(0.1,4,0.05);const N=n*NA;return{q:`Hoeveel ${st.deel} zitten er in <strong>${nl(n,2)} mol</strong> ${st.name.split(' (')[0]}? Geef alleen het getal vóór ·10<sup>23</sup>.`,ans:N/1e23,unit:'·10²³ deeltjes',dec:2,sol:`<ol><li>Formule: N = n · N<sub>A</sub>, met N<sub>A</sub> = 6,02·10²³ mol⁻¹ (Binas 7).</li><li>N = ${nl(n,2)} × 6,02·10²³ = ${nl(N/1e23,2)}·10²³ = <strong>${sci(N,3)} ${st.deel}</strong>. Vul hierboven ${nl(N/1e23,2)} in.</li></ol>`};}},
+ {cat:'p2',title:'Van deeltjes naar mol (n = N / N<sub>A</sub>)',gen(){const x=rnd(0.5,30,0.1);const n=x*1e23/NA;return{q:`Een hoeveelheid stof bevat <strong>${nl(x,1)}·10<sup>23</sup> moleculen</strong>. Hoeveel mol is dat?`,ans:n,unit:'mol',dec:2,sol:`<ol><li>N = n · N<sub>A</sub>, dus n = N / N<sub>A</sub>.</li><li>n = ${nl(x,1)}·10²³ / 6,02·10²³ = <strong>${fsig(n,3)} mol</strong>. (De machten van 10 vallen tegen elkaar weg.)</li></ol>`};}},
+ {cat:'p2',title:'Van massa naar deeltjes (twee stappen)',gen(){const st=pick(STOFFEN);const m=rnd(1,100,0.5);const n=m/st.M,N=n*NA;return{q:`Hoeveel ${st.deel} zitten er in <strong>${nl(m,1)} g</strong> ${st.name.split(' (')[0]}? (M = ${nl(st.M,2)} g/mol) Geef het getal vóór ·10<sup>23</sup>.`,ans:N/1e23,unit:'·10²³ deeltjes',dec:2,sol:`<ol><li>Route in het blokschema: m → n → N.</li><li>n = m / M = ${nl(m,1)} / ${nl(st.M,2)} = ${fsig(n,4)} mol (niet afronden!).</li><li>N = n · N<sub>A</sub> = ${fsig(n,4)} × 6,02·10²³ = ${nl(N/1e23,2)}·10²³ = <strong>${sci(N,3)} ${st.deel}</strong>. Vul hierboven ${nl(N/1e23,2)} in.</li></ol>`};}},
+ {cat:'p2',title:'Van deeltjes naar massa (twee stappen)',gen(){const st=pick(STOFFEN);const x=rnd(1,30,0.5);const n=x*1e23/NA,m=n*st.M;return{q:`Wat is de massa van <strong>${nl(x,1)}·10<sup>23</sup> ${st.deel}</strong> ${st.name.split(' (')[0]}? (M = ${nl(st.M,2)} g/mol)`,ans:m,unit:'g',dec:1,sol:`<ol><li>Route: N → n → m.</li><li>n = N / N<sub>A</sub> = ${nl(x,1)}·10²³ / 6,02·10²³ = ${fsig(n,4)} mol.</li><li>m = n · M = ${fsig(n,4)} × ${nl(st.M,2)} = <strong>${fsig(m,3)} g</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Volume uit massa en dichtheid (V = m / ρ)',gen(){const st=pick(STOFFEN);const m=rnd(5,500,1);const V=m/st.rho;return{q:`Bereken het volume in mL van <strong>${m} g</strong> ${st.name.split(' (')[0]}. (ρ = ${st.rs} g/mL, Binas 8-12)`,ans:V,unit:'mL',dec:1,sol:`<ol><li>ρ = m / V, omschrijven: V = m / ρ.</li><li>V = ${m} / ${st.rs} = <strong>${fsig(V,3)} mL</strong>.</li><li>Check: ${st.rho>1?'de dichtheid is groter dan 1 g/mL, dus het volume in mL is kleiner dan de massa in g.':'de dichtheid is kleiner dan 1 g/mL, dus het volume in mL is groter dan de massa in g.'}</li></ol>`};}},
+ {cat:'p2',title:'Massa uit volume en dichtheid (m = ρ · V)',gen(){const st=pick(STOFFEN);const V=rnd(5,500,1);const m=V*st.rho;return{q:`Bereken de massa van <strong>${V} mL</strong> ${st.name.split(' (')[0]}. (ρ = ${st.rs} g/mL)`,ans:m,unit:'g',dec:1,sol:`<ol><li>ρ = m / V, omschrijven: m = ρ · V.</li><li>m = ${st.rs} × ${V} = <strong>${fsig(m,3)} g</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Dichtheid omrekenen kg/m³ ↔ g/mL',gen(){const st=pick(STOFFEN);const naarG=Math.random()<0.5;const kg=st.rho*1000;return naarG?{q:`In Binas staat ρ = <strong>${st.rs}·10<sup>3</sup> kg/m<sup>3</sup></strong> voor ${st.name.split(' (')[0]}. Hoeveel g/mL is dat?`,ans:st.rho,unit:'g/mL',dec:2,sol:`<ol><li>1 g/mL = 1 g/cm³ = 1000 kg/m³ (1 m³ = 10⁶ cm³ en 1 kg = 10³ g).</li><li>${st.rs}·10³ kg/m³ = <strong>${st.rs} g/mL</strong>. Het getal vóór de 10³ is dus meteen de dichtheid in g/mL.</li></ol>`}:{q:`De dichtheid van ${st.name.split(' (')[0]} is <strong>${st.rs} g/mL</strong>. Hoeveel kg/m<sup>3</sup> is dat?`,ans:kg,unit:'kg/m³',dec:0,sol:`<ol><li>1 g/mL = 1000 kg/m³.</li><li>${st.rs} × 1000 = <strong>${nl(kg,0)} kg/m³</strong> = ${st.rs}·10³ kg/m³.</li></ol>`};}},
+ {cat:'p2',title:'Van mol naar volume (drie stappen)',gen(){const st=pick(STOFFEN);const n=rnd(0.2,5,0.1);const m=n*st.M,V=m/st.rho;return{q:`Bereken het volume in mL van <strong>${nl(n,1)} mol</strong> ${st.name.split(' (')[0]}. (M = ${nl(st.M,2)} g/mol, ρ = ${st.rs} g/mL)`,ans:V,unit:'mL',dec:1,sol:`<ol><li>Route: n → m → V (twee pijlen naar links in het blokschema).</li><li>m = n · M = ${nl(n,1)} × ${nl(st.M,2)} = ${fsig(m,4)} g.</li><li>V = m / ρ = ${fsig(m,4)} / ${st.rs} = <strong>${fsig(V,3)} mL</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Van volume naar mol (twee stappen)',gen(){const st=pick(STOFFEN);const V=rnd(10,500,5);const m=V*st.rho,n=m/st.M;return{q:`Hoeveel mol ${st.name.split(' (')[0]} is <strong>${V} mL</strong>? (ρ = ${st.rs} g/mL, M = ${nl(st.M,2)} g/mol)`,ans:n,unit:'mol',dec:2,sol:`<ol><li>Route: V → m → n.</li><li>m = ρ · V = ${st.rs} × ${V} = ${fsig(m,4)} g.</li><li>n = m / M = ${fsig(m,4)} / ${nl(st.M,2)} = <strong>${fsig(n,3)} mol</strong>.</li></ol>`};}},
+ {cat:'p2',title:'Molverhouding: atomen in een molecuul',gen(){const fo=pick(FORMULES.filter(f=>Object.keys(f.c).length>1));const at=pick(Object.keys(fo.c));const n=rnd(0.5,6,0.5);const a=n*fo.c[at];return{q:`Hoeveel mol <strong>${at}-atomen</strong> zitten er in <strong>${nl(n,1)} mol ${fo.f}</strong>?`,ans:a,unit:'mol',dec:1,sol:`<ol><li>Lees de index af: in één molecuul ${fo.f} zit${fo.c[at]===1?'':'ten'} ${fo.c[at]} ${at}-atoom${fo.c[at]===1?'':'en'}. Dus in 1 mol moleculen zit ${fo.c[at]} mol ${at}.</li><li>${nl(n,1)} × ${fo.c[at]} = <strong>${nl(a,1)} mol ${at}-atomen</strong>. (Net als: 1 dozijn NH₃ bevat 3 dozijn H.)</li></ol>`};}},
+ // §3
+ {cat:'p3',title:'Significante cijfers tellen',gen(){const opts=[['0,002 30',3],['50,00',4],['50,0',3],['50',2],['3,400',4],['205',3],['0,0500',3],['1,008',4],['6,02·10²³',3],['2,8·10⁻²',2],['0,7',1],['12,05',4],['180,16',5],['0,010',2],['1,2·10²',2],['92,138',5]];const o=pick(opts);return{q:`Hoeveel significante cijfers heeft de meetwaarde <strong>${o[0]}</strong>?`,ans:o[1],unit:'cijfers',dec:0,exact:true,sol:`<ol><li>Begin te tellen bij het eerste cijfer dat geen 0 is. Nullen aan het eind tellen mee; de macht van 10 telt niet mee.</li><li>${o[0]} heeft <strong>${o[1]}</strong> significante cijfer${o[1]===1?'':'s'}.</li></ol>`};}},
+ {cat:'p3',title:'Optellen: afronden op decimalen',gen(){const a=rnd(5,60,0.1),b=rnd(0.5,9.99,0.01);const s=a+b;const r=Math.round((s+1e-9)*10)/10;return{q:`In een maatcilinder zit <strong>${nl(a,1)} mL</strong> water. Met een pipet voeg je <strong>${nl(b,2)} mL</strong> toe. Geef het totale volume in het juiste aantal significante cijfers.`,ans:r,unit:'mL',dec:1,tol:0.0011,sol:`<ol><li>${nl(a,1)} + ${nl(b,2)} = ${nl(s,2)} mL.</li><li>Optellen → afronden op het kleinste aantal <em>decimalen</em>: ${nl(a,1)} heeft 1 decimaal.</li><li>Antwoord: <strong>${nl(r,1)} mL</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Delen: afronden op significante cijfers',gen(){const V=[10.0,25.0,50.0,100.0][rnd(0,3)];const sig=[2,3][rnd(0,1)];const m=sig===2?rnd(10,99,1):rnd(10.1,99.9,0.1);const rho=m/V;const r=parseFloat(rho.toPrecision(sig));return{q:`Je meet <strong>${sig===2?nl(m,0):nl(m,1)} g</strong> van een vloeistof af in een maatcilinder: <strong>${nl(V,1)} mL</strong>. Bereken de dichtheid in g/mL in het juiste aantal significante cijfers.`,ans:r,unit:'g/mL',dec:null,disp:r.toPrecision(sig).replace('.',','),tol:1e-6,sol:`<ol><li>ρ = m / V = ${sig===2?nl(m,0):nl(m,1)} / ${nl(V,1)} = ${nl(rho,4)}…</li><li>Delen → kleinste aantal significante cijfers: de massa heeft er ${sig}, het volume ${V>=100?4:3}.</li><li>Antwoord: <strong>${r.toPrecision(sig).replace('.',',')} g/mL</strong>${String(r.toPrecision(sig)).endsWith('0')?' (schrijf de laatste 0 op: die is significant)':''}.</li></ol>`};}},
+ {cat:'p3',title:'Wetenschappelijke notatie: exponent',gen(){const items=[['0,002 30 m','2,30',-3],['40,8 g','4,08',1],['0,0054 mol','5,4',-3],['602 000 000 000 000 000 000 000','6,02',23],['115 mL','1,15',2],['0,021 092 mol','2,109 2',-2],['0,000 002 %','2',-6],['1 000 000 (1 miljoen)','1',6],['92,138 g','9,213 8',1],['0,850 g/mL','8,50',-1],['180,16 g/mol','1,801 6',2],['0,000 016 g','1,6',-5]];const it=pick(items);return{q:`Schrijf <strong>${it[0]}</strong> in wetenschappelijke notatie: ${it[1]} · 10<sup>?</sup>. Welke exponent hoort bij het vraagteken?`,ans:it[2],unit:'(exponent)',dec:0,exact:true,sol:`<ol><li>Zet de komma achter het eerste cijfer dat geen 0 is: ${it[1]}.</li><li>Tel hoeveel plaatsen de komma is verschoven: naar links = positief, naar rechts = negatief.</li><li>${it[0]} = ${it[1]} · 10<sup>${it[2]}</sup>.</li></ol>`};}},
+ {cat:'p3',title:'Massapercentage',gen(){const mm=rnd(50,500,10),ma=rnd(1,mm/2,0.5);const p=ma/mm*100;return{q:`Een mengsel van <strong>${mm} g</strong> bevat <strong>${nl(ma,1)} g</strong> zout. Bereken het massapercentage zout.`,ans:p,unit:'massa%',dec:1,sol:`<ol><li>massa% = m(zout) / m(mengsel) × 100%.</li><li>${nl(ma,1)} / ${mm} × 100% = <strong>${fsig(p,3)} massa%</strong>.</li><li>Teller en noemer allebei in gram: klopt.</li></ol>`};}},
+ {cat:'p3',title:'Volumepercentage',gen(){const vt=[250,330,500,700,750,1000][rnd(0,5)];const va=rnd(5,vt/2,1);const p=va/vt*100;return{q:`Een drank van <strong>${vt} mL</strong> bevat <strong>${va} mL</strong> alcohol. Bereken het volumepercentage alcohol.`,ans:p,unit:'volume%',dec:1,sol:`<ol><li>volume% = V(alcohol) / V(mengsel) × 100%.</li><li>${va} / ${vt} × 100% = <strong>${fsig(p,3)} volume%</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Massa uit een percentage',gen(){const p=rnd(2,40,0.5),mt=rnd(100,2000,50);const m=p/100*mt;return{q:`Brood bevat <strong>${nl(p,1)} massa%</strong> eiwit. Hoeveel gram eiwit zit er in <strong>${mt} g</strong> brood?`,ans:m,unit:'g',dec:1,sol:`<ol><li>massa% = m(A)/m(mengsel) × 100%, omschrijven: m(A) = massa% / 100 × m(mengsel).</li><li>m(eiwit) = ${nl(p,1)}/100 × ${mt} = <strong>${fsig(m,3)} g</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Massa-ppm',gen(){const mg=rnd(0.5,80,0.5),kg=rnd(1,20,0.5);const ppm=mg*1e-3/(kg*1e3)*1e6;return{q:`In <strong>${nl(kg,1)} kg</strong> vis wordt <strong>${nl(mg,1)} mg</strong> kwik gevonden. Bereken het gehalte in massa-ppm.`,ans:ppm,unit:'ppm',dec:2,sol:`<ol><li>massa-ppm = m(kwik) / m(mengsel) × 10⁶, met <em>dezelfde eenheid</em> boven en onder.</li><li>${nl(mg,1)} mg = ${nl(mg*1e-3,4)} g; ${nl(kg,1)} kg = ${nl(kg*1e3,0)} g.</li><li>${nl(mg*1e-3,4)} / ${nl(kg*1e3,0)} × 10⁶ = <strong>${fsig(ppm,3)} ppm</strong>. (Sneller: 1 ppm = 1 mg per kg, dus ${nl(mg,1)} / ${nl(kg,1)}.)</li></ol>`};}},
+ {cat:'p3',title:'Massa-ppb',gen(){const ug=rnd(2,900,1),kg=rnd(1,50,1);const ppb=ug*1e-6/(kg*1e3)*1e9;return{q:`In <strong>${kg} kg</strong> drinkwater zit <strong>${ug} µg</strong> lood. Bereken het gehalte in massa-ppb.`,ans:ppb,unit:'ppb',dec:1,sol:`<ol><li>massa-ppb = m(lood) / m(mengsel) × 10⁹.</li><li>${ug} µg = ${ug}·10⁻⁶ g; ${kg} kg = ${kg}·10³ g.</li><li>${ug}·10⁻⁶ / ${kg}·10³ × 10⁹ = <strong>${fsig(ppb,3)} ppb</strong>. (Sneller: 1 ppb = 1 µg per kg.)</li></ol>`};}},
+ {cat:'p3',title:'Molariteit uit mol en volume',gen(){const n=rnd(0.02,2,0.01),V=[100,200,250,500,750,1000,1500,2000][rnd(0,7)];const c=n/(V/1000);return{q:`Je lost <strong>${nl(n,2)} mol</strong> keukenzout op tot <strong>${V} mL</strong> oplossing. Bereken de molariteit in mol/L.`,ans:c,unit:'mol/L',dec:2,sol:`<ol><li>[A] = n(A) / V<sub>opl</sub>, met V in <strong>liter</strong>: ${V} mL = ${nl(V/1000,3)} L.</li><li>[NaCl] = ${nl(n,2)} / ${nl(V/1000,3)} = <strong>${fsig(c,3)} mol/L</strong> (= ${fsig(c,3)} M).</li></ol>`};}},
+ {cat:'p3',title:'Molariteit uit massa en volume (twee stappen)',gen(){const st=pick(STOFFEN.filter(s=>['glucose','keukenzout','sacharose','azijnzuur'].some(k=>s.name.startsWith(k))));const m=rnd(1,60,0.5),V=[100,200,250,500,750,1000][rnd(0,5)];const n=m/st.M,c=n/(V/1000);return{q:`<strong>${nl(m,1)} g</strong> ${st.name.split(' (')[0]} wordt opgelost tot <strong>${V} mL</strong> oplossing. Bereken de molariteit. (M = ${nl(st.M,2)} g/mol)`,ans:c,unit:'mol/L',dec:3,sol:`<ol><li>Stap 1, massa → mol: n = m / M = ${nl(m,1)} / ${nl(st.M,2)} = ${fsig(n,4)} mol.</li><li>Stap 2, mol → molariteit: V<sub>opl</sub> = ${V} mL = ${nl(V/1000,3)} L. [A] = ${fsig(n,4)} / ${nl(V/1000,3)} = <strong>${fsig(c,3)} mol/L</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Mol uit molariteit en volume',gen(){const c=rnd(0.05,3,0.05),V=[50,100,150,200,250,500][rnd(0,5)];const n=c*V/1000;return{q:`Hoeveel mol opgeloste stof zit er in <strong>${V} mL</strong> van een oplossing van <strong>${nl(c,2)} mol/L</strong>?`,ans:n,unit:'mol',dec:3,sol:`<ol><li>[A] = n / V<sub>opl</sub>, omschrijven: n = [A] · V<sub>opl</sub>.</li><li>V<sub>opl</sub> = ${V} mL = ${nl(V/1000,3)} L.</li><li>n = ${nl(c,2)} × ${nl(V/1000,3)} = <strong>${fsig(n,3)} mol</strong>.</li></ol>`};}},
+ {cat:'p3',title:'Massa uit molariteit en volume (drie stappen)',gen(){const st=pick(STOFFEN.filter(s=>['glucose','keukenzout','sacharose'].some(k=>s.name.startsWith(k))));const c=rnd(0.05,1.5,0.05),V=[100,200,250,500,1000][rnd(0,4)];const n=c*V/1000,m=n*st.M;return{q:`Hoeveel gram ${st.name.split(' (')[0]} moet je afwegen voor <strong>${V} mL</strong> oplossing van <strong>${nl(c,2)} mol/L</strong>? (M = ${nl(st.M,2)} g/mol)`,ans:m,unit:'g',dec:2,sol:`<ol><li>Route: [A] → n → m.</li><li>n = [A] · V<sub>opl</sub> = ${nl(c,2)} × ${nl(V/1000,3)} = ${fsig(n,4)} mol.</li><li>m = n · M = ${fsig(n,4)} × ${nl(st.M,2)} = <strong>${fsig(m,3)} g</strong>.</li></ol>`};}}
+];
+let exFilter='all',exState={good:0,bad:0},exCurrent={};
+const catLabel={p1:'§1',p2:'§2',p3:'§3'};
+function exRender(){
+  const cont=document.getElementById('ex-container');cont.innerHTML='';
+  exTypes.forEach((t,i)=>{
+    if(exFilter!=='all'&&t.cat!==exFilter)return;
+    if(!exCurrent[i])exCurrent[i]=t.gen();
+    const c=exCurrent[i];
+    const card=document.createElement('div');card.className='ex-card';card.id='ex-'+i;
+    card.innerHTML=`<div class="ex-head"><div><span class="pill">${catLabel[t.cat]}</span><strong>${t.title}</strong></div><button class="btn ghost" data-new="${i}">🔄 Nieuwe getallen</button></div>
+      <div class="ex-q">${c.q}</div>
+      <div class="ex-input"><input type="text" inputmode="decimal" placeholder="antwoord" data-in="${i}"><span class="unit">${c.unit}</span><button class="btn" data-check="${i}">Controleer</button><button class="btn ghost" data-sol="${i}">Uitwerking</button></div>
+      <div class="ex-fb" id="exfb-${i}"></div>
+      <div class="ex-sol" id="exsol-${i}">${c.sol}</div>`;
+    cont.appendChild(card);
+  });
+  cont.querySelectorAll('[data-new]').forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.new;exCurrent[i]=exTypes[i].gen();exRender();document.getElementById('ex-'+i).scrollIntoView({behavior:'smooth',block:'center'});}));
+  cont.querySelectorAll('[data-sol]').forEach(b=>b.addEventListener('click',()=>document.getElementById('exsol-'+b.dataset.sol).classList.toggle('show')));
+  cont.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>exCheck(+b.dataset.check)));
+  cont.querySelectorAll('[data-in]').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter')exCheck(+inp.dataset.in);}));
+}
+function exCheck(i){
+  const c=exCurrent[i];const inp=document.querySelector(`[data-in="${i}"]`);const fb=document.getElementById('exfb-'+i);
+  const raw=inp.value.trim().replace(',','.').replace(/\s/g,'').replace('−','-').replace('+','');const val=parseFloat(raw);
+  if(isNaN(val)){fb.className='ex-fb show bad';fb.textContent='Vul eerst een getal in (komma of punt mag).';return;}
+  let ok;
+  if(c.exact)ok=Math.abs(val-c.ans)<1e-9;
+  else{const tol=c.tol!==undefined?c.tol:Math.max(Math.abs(c.ans)*0.025,c.dec===0?0.6:c.dec===1?0.06:c.dec===2?0.006:0.0006);ok=Math.abs(val-c.ans)<=tol;}
+  const shown=c.disp!==undefined?c.disp:(c.dec===null?String(c.ans).replace('.',','):nl(c.ans,c.dec));
+  if(ok){exState.good++;fb.className='ex-fb show good';fb.innerHTML=`✅ <strong>Goed!</strong> ${shown} ${c.unit}.`;}
+  else{exState.bad++;fb.className='ex-fb show bad';fb.innerHTML=`❌ <strong>Niet goed.</strong> Het antwoord is ${shown} ${c.unit}. Klik op "Uitwerking" en kijk waar het misging.`;document.getElementById('exsol-'+i).classList.add('show');}
+  document.getElementById('ex-score').textContent=`Goed: ${exState.good} · Fout: ${exState.bad}`;
+}
+document.querySelectorAll('.ex-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.ex-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');exFilter=b.dataset.cat;exRender();}));
+exRender();
+
+// ---------- FLASHCARDS ----------
+const flashcards=[
+  {term:"Atoommodel (huidig)",def:"Een kern met positieve protonen en ongeladen neutronen; daaromheen negatieve elektronen in vaste banen (schillen) in de elektronenwolk.",cat:"p1"},
+  {term:"Demokritos → Dalton → Thomson → Rutherford → Bohr → Chadwick",def:"Ondeelbaar deeltje → massief bolletje → ladingen in het atoom → positieve kern met elektronenwolk → elektronen in vaste schillen → neutronen in de kern.",cat:"p1"},
+  {term:"Proton, neutron, elektron",def:"Proton: kern, lading +, massa 1 u. Neutron: kern, geen lading, massa 1 u. Elektron: schillen, lading −, massa verwaarloosbaar.",cat:"p1"},
+  {term:"Atoomnummer",def:"Het aantal protonen in de kern. Bepaalt om welk element het gaat en de plek in het periodiek systeem. Bij een neutraal atoom ook het aantal elektronen.",cat:"p1"},
+  {term:"Massagetal",def:"Aantal protonen + aantal neutronen. Dus: neutronen = massagetal − atoomnummer.",cat:"p1"},
+  {term:"Notatie ³⁷₁₇Cl",def:"Linksboven het massagetal (37), linksonder het atoomnummer (17). Ook geschreven als ³⁷Cl of Cl-37. 17 p, 20 n, 17 e.",cat:"p1"},
+  {term:"Isotopen",def:"Atomen van hetzelfde element (zelfde atoomnummer) met een verschillend aantal neutronen, dus een verschillend massagetal. Cl-35 en Cl-37.",cat:"p1"},
+  {term:"Elektronenschillen K, L, M",def:"Banen om de kern. Maximaal 2, 8 en 18 elektronen. Voor de eerste 20 elementen: K2, L8, M8, N2. Binas 99 geeft de elektronenconfiguratie.",cat:"p1"},
+  {term:"Valentie-elektronen",def:"De elektronen in de buitenste schil. Alleen die doen mee aan chemische reacties. Aantal = groepnummer (groep 1-2) of groepnummer − 10 (groep 13-18).",cat:"p1"},
+  {term:"Ion",def:"Een atoom (of groep atomen) met een lading, doordat het elektronen heeft afgestaan (positief) of opgenomen (negatief). Lading = protonen − elektronen.",cat:"p1"},
+  {term:"Na⁺ en Cl⁻: hoeveel elektronen?",def:"Na⁺: 11 protonen, 10 elektronen (één kwijt). Cl⁻: 17 protonen, 18 elektronen (één erbij).",cat:"p1"},
+  {term:"Relatieve atoommassa A_r",def:"Gewogen gemiddelde van de massa's van de isotopen van een element, in u. Daarom vaak geen heel getal (Cl: 35,45). Binas 99.",cat:"p1"},
+  {term:"Relatieve molecuulmassa M_r",def:"Som van de A_r van alle atomen in de molecuulformule, in u. C₆H₁₂O₆: 6×12,01 + 12×1,008 + 6×16,00 = 180,16 u.",cat:"p1"},
+  {term:"De eenheid u",def:"Atomaire massa-eenheid: 1 u = 1,66·10⁻²⁴ g. In 1 gram passen 6,02·10²³ u; daarom is M in g/mol hetzelfde getal als M_r in u.",cat:"p1"},
+  {term:"Mendelejev",def:"Zette elementen op volgorde van atoommassa met vergelijkbare eigenschappen onder elkaar, liet gaten open en voorspelde onbekende elementen (germanium). Basis van het huidige periodiek systeem.",cat:"p1"},
+  {term:"Periode",def:"Horizontale rij in het periodiek systeem (7 stuks). Periodenummer = aantal schillen met elektronen.",cat:"p1"},
+  {term:"Groep",def:"Verticale kolom in het periodiek systeem (18 stuks). Elementen in één groep hebben evenveel valentie-elektronen en vergelijkbare eigenschappen.",cat:"p1"},
+  {term:"Metalen",def:"Links en midden in het periodiek systeem. Glanzend, geleiden stroom en warmte. Vormen geen moleculen: formule = symbool (Fe). Worden positieve ionen.",cat:"p1"},
+  {term:"Niet-metalen",def:"Rechtsboven in het periodiek systeem (+ waterstof). Vaak gasvormig, geleiden geen stroom. Vormen vaak tweeatomige moleculen. Worden negatieve ionen.",cat:"p1"},
+  {term:"De zeven tweeatomige elementen",def:"H₂, N₂, O₂, F₂, Cl₂, Br₂, I₂. Ezelsbrug: Heb Nooit Ongerust Flauwe Club Brood In.",cat:"p1"},
+  {term:"Edelgassen",def:"Groep 18 (He, Ne, Ar, Kr, Xe, Rn). Acht valentie-elektronen (He: 2), heel stabiel, reageren vrijwel niet.",cat:"p1"},
+  {term:"Edelgasconfiguratie",def:"Acht elektronen in de buitenste schil (bij helium 2). Atomen reageren om deze stabiele verdeling te bereiken: elektronen afstaan, opnemen of delen.",cat:"p1"},
+  {term:"Halogenen",def:"Groep 17 (F, Cl, Br, I). Zeven valentie-elektronen; nemen makkelijk één elektron op → ion met lading 1−. Reageren makkelijk met metalen.",cat:"p1"},
+  {term:"Alkalimetalen en aardalkalimetalen",def:"Groep 1 (Li, Na, K): 1 valentie-elektron → 1+. Groep 2 (Mg, Ca): 2 valentie-elektronen → 2+. De meest reactieve metalen.",cat:"p1"},
+  {term:"2 Na + Cl₂ → 2 Na⁺ + 2 Cl⁻",def:"Elk Na-atoom staat één elektron af, elk Cl-atoom neemt er één op. Beide krijgen de edelgasconfiguratie én een lading.",cat:"p1"},
+  {term:"Atoombinding en covalentie",def:"Atoombinding: twee niet-metaalatomen delen een elektronenpaar. Covalentie: het aantal atoombindingen dat een atoom vormt om de edelgasconfiguratie te bereiken.",cat:"p1"},
+  {term:"Covalentie van H, Cl, O, N, C",def:"H 1 · F/Cl/Br/I 1 · O/S 2 · N/P 3 · C/Si 4. Regel: 8 − valentie-elektronen; waterstof streeft naar 2 (zoals helium), dus 2 − 1 = 1.",cat:"p1"},
+  {term:"Mol",def:"Eenheid van de chemische hoeveelheid n. 1 mol = 6,02·10²³ deeltjes. Een telwoord, net als dozijn (12), maar dan veel groter.",cat:"p2"},
+  {term:"Waarom is de mol bedacht?",def:"Moleculen zijn te klein om te tellen of los te wegen, maar reacties gaan in vaste deeltjesverhoudingen. Met de mol kun je deeltjes 'tellen' door te wegen.",cat:"p2"},
+  {term:"Getal van Avogadro N_A",def:"6,02·10²³ mol⁻¹ (Binas 7): het aantal deeltjes in één mol. Gekozen als het aantal u dat in 1 gram past.",cat:"p2"},
+  {term:"N = n · N_A",def:"Aantal deeltjes = chemische hoeveelheid (mol) × getal van Avogadro. Andersom: n = N / N_A.",cat:"p2"},
+  {term:"Molverhouding in NH₃",def:"1 mol NH₃ bevat 1 mol N-atomen en 3 mol H-atomen. Verhouding 1 : 1 : 3, precies de indexen. (Dozijn: 1 dozijn NH₃ = 3 dozijn H.)",cat:"p2"},
+  {term:"Molaire massa M",def:"De massa van 1 mol stof, in g/mol. Hetzelfde getal als de relatieve molecuulmassa in u. Binas 98, of zelf berekenen met Binas 99.",cat:"p2"},
+  {term:"m = n · M",def:"Massa (g) = chemische hoeveelheid (mol) × molaire massa (g/mol). Omschrijven: n = m / M en M = m / n.",cat:"p2"},
+  {term:"Hoeveel weegt 2,00 mol water?",def:"M(H₂O) = 18,016 g/mol → m = 2,00 × 18,016 = 36,032 → 36,0 g (3 sig. cijfers). Twee keer zoveel deeltjes, dus twee keer zo zwaar.",cat:"p2"},
+  {term:"Dichtheid ρ",def:"Massa per volume: ρ = m / V. Stofeigenschap. Eenheid kg/m³ of g/cm³ (= g/mL). Binas 8-12 en 40A. Al: 2,70 g/cm³; Fe: 7,87 g/cm³.",cat:"p2"},
+  {term:"kg/m³ ↔ g/mL",def:"1 g/mL = 1 g/cm³ = 1,0·10³ kg/m³. Ethanol: 0,80·10³ kg/m³ = 0,80 g/mL.",cat:"p2"},
+  {term:"Het blokschema",def:"V ⇄ m ⇄ n ⇄ N. Naar rechts: ×ρ, :M, ×N_A. Naar links: :ρ, ×M, :N_A. Plus n ⇄ [A] via :V_opl en ×V_opl.",cat:"p2"},
+  {term:"Volume van 2,0 mol ethanol",def:"m = n·M = 2,0 × 46,069 = 92,138 g. V = m/ρ = 92,138 / 0,80 = 115,17 mL → 1,2·10² mL (2 significante cijfers).",cat:"p2"},
+  {term:"Meetwaarde vs. telwaarde",def:"Meetwaarde: uit een instrument, beperkt aantal significante cijfers. Telwaarde: exact geheel getal (11 protonen, 100%), heeft geen invloed op de significantie.",cat:"p3"},
+  {term:"Significante cijfers tellen",def:"Begin bij het eerste cijfer ≠ 0 en tel alles rechts daarvan, inclusief nullen aan het eind. 0,002 30 → 3; 50,00 → 4; 50 → 2. De macht van 10 telt niet mee.",cat:"p3"},
+  {term:"Bekerglas, maatcilinder, maatkolf, volpipet",def:"Steeds nauwkeuriger: 50 mL (2 sig. cijfers), 50,0 mL (3), 50,00 mL (4). Het instrument bepaalt de nauwkeurigheid.",cat:"p3"},
+  {term:"Wetenschappelijke notatie",def:"Eén cijfer voor de komma × een macht van 10. 0,002 30 = 2,30·10⁻³; 40,8 = 4,08·10¹. Maakt het aantal significante cijfers zichtbaar: 1,2·10² = 2 sig., terwijl 120 er 3 zou betekenen (eindnullen tellen mee).",cat:"p3"},
+  {term:"Vuistregel optellen/aftrekken",def:"Afronden op het aantal decimalen van de meetwaarde met de minste decimalen. 1,003 + 0,5 = 1,503 → 1,5.",cat:"p3"},
+  {term:"Vuistregel vermenigvuldigen/delen",def:"Afronden op het aantal significante cijfers van de meetwaarde met de minste significante cijfers. 3,34 × 5,026 = 16,786… → 16,8.",cat:"p3"},
+  {term:"Combinatie van + en ×",def:"Eerst regel 1 voor het optel-deel, dan regel 2. (1,003 + 0,5) × 3,33 = 1,503 × 3,33 = 5,004… → 5,0 (de som 1,5 heeft 2 sig. cijfers).",cat:"p3"},
+  {term:"Tussenuitkomst afronden?",def:"Nooit. Laat het getal in je rekenmachine staan (of schrijf minstens 2 extra cijfers op). Alleen het eindantwoord rond je af.",cat:"p3"},
+  {term:"Gehalte",def:"Hoeveel van een bestanddeel (component) er in het hele mengsel zit. Altijd: deel / geheel. Als %, ppm, ppb of als concentratie.",cat:"p3"},
+  {term:"Massapercentage",def:"massa% = m(A) / m(mengsel) × 100%. Zelfde eenheid boven en onder. Voor vaste mengsels en voedsel.",cat:"p3"},
+  {term:"Volumepercentage",def:"volume% = V(A) / V(mengsel) × 100%. Voor vloeistofmengsels (alcohol in bier: 5,0 vol%).",cat:"p3"},
+  {term:"Massa-ppm en massa-ppb",def:"ppm = m(A)/m(mengsel) × 10⁶ (gram per miljoen gram = mg per kg). ppb = × 10⁹ (µg per kg). Voor heel lage gehaltes, zoals gifstoffen.",cat:"p3"},
+  {term:"Concentratie en molariteit",def:"Concentratie: hoeveelheid opgeloste stof per liter oplossing (bv. g/L). Molariteit [A]: in mol per liter (mol/L = M). Vierkante haken = molariteit.",cat:"p3"},
+  {term:"[A] = n(A) / V_opl",def:"Molariteit = chemische hoeveelheid (mol) / volume van de oplossing in LITER. 750 mL = 0,750 L.",cat:"p3"},
+  {term:"Molariteit van 3,8 g glucose in 750 mL",def:"n = 3,8 / 180,16 = 0,021 092 mol. [glucose] = 0,021 092 / 0,750 = 2,8·10⁻² M (2 sig. cijfers).",cat:"p3"},
+  {term:"Stappenplan rekenopgave",def:"Gegevens + gevraagd met symbool en eenheid → route in het blokschema → Binas-waarden opzoeken → eenheden kloppend maken → rekenen zonder tussentijds afronden → eindantwoord in juiste sig. cijfers.",cat:"p3"}
+];
+let fcOrder=flashcards.map((_,i)=>i),fcIndex=0,fcFilter='all',fcMarked=new Set(load('fc-marked',[]));
+function fcFiltered(){const list=fcOrder.map(i=>flashcards[i]);if(fcFilter==='all')return list;if(fcFilter==='oefen')return list.filter(c=>fcMarked.has(flashcards.indexOf(c)));return list.filter(c=>c.cat===fcFilter);}
+function renderFc(){
+  const list=fcFiltered();
+  if(list.length===0){document.getElementById('fc-term').textContent='Geen kaarten';document.getElementById('fc-def').textContent='Markeer kaarten met "Nog oefenen" om ze hier terug te zien.';document.getElementById('fc-counter').textContent='0 van 0';return;}
+  if(fcIndex>=list.length)fcIndex=0;if(fcIndex<0)fcIndex=list.length-1;
+  const c=list[fcIndex];
+  document.getElementById('fc-term').textContent=c.term;
+  document.getElementById('fc-def').textContent=c.def;
+  document.getElementById('fc-counter').textContent=`Kaart ${fcIndex+1} van ${list.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+  const real=flashcards.indexOf(c),mb=document.getElementById('fc-mark');
+  if(fcMarked.has(real)){mb.textContent='✓ Gemarkeerd';mb.style.background='var(--green)';}else{mb.textContent='⚠️ Nog oefenen';mb.style.background='var(--orange)';}
+}
+document.getElementById('flashcard').addEventListener('click',()=>document.getElementById('flashcard').classList.toggle('flipped'));
+document.getElementById('fc-prev').addEventListener('click',()=>{fcIndex--;renderFc();});
+document.getElementById('fc-next').addEventListener('click',()=>{fcIndex++;renderFc();});
+document.getElementById('fc-mark').addEventListener('click',()=>{const list=fcFiltered();if(!list.length)return;const real=flashcards.indexOf(list[fcIndex]);if(fcMarked.has(real))fcMarked.delete(real);else fcMarked.add(real);store('fc-marked',[...fcMarked]);renderFc();});
+document.getElementById('fc-shuffle').addEventListener('click',()=>{for(let i=fcOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]];}fcIndex=0;renderFc();});
+document.querySelectorAll('.fc-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.fc-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');fcFilter=b.dataset.cat;fcIndex=0;renderFc();}));
+renderFc();
+
+// ---------- QUIZ ----------
+const quizQuestions=[
+  {level:1,q:"Wat bepaalt het atoomnummer van een atoom?",options:["Het aantal neutronen","Het aantal protonen","Het aantal schillen","De massa in u"],correct:1,explain:"Atoomnummer = aantal protonen in de kern. Dat bepaalt om welk element het gaat. Bij een neutraal atoom is het ook het aantal elektronen."},
+  {level:1,q:"Wat is het massagetal?",options:["Het aantal protonen","Het aantal neutronen","Protonen + neutronen","Protonen + elektronen"],correct:2,explain:"Massagetal = protonen + neutronen (de deeltjes in de kern, elk 1 u). Elektronen wegen vrijwel niets."},
+  {level:1,q:"Hoeveel deeltjes zitten er in 1 mol?",options:["6,02·10²³","1,66·10⁻²⁴","12","6,02·10²⁶"],correct:0,explain:"1 mol = 6,02·10²³ deeltjes: het getal van Avogadro (Binas 7)."},
+  {level:1,q:"Welke formule hoort bij dichtheid?",options:["ρ = V / m","ρ = m · V","ρ = m / V","ρ = n / V"],correct:2,explain:"Dichtheid = massa gedeeld door volume, in kg/m³ of g/mL. n/V is de molariteit."},
+  {level:1,q:"Wat is de eenheid van molariteit?",options:["g/L","mol/L","mol","g/mol"],correct:1,explain:"Molariteit [A] = n / V_opl in mol per liter, afgekort M. g/mol is de eenheid van molaire massa."},
+  {level:1,q:"In welke groep staan de edelgassen?",options:["Groep 1","Groep 2","Groep 17","Groep 18"],correct:3,explain:"Groep 18: He, Ne, Ar, … Ze hebben de edelgasconfiguratie en reageren vrijwel niet. Groep 17 zijn de halogenen."},
+  {level:1,q:"Hoeveel significante cijfers heeft 0,0500?",options:["1","2","3","4"],correct:2,explain:"Nullen vooraan tellen niet; begin bij de 5 en tel de nullen erachter mee: 5, 0, 0 → 3 significante cijfers."},
+  {level:1,q:"Welke van deze elementen komt als tweeatomig molecuul voor?",options:["Na","Fe","Cl","Ne"],correct:2,explain:"Chloor is Cl₂ (H₂ N₂ O₂ F₂ Cl₂ Br₂ I₂). Metalen (Na, Fe) vormen geen moleculen; edelgassen (Ne) zijn losse atomen."},
+  {level:2,q:"Cl-35 en Cl-37 zijn isotopen. Waarin verschillen ze?",options:["Aantal protonen","Aantal elektronen","Aantal neutronen","Ze verschillen niet"],correct:2,explain:"Isotopen: zelfde atoomnummer (17 protonen), ander massagetal. Cl-35 heeft 18 neutronen, Cl-37 heeft 20."},
+  {level:2,q:"Een Mg²⁺-ion heeft 12 protonen. Hoeveel elektronen heeft het?",options:["14","12","10","2"],correct:2,explain:"Lading 2+ betekent twee elektronen kwijt: 12 − 2 = 10 elektronen. Positief = elektronen afgestaan, nooit erbij."},
+  {level:2,q:"Waarom is de relatieve atoommassa van chloor 35,45 en geen heel getal?",options:["Meetfout in Binas","Het is een gewogen gemiddelde van de isotopen Cl-35 en Cl-37","Chloor heeft halve protonen","Omdat chloor een gas is"],correct:1,explain:"In de natuur is ongeveer 75% Cl-35 en 25% Cl-37. Het gewogen gemiddelde is 35,45 u."},
+  {level:2,q:"Waarom reageert natrium zo makkelijk en argon niet?",options:["Natrium is zwaarder","Natrium heeft 1 valentie-elektron dat het makkelijk afstaat; argon heeft al 8","Argon is een metaal","Natrium heeft meer neutronen"],correct:1,explain:"Atomen streven naar de edelgasconfiguratie (8 valentie-elektronen). Argon heeft die al; natrium bereikt hem door één elektron af te staan (Na⁺)."},
+  {level:2,q:"Waarom is de molaire massa van water 18,0 g/mol als M_r = 18,0 u?",options:["Toeval","Omdat 1 mol precies het aantal u is dat in 1 gram past","Omdat water uit 18 atomen bestaat","Omdat 1 u = 1 g"],correct:1,explain:"1 g / 1,66·10⁻²⁴ g = 6,02·10²³. Dus 6,02·10²³ deeltjes van 18,0 u wegen samen 18,0 g. Daarom is M in g/mol hetzelfde getal als M_r in u."},
+  {level:2,q:"Je gaat in het blokschema van massa naar aantal deeltjes. Welke bewerkingen?",options:["× M, dan × N_A","÷ M, dan × N_A","÷ M, dan ÷ N_A","× ρ, dan ÷ M"],correct:1,explain:"m → n: delen door M (n = m/M). n → N: vermenigvuldigen met N_A (N = n·N_A)."},
+  {level:2,q:"Wat is het verschil tussen een meetwaarde en een telwaarde?",options:["Geen verschil","Een telwaarde is exact en telt niet mee voor de significantie; een meetwaarde heeft een beperkte nauwkeurigheid","Een meetwaarde is altijd groter","Telwaarden staan in Binas"],correct:1,explain:"11 protonen of 100% zijn exact (telwaarden). 50,0 mL komt uit een maatcilinder en heeft 3 significante cijfers (meetwaarde)."},
+  {level:2,q:"Waarom schrijft het boek 1,2·10² mL en niet 120 mL?",options:["Het staat mooier","120 mL zou 3 significante cijfers betekenen (eindnullen tellen mee); 1,2·10² laat zien dat het er 2 zijn","120 mL is fout","Wetenschappelijke notatie is verplicht"],correct:1,explain:"Eindnullen tellen mee, dus 120 zou 3 significante cijfers zijn. Het antwoord mag er maar 2 hebben (2,0 mol en 0,80 g/mL), en dat laat 1,2·10² zien."},
+  {level:3,q:"Hoeveel neutronen heeft ⁵⁶₂₆Fe?",options:["26","30","56","82"],correct:1,explain:"Neutronen = massagetal − atoomnummer = 56 − 26 = 30."},
+  {level:3,q:"Bereken M_r van CO₂ (C 12,01; O 16,00).",options:["28,01 u","44,01 u","28,02 u","60,01 u"],correct:1,explain:"1 × 12,01 + 2 × 16,00 = 12,01 + 32,00 = 44,01 u. Vergeet de index 2 bij O niet."},
+  {level:3,q:"Hoeveel mol is 9,0 g water (M = 18,0 g/mol)?",options:["162 mol","2,0 mol","0,50 mol","0,20 mol"],correct:2,explain:"n = m / M = 9,0 / 18,0 = 0,50 mol. Van gram naar mol wordt het getal kleiner."},
+  {level:3,q:"Hoeveel moleculen zitten er in 0,25 mol CO₂?",options:["1,5·10²³","2,4·10²³","6,0·10²³","4,2·10⁻²⁵"],correct:0,explain:"N = n · N_A = 0,25 × 6,02·10²³ = 1,5·10²³ moleculen."},
+  {level:3,q:"Wat is het volume van 27,0 g aluminium (ρ = 2,70 g/cm³)?",options:["72,9 cm³","10,0 cm³","0,100 cm³","2,70 cm³"],correct:1,explain:"V = m / ρ = 27,0 / 2,70 = 10,0 cm³ (3 significante cijfers)."},
+  {level:3,q:"10,0 mL + 4,55 mL = ? (juiste significantie)",options:["14,55 mL","14,6 mL","15 mL","14,5 mL"],correct:1,explain:"Optellen → afronden op het kleinste aantal decimalen (10,0 heeft 1 decimaal): 14,55 → 14,6 mL."},
+  {level:3,q:"42,5 g / 50,00 mL = ? (juiste significantie)",options:["0,85 g/mL","0,8500 g/mL","0,850 g/mL","0,9 g/mL"],correct:2,explain:"Delen → minste significante cijfers: 42,5 heeft er 3. 0,8500 → 0,850 g/mL. De laatste 0 hoort erbij."},
+  {level:3,q:"0,20 mol NaCl opgelost tot 500 mL. Wat is de molariteit?",options:["0,0004 M","100 M","0,40 M","0,10 M"],correct:2,explain:"V_opl = 500 mL = 0,500 L. [NaCl] = 0,20 / 0,500 = 0,40 mol/L. Vergeet je mL → L, dan krijg je 0,0004 (fout)."},
+  {level:3,q:"Een vis van 2,0 kg bevat 0,50 mg kwik. Wat is het gehalte in massa-ppm?",options:["0,25 ppm","1,0 ppm","250 ppm","0,0025 ppm"],correct:0,explain:"ppm = mg per kg: 0,50 mg / 2,0 kg = 0,25 ppm. Of: 0,00050 g / 2000 g × 10⁶ = 0,25."}
+];
+let quizState={},quizFilter='all';
+function renderQuiz(){
+  const cont=document.getElementById('quiz-container');cont.innerHTML='';
+  const list=quizFilter==='all'?quizQuestions:quizQuestions.filter(q=>q.level==quizFilter);
+  list.forEach((q,idx)=>{
+    const real=quizQuestions.indexOf(q);
+    const card=document.createElement('div');card.className='quiz-card';
+    card.innerHTML=`<div class="quiz-q"><span class="pill ${q.level==1?'':q.level==2?'pill-blue':'pill-orange'}">Niveau ${q.level}</span> ${idx+1}. ${q.q}</div>
+      <div class="quiz-options" id="opts-${real}">${q.options.map((o,i)=>`<button class="quiz-option" data-q="${real}" data-i="${i}">${o}</button>`).join('')}</div>
+      <div class="quiz-feedback" id="fb-${real}"></div>`;
+    cont.appendChild(card);
+  });
+  document.querySelectorAll('.quiz-option').forEach(b=>b.addEventListener('click',()=>answer(parseInt(b.dataset.q),parseInt(b.dataset.i))));
+  Object.keys(quizState).forEach(qi=>{
+    const s=quizState[qi];if(!s.answered)return;
+    const opts=document.querySelectorAll(`#opts-${qi} .quiz-option`);
+    opts.forEach((b,i)=>{b.disabled=true;if(i===quizQuestions[qi].correct)b.classList.add('correct');if(i===s.chosen&&s.chosen!==quizQuestions[qi].correct)b.classList.add('wrong');});
+    const fb=document.getElementById(`fb-${qi}`);if(fb){fb.classList.add('show',s.correct?'good':'bad');fb.innerHTML=(s.correct?'✅ <strong>Goed!</strong> ':'❌ <strong>Niet helemaal.</strong> ')+quizQuestions[qi].explain;}
+  });
+  updateScore();
+}
+function answer(qi,choice){
+  const q=quizQuestions[qi];const correct=choice===q.correct;
+  quizState[qi]={answered:true,chosen:choice,correct};
+  const opts=document.querySelectorAll(`#opts-${qi} .quiz-option`);
+  opts.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===choice&&!correct)b.classList.add('wrong');});
+  const fb=document.getElementById(`fb-${qi}`);fb.classList.add('show',correct?'good':'bad');
+  fb.innerHTML=(correct?'✅ <strong>Goed!</strong> ':'❌ <strong>Niet helemaal.</strong> ')+q.explain;
+  updateScore();
+}
+function updateScore(){
+  const total=quizQuestions.length,answered=Object.keys(quizState).length,correct=Object.values(quizState).filter(s=>s.correct).length;
+  document.getElementById('score-display').textContent=`Beantwoord: ${answered} / ${total} — Goed: ${correct}`;
+  document.getElementById('progress-fill').style.width=`${answered/total*100}%`;
+}
+function resetQuiz(){if(confirm('Alles opnieuw beginnen?')){quizState={};renderQuiz();}}
+document.querySelectorAll('.quiz-filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.quiz-filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');quizFilter=b.dataset.level;renderQuiz();}));
+renderQuiz();
+
+// ---------- LEERSCHEMA ----------
+const sessions=[
+  {title:'Sessie 1 · §1 Atoombouw',dur:'45 min',items:['Theorie §1 lezen tot en met "Relatieve atoom- en molecuulmassa"; speel met de atoombouwer: klik alle 20 elementen en voorspel eerst zelf de configuratie','Formule-trainer §1: neutronen, elektronen in ionen, elektronenconfiguratie, M<sub>r</sub> (elk minstens 2× goed)','Flashcards §1 (eerste helft: atoommodel t/m M_r), onbekende markeren','Oefenvragen niveau 1']},
+  {title:'Sessie 2 · §1 Periodiek systeem',dur:'40 min',items:['Theorie §1 vanaf "Het periodiek systeem": metalen/niet-metalen, edelgasconfiguratie, ionen, covalentie','Atoombouwer: maak van Na, Mg, Cl, O het juiste ion met de schuif en kijk of de buitenste schil vol is','Formule-trainer §1: valentie-elektronen, covalentie, ionlading','Flashcards §1 (alle), oefenvragen niveau 2 over §1']},
+  {title:'Sessie 3 · §2 De chemische hoeveelheid',dur:'50 min',items:['Theorie §2 lezen; teken het blokschema V ⇄ m ⇄ n ⇄ N uit je hoofd met alle pijlen','Mol-machine: kies water, vul 18 g in en kijk of je elke stap zelf had kunnen zetten; daarna een metaal','Formule-trainer §2: alle opgaven, ook de twee- en driestaps','Flashcards §2','Voorbeeldopdracht 1 en 2 uit het boek (§2) zonder te kijken nadoen']},
+  {title:'Sessie 4 · §3 Significantie en gehaltes',dur:'50 min',items:['Theorie §3 lezen: significante cijfers (drie vuistregels), wetenschappelijke notatie, gehaltes, molariteit','Formule-trainer §3: significante cijfers en notatie eerst, dan gehaltes en molariteit','Flashcards §3','Oefenvragen niveau 2 en 3','Voorbeeldopdracht 4 (glucose) uit het boek zonder te kijken nadoen']},
+  {title:'Sessie 5 · Alles herhalen',dur:'40 min',items:['Spiekbriefje doorlezen; het blokschema en het stappenplan hardop uitleggen in gewone taal','Flashcards "Nog oefenen" tot ze allemaal goed zijn','Alle oefenvragen opnieuw (Opnieuw beginnen)','Formule-trainer: alle opgaven één keer met nieuwe getallen','Uit het boek: de leerdoelen bovenaan §1, §2 en §3 langslopen en bij elk leerdoel bedenken welke opgave erbij hoort']},
+  {title:'Dag van de toets',dur:'10 min',items:['Spiekbriefje 10 minuten doornemen, geen nieuwe stof','Bij elke rekenvraag: gegevens + eenheid opschrijven, route in het blokschema, Binas-waarden erbij, eenheden kloppend, niet tussentijds afronden, sig. cijfers']}
+];
+function fmtDate(d){return d.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'short'});}
+function buildPlan(){
+  const cont=document.getElementById('plan-container');cont.innerHTML='';
+  const val=document.getElementById('toets-datum').value;const done=load('plan-done',{});
+  const today=new Date();today.setHours(0,0,0,0);
+  let dates=null,info='';
+  if(val){
+    const toets=new Date(val+'T00:00:00');const N=Math.round((toets-today)/86400000);
+    if(N<0)info='Deze datum is al geweest.';
+    else if(N===0)info='De toets is vandaag! Doe alleen de laatste sessie.';
+    else{
+      info=`Nog ${N} dag${N===1?'':'en'} tot de toets.`;
+      dates=[];const studyDays=N;
+      for(let i=0;i<5;i++){let off;if(studyDays>=5){off=Math.round(i*(studyDays-1)/4);}else{off=Math.min(Math.floor(i*studyDays/5),studyDays-1);}const d=new Date(today);d.setDate(d.getDate()+off);dates.push(d);}
+      dates.push(toets);
+      if(N<5)info+=' Dat is krap: sommige sessies vallen op dezelfde dag. Doe ze dan met een pauze ertussen.';
+    }
+  } else info='Geen datum ingevuld: hieronder staat de volgorde zonder data.';
+  document.getElementById('dagen-over').textContent=info;
+  sessions.forEach((s,si)=>{
+    const div=document.createElement('div');div.className='plan-day';
+    const dateTxt=dates?fmtDate(dates[si]):'';
+    div.innerHTML=`<div class="d-head"><span class="d-date">${dateTxt?dateTxt+' · ':''}${s.title}</span><span class="d-dur">⏱ ${s.dur}</span></div>`+s.items.map((it,ii)=>{const k=si+'-'+ii;const ch=done[k]?'checked':'';return `<label class="${ch?'done':''}"><input type="checkbox" data-k="${k}" ${ch}><span>${it}</span></label>`;}).join('');
+    cont.appendChild(div);
+  });
+  cont.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',()=>{const d=load('plan-done',{});if(cb.checked)d[cb.dataset.k]=true;else delete d[cb.dataset.k];store('plan-done',d);cb.parentElement.classList.toggle('done',cb.checked);}));
+}
+const dateInput=document.getElementById('toets-datum');
+dateInput.value=load('toets-datum','');
+dateInput.addEventListener('change',()=>{store('toets-datum',dateInput.value);buildPlan();});
+document.getElementById('plan-reset').addEventListener('click',()=>{if(confirm('Alle vinkjes wissen?')){store('plan-done',{});buildPlan();}});
+buildPlan();
+</script>
+</body>
+</html>
